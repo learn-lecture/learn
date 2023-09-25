@@ -47,8 +47,12 @@ public class UserRegisterRequest {
     // Json Data : 2023-09-25 21:47:00 -> 2023-09-25T21:47:00
     // 오늘 이후의 날짜만 받겠다는 어노테이션
     //@FutureOrPresent
-    @YearMonth
     //private LocalDateTime registerAt;
+    
+    // My custom annotation
+    // 자바 Date Type은 ISO 8601 이므로 LocalDateTime을 사용하면 다른 값을 못받음.
+    // String으로 Date Type을 받은 후 유효성 검사 진행.
+    @YearMonth
     private String registerAt;
 
     // Valid, 두 값 중 한 값이라도 있을 경우 검증 O
