@@ -16,7 +16,7 @@ import java.util.Optional;
 // Autowired는 final이 굳이 필요없음. 자동으로 Spring이 직접 bean을 찾음.
 @RequiredArgsConstructor
 public class BookService {
-    private final BookRepository bookRepository;
+    private final BookRepository bookRepository = new BookRepository();
 /*
     public BookService(BookRepository bookRepository){
         this.bookRepository = bookRepository;

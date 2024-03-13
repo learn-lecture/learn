@@ -15,8 +15,8 @@ import java.util.Optional;
 public class UserService {
 
     //옛날 방식.
-    @Autowired
-    private UserRepository userRepository;
+    //@Autowired
+    private UserRepository userRepository = new UserRepository();
     // private final UserRepository userRepository;
 
     public UserEntity save(UserEntity user) {
