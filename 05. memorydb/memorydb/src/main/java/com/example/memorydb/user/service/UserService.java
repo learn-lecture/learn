@@ -27,25 +27,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
- /*   public void delete(Long id) {
-        userRepository.delete(id);
-    }
-*/
     public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
     }
-/* My Code
-    public List<UserEntity> highScore() {
-        var allUser = userRepository.findAll();
-        List<UserEntity> highScoreEntity = allUser.stream()
-                .filter(it -> {
-                    return (it.getScore() >= 70);
-                })
-                .collect(Collectors.toList());
-        return highScoreEntity;
+
+    public void delete(Long id) {
+        Optional<UserEntity> user = findById(id);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        userRepository.delete(user.get());
     }
-*/
-  /*  public List<UserEntity> highScore(int score) {
-        return userRepository.highScore(score);
-    }*/
+
+    public List<UserEntity> filter(int score) {
+        return userRepository.findAllByScoreGreaterThanEqual(score);
+    }
+
+    public List<UserEntity> filter(int min, int max) {
+        return userRepository.filterScoreMinMax(min, max);
+    }
 }

@@ -31,21 +31,23 @@ public class UserApiController {
         return userService.findById(id);
     }
 
-/*
     @DeleteMapping("/delete")
-    public void delete(
-        @RequestParam Long id
-    ) {
+    public void delete(@RequestParam Long id) {
         userService.delete(id);
     }
-*/
 
-/*    @GetMapping("/highscore")
-    public List<UserEntity> highSocre(
-        @RequestParam int score
+    @GetMapping("/filter")
+    public List<UserEntity> filterScore(@RequestParam int score){
+        return userService.filter(score);
+    }
+
+    @GetMapping("/filtertwo")
+    public List<UserEntity> filterScoreMinMax(
+        @RequestParam int min,
+        @RequestParam int max
     ){
-        return userService.highScore(score);
-    }*/
+        return userService.filter(min, max);
+    }
 }
 /*
 Business Logic을 처리하는 부분 = Service Logic
