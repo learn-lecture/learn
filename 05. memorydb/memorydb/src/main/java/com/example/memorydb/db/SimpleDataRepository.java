@@ -1,3 +1,4 @@
+/*
 package com.example.memorydb.db;
 
 import com.example.memorydb.entity.Entity;
@@ -80,3 +81,4 @@ abstract public class SimpleDataRepository<T extends Entity, ID extends Long> im
     }
 
 }
+*/

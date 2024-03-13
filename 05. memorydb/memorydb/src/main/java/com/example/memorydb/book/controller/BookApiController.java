@@ -25,22 +25,12 @@ public class BookApiController {
     public List<BookEntity> findAll(
         @RequestParam(name = "id", defaultValue = "0") Long id
     ) {
-        if(id == 0) return bookService.findALl();
-
-        var response = bookService.findById(id);
-        List<BookEntity> bookList = new ArrayList<BookEntity>();
-
-        if(response.isPresent()) {
-            BookEntity bookEntity = response.get();
-            bookList.add(bookEntity);
-        }
-
-        return bookList;
+        return bookService.findALl();
     }
 
-    @DeleteMapping("/delete/{id}")
+   /* @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         bookService.delete(id);
     }
-
+*/
 }

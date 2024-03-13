@@ -22,33 +22,30 @@ public class UserApiController {
     }
 
     @GetMapping("/all")
-    public List<UserEntity> findAll(
-        @RequestParam(name = "score", defaultValue = "0") int score
-    ) {
-        if(score == 0) return userService.findAll();
-        return userService.highScore(score);
+    public List<UserEntity> findAll(@RequestParam(name = "score", defaultValue = "0") int score) {
+        return userService.findAll();
     }
 
     @GetMapping("/id/{id}")
-    public Optional<UserEntity> findById(
-        @PathVariable Long id
-    ) {
+    public Optional<UserEntity> findById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
+/*
     @DeleteMapping("/delete")
     public void delete(
         @RequestParam Long id
     ) {
         userService.delete(id);
     }
+*/
 
-    @GetMapping("/highscore")
+/*    @GetMapping("/highscore")
     public List<UserEntity> highSocre(
         @RequestParam int score
     ){
         return userService.highScore(score);
-    }
+    }*/
 }
 /*
 Business Logic을 처리하는 부분 = Service Logic

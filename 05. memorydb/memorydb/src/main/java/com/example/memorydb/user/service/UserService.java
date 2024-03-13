@@ -15,8 +15,8 @@ import java.util.Optional;
 public class UserService {
 
     //옛날 방식.
-    //@Autowired
-    private UserRepository userRepository = new UserRepository();
+    @Autowired
+    private UserRepository userRepository;
     // private final UserRepository userRepository;
 
     public UserEntity save(UserEntity user) {
@@ -27,10 +27,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void delete(Long id) {
+ /*   public void delete(Long id) {
         userRepository.delete(id);
     }
-
+*/
     public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
     }
@@ -45,7 +45,7 @@ public class UserService {
         return highScoreEntity;
     }
 */
-    public List<UserEntity> highScore(int score) {
+  /*  public List<UserEntity> highScore(int score) {
         return userRepository.highScore(score);
-    }
+    }*/
 }
