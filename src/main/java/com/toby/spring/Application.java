@@ -8,6 +8,8 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -30,8 +32,8 @@ public class Application {
 					// 1. status line에서 status code
 					// 2. create header, especially contentType header
 					// 3. body
-					resp.setStatus(200);
-					resp.setHeader("Content-Type", "text/plain");
+					resp.setStatus(HttpStatus.OK.value());
+					resp.setHeader(HttpHeaders.CONTENT_TYPE, "text/plain");
 					resp.getWriter().println("Hello Servlet");
 				}
 			}).addMapping("/hello");
