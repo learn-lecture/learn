@@ -28,13 +28,14 @@ public class Application {
 				protected void service(HttpServletRequest req, HttpServletResponse resp) throws
 					ServletException,
 					IOException {
+					String name = req.getParameter("name");
 					// 웹 응답의 3가지 요소
 					// 1. status line에서 status code
 					// 2. create header, especially contentType header
 					// 3. body
 					resp.setStatus(HttpStatus.OK.value());
 					resp.setHeader(HttpHeaders.CONTENT_TYPE, "text/plain");
-					resp.getWriter().println("Hello Servlet");
+					resp.getWriter().println("Hello " + name);
 				}
 			}).addMapping("/hello");
 		});
