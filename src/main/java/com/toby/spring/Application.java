@@ -30,22 +30,28 @@ public class Application {
 	public static void main(String[] args) {
 		// Spring Container
 		// resource, event, ...
-		final GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
+		final GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
+			@Override
+			protected void onRefresh() {
+				super.onRefresh();
+
+				// Tomcat 외 다른 서버도 구현할 수 있도록 interface로 명시되어 있음.
+				final ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+				final WebServer webServer = serverFactory.getWebServer(servletContext -> {
+					servletContext.addServlet(
+						"frontcontroller",
+						new DispatcherServlet(this)
+					).addMapping("/*");
+				});
+				webServer.start();
+				// ----- Success WebServer Start -----
+			}
+		};
 		// bean 등록 후 초기화하기
 		applicationContext.registerBean(HelloController.class);
 		applicationContext.registerBean(SimpleHelloService.class);
 		applicationContext.refresh();
 
-		// Tomcat 외 다른 서버도 구현할 수 있도록 interface로 명시되어 있음.
-		final ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-		final WebServer webServer = serverFactory.getWebServer(servletContext -> {
-			servletContext.addServlet(
-				"frontcontroller",
-				new DispatcherServlet(applicationContext)
-			).addMapping("/*");
-		});
-		webServer.start();
-		// ----- Success WebServer Start -----
 	}
 
 }
