@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
 import com.toby.spring.contoller.HelloController;
+import com.toby.spring.service.SimpleHelloService;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -29,6 +30,7 @@ public class Application {
 		final GenericApplicationContext applicationContext = new GenericApplicationContext();
 		// bean 등록 후 초기화하기
 		applicationContext.registerBean(HelloController.class);
+		applicationContext.registerBean(SimpleHelloService.class);
 		applicationContext.refresh();
 
 		// Tomcat 외 다른 서버도 구현할 수 있도록 interface로 명시되어 있음.
