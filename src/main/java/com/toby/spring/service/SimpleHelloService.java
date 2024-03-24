@@ -2,7 +2,9 @@ package com.toby.spring.service;
 
 import org.springframework.stereotype.Component;
 
-@Component
+import com.toby.spring.utility.MyComponent;
+
+@MyComponent
 public class SimpleHelloService implements HelloService {
 
 	@Override
