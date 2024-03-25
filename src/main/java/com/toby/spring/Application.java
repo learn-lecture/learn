@@ -34,7 +34,6 @@ public class Application {
 				// Bean 추출 및 서블렛 세팅
 				final ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
 				final DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
-				dispatcherServlet.setApplicationContext(this);
 
 				final WebServer webServer = serverFactory.getWebServer(servletContext -> {
 					servletContext.addServlet("dispatcherServlet", dispatcherServlet).addMapping("/*");
