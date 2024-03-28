@@ -16,16 +16,9 @@ import com.toby.spring.service.HelloService;
 public class HelloController {
 
 	private final HelloService helloService;
-	private final ApplicationContext applicationContext;
 
-	public HelloController(
-		final HelloService helloService,
-		final ApplicationContext applicationContext
-	) {
+	public HelloController(final HelloService helloService) {
 		this.helloService = helloService;
-		this.applicationContext = applicationContext;
-
-		System.out.println(applicationContext);
 	}
 
 	@GetMapping("/hello")
