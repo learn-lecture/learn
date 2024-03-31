@@ -2,9 +2,9 @@ package com.toby.spring;
 
 import org.springframework.boot.SpringApplication;
 
-import com.toby.spring.utility.MySpringBootAnnotation;
+import com.toby.config.MySpringBootApplication;
 
-@MySpringBootAnnotation
+@MySpringBootApplication
 public class Application {
 
 	public static void main(String[] args) {
