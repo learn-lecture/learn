@@ -17,4 +17,8 @@ public class HelloDecorator implements HelloService{
 	public String sayHello(final String name) {
 		return "*" + helloService.sayHello(name) + "*";
 	}
+
+	/* TODO
+		Proxy Pattern을 적용해보기
+	*/
 }
