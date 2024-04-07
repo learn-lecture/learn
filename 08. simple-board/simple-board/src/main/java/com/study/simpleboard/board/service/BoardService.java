@@ -1,5 +1,7 @@
 package com.study.simpleboard.board.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.study.simpleboard.board.db.BoardEntity;
@@ -21,6 +23,12 @@ public class BoardService {
 			.build();
 
 		return boardRepository.save(registered);
+	}
+
+	public BoardEntity view(final Long id) {
+		return boardRepository.findById(id).orElseThrow(() -> {
+			throw new IllegalArgumentException("not found");
+		});
 	}
 
 }

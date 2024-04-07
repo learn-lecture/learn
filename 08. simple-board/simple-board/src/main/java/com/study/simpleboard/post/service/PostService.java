@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.study.simpleboard.board.db.BoardEntity;
+import com.study.simpleboard.board.db.BoardRepository;
 import com.study.simpleboard.post.db.PostEntity;
 import com.study.simpleboard.post.db.PostRepository;
 import com.study.simpleboard.post.model.PostRequest;
@@ -20,10 +22,16 @@ public class PostService {
 
 	private final PostRepository postRepository;
 	private final ReplyService replyService;
+	private final BoardRepository boardRepository;
 
 	public PostEntity create(final PostRequest postRequest) {
+		final BoardEntity board = boardRepository.findById(postRequest.boardId())
+			.orElseThrow(() -> {
+				throw new IllegalArgumentException("wrong board");
+			});
+
 		final PostEntity registered = PostEntity.builder()
-			.boardId(1L)
+			.board(board)
 			.userName(postRequest.userName())
 			.password(postRequest.password())
 			.email(postRequest.email())
