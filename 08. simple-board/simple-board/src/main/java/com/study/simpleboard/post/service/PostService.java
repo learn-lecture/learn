@@ -9,6 +9,8 @@ import com.study.simpleboard.post.db.PostEntity;
 import com.study.simpleboard.post.db.PostRepository;
 import com.study.simpleboard.post.model.PostRequest;
 import com.study.simpleboard.post.model.PostViewRequest;
+import com.study.simpleboard.reply.db.ReplyEntity;
+import com.study.simpleboard.reply.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 
 	private final PostRepository postRepository;
+	private final ReplyService replyService;
 
 	public PostEntity create(final PostRequest postRequest) {
 		final PostEntity registered = PostEntity.builder()
@@ -42,6 +45,9 @@ public class PostService {
 		if (!entity.getPassword().equals(request.password())) {
 			throw new IllegalArgumentException("wrong passwd");
 		}
+
+		final List<ReplyEntity> replies = replyService.findAllByPostId(request.postId());
+		entity.setReplies(replies);
 
 		return entity;
 	}
