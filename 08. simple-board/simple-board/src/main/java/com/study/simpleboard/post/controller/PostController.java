@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.simpleboard.post.db.PostEntity;
+import com.study.simpleboard.post.model.PostDto;
 import com.study.simpleboard.post.model.PostRequest;
 import com.study.simpleboard.post.model.PostViewRequest;
 import com.study.simpleboard.post.service.PostService;
@@ -24,7 +25,7 @@ public class PostController {
 	private final PostService postService;
 
 	@PostMapping("")
-	public PostEntity create(@Valid @RequestBody final PostRequest postRequest) {
+	public PostDto create(@Valid @RequestBody final PostRequest postRequest) {
 		return postService.create(postRequest);
 	}
 
@@ -34,7 +35,7 @@ public class PostController {
 	}
 
 	@GetMapping("/all")
-	public List<PostEntity> list() {
+	public List<PostDto> list() {
 		return postService.all();
 	}
 

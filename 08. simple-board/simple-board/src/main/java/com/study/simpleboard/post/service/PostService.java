@@ -9,6 +9,7 @@ import com.study.simpleboard.board.db.BoardEntity;
 import com.study.simpleboard.board.db.BoardRepository;
 import com.study.simpleboard.post.db.PostEntity;
 import com.study.simpleboard.post.db.PostRepository;
+import com.study.simpleboard.post.model.PostDto;
 import com.study.simpleboard.post.model.PostRequest;
 import com.study.simpleboard.post.model.PostViewRequest;
 import com.study.simpleboard.reply.db.ReplyEntity;
@@ -24,7 +25,7 @@ public class PostService {
 	private final ReplyService replyService;
 	private final BoardRepository boardRepository;
 
-	public PostEntity create(final PostRequest postRequest) {
+	public PostDto create(final PostRequest postRequest) {
 		final BoardEntity board = boardRepository.findById(postRequest.boardId())
 			.orElseThrow(() -> {
 				throw new IllegalArgumentException("wrong board");
@@ -41,9 +42,10 @@ public class PostService {
 			.postedAt(LocalDateTime.now())
 			.build();
 
-		return postRepository.save(registered);
+		return PostDto.toDto(postRepository.save(registered));
 	}
 
+	// Todo : Reply 연관관계 설정하기
 	public PostEntity view(final PostViewRequest request) {
 		final PostEntity entity = postRepository.findFirstByIdAndStatusOrderByIdDesc(request.postId(), "REGISTERED")
 			.orElseThrow(() -> {
@@ -60,9 +62,10 @@ public class PostService {
 		return entity;
 	}
 
-	public List<PostEntity> all() {
+	public List<PostDto> all() {
 		return postRepository.findAll().stream()
 			.filter(it -> it.getStatus().equals("REGISTERED"))
+			.map(PostDto::toDto)
 			.toList();
 	}
 

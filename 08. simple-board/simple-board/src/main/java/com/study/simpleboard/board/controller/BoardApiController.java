@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.simpleboard.board.db.BoardEntity;
+import com.study.simpleboard.board.model.BoardDto;
 import com.study.simpleboard.board.model.BoardRequest;
 import com.study.simpleboard.board.service.BoardService;
 
@@ -26,15 +27,15 @@ public class BoardApiController {
 	private final BoardService boardService;
 
 	@PostMapping("")
-	public BoardEntity create(@Valid @RequestBody final BoardRequest boardRequest) {
+	public BoardDto create(@Valid @RequestBody final BoardRequest boardRequest) {
 		return boardService.create(boardRequest);
 	}
 
 	@GetMapping("/{id}")
-	public BoardEntity view(@PathVariable Long id) {
-		final BoardEntity entity = boardService.view(id);
-		log.info("result : {}", entity);
+	public BoardDto view(@PathVariable Long id) {
+		final BoardDto dto = boardService.view(id);
+		log.info("result : {}", dto);
 
-		return entity;
+		return dto;
 	}
 }
