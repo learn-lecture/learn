@@ -42,4 +42,8 @@ public class PostEntity {
 
 	private LocalDateTime postedAt;
 
+	public void setStatus(final String status) {
+		this.status = status;
+	}
+
 }
