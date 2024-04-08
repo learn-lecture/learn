@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.study.simpleboard.board.db.BoardEntity;
 import com.study.simpleboard.reply.db.ReplyEntity;
+import com.study.simpleboard.reply.model.ReplyDto;
 import com.study.simpleboard.reply.model.ReplyRequest;
 import com.study.simpleboard.reply.service.ReplyService;
 
@@ -21,7 +22,7 @@ public class ReplyApiController {
 	private final ReplyService replyService;
 
 	@PostMapping("")
-	public ReplyEntity create(@Valid @RequestBody final ReplyRequest replyRequest) {
+	public ReplyDto create(@Valid @RequestBody final ReplyRequest replyRequest) {
 		return replyService.create(replyRequest);
 	}
 

@@ -21,6 +21,7 @@ public record BoardDto(
 
 	List<PostDto> posts
 ) {
+
 	public static BoardDto toDto(final BoardEntity board) {
 		return BoardDto.builder()
 			.boardName(board.getBoardName())
@@ -35,4 +36,5 @@ public record BoardDto(
 			.map(PostDto::toDto)
 			.toList();
 	}
+
 }

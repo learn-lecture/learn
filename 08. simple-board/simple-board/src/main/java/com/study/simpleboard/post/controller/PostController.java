@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.simpleboard.post.db.PostEntity;
 import com.study.simpleboard.post.model.PostDto;
 import com.study.simpleboard.post.model.PostRequest;
 import com.study.simpleboard.post.model.PostViewRequest;
@@ -30,7 +29,7 @@ public class PostController {
 	}
 
 	@PostMapping("/view")
-	public PostEntity view(@Valid @RequestBody final PostViewRequest postViewRequest) {
+	public PostDto view(@Valid @RequestBody final PostViewRequest postViewRequest) {
 		return postService.view(postViewRequest);
 	}
 

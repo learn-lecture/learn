@@ -57,9 +57,10 @@ public class PostEntity {
 
 	private LocalDateTime postedAt;
 
-
-	@Setter
-	@Transient
+	@OneToMany(
+		mappedBy = "post"
+	)
+	@Builder.Default
 	private List<ReplyEntity> replies = List.of();
 
 }

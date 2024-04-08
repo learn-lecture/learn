@@ -28,7 +28,7 @@ public class PostService {
 	public PostDto create(final PostRequest postRequest) {
 		final BoardEntity board = boardRepository.findById(postRequest.boardId())
 			.orElseThrow(() -> {
-				throw new IllegalArgumentException("wrong board");
+				throw new IllegalArgumentException("not found");
 			});
 
 		final PostEntity registered = PostEntity.builder()
@@ -45,8 +45,7 @@ public class PostService {
 		return PostDto.toDto(postRepository.save(registered));
 	}
 
-	// Todo : Reply 연관관계 설정하기
-	public PostEntity view(final PostViewRequest request) {
+	public PostDto view(final PostViewRequest request) {
 		final PostEntity entity = postRepository.findFirstByIdAndStatusOrderByIdDesc(request.postId(), "REGISTERED")
 			.orElseThrow(() -> {
 				throw new IllegalArgumentException("not found");
@@ -56,10 +55,10 @@ public class PostService {
 			throw new IllegalArgumentException("wrong passwd");
 		}
 
-		final List<ReplyEntity> replies = replyService.findAllByPostId(request.postId());
-		entity.setReplies(replies);
+		//final List<ReplyEntity> replies = replyService.findAllByPostId(request.postId());
+		//entity.setReplies(replies);
 
-		return entity;
+		return PostDto.toDto(entity);
 	}
 
 	public List<PostDto> all() {

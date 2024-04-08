@@ -2,6 +2,9 @@ package com.study.simpleboard.board.db;
 
 import java.util.List;
 
+import org.hibernate.annotations.SQLOrder;
+import org.hibernate.annotations.SQLRestriction;
+
 import com.study.simpleboard.post.db.PostEntity;
 
 import jakarta.persistence.Entity;
@@ -34,6 +37,9 @@ public class BoardEntity {
 	@OneToMany(
 		mappedBy = "board"
 	)
+	@SQLRestriction("status = 'REGISTERED'")
+	@Builder.Default
+	@SQLOrder("id desc")
 	private List<PostEntity> posts = List.of();
 
 }

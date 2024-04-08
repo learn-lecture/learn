@@ -5,8 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.study.simpleboard.post.db.PostEntity;
+import com.study.simpleboard.post.db.PostRepository;
+import com.study.simpleboard.post.service.PostService;
 import com.study.simpleboard.reply.db.ReplyEntity;
 import com.study.simpleboard.reply.db.ReplyRepository;
+import com.study.simpleboard.reply.model.ReplyDto;
 import com.study.simpleboard.reply.model.ReplyRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -16,10 +20,16 @@ import lombok.RequiredArgsConstructor;
 public class ReplyService {
 
 	private final ReplyRepository replyRepository;
+	private final PostRepository postRepository;
 
-	public ReplyEntity create(final ReplyRequest replyRequest) {
+	public ReplyDto create(final ReplyRequest replyRequest) {
+		final PostEntity post = postRepository.findById(replyRequest.postId())
+			.orElseThrow(()-> {
+				throw new IllegalArgumentException("Not FOund");
+			});
+
 		final ReplyEntity registered = ReplyEntity.builder()
-			.postId(replyRequest.postId())
+			.post(post)
 			.userName(replyRequest.userName())
 			.password(replyRequest.password())
 			.status("REGISTERED")
@@ -28,7 +38,7 @@ public class ReplyService {
 			.repliedAt(LocalDateTime.now())
 			.build();
 
-		return replyRepository.save(registered);
+		return ReplyDto.toDto(replyRepository.save(registered));
 	}
 
 	public List<ReplyEntity> findAllByPostId(final Long postId) {

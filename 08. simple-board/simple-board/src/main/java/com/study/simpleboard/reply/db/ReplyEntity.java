@@ -2,11 +2,14 @@ package com.study.simpleboard.reply.db;
 
 import java.time.LocalDateTime;
 
+import com.study.simpleboard.post.db.PostEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +29,9 @@ public class ReplyEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Long postId;
+	@ManyToOne
+	@ToString.Exclude
+	private PostEntity post;
 
 	private String userName;
 
@@ -41,6 +46,5 @@ public class ReplyEntity {
 	private String content;
 
 	private LocalDateTime repliedAt;
-
 
 }

@@ -10,6 +10,7 @@ import com.study.simpleboard.board.db.BoardEntity;
 import com.study.simpleboard.board.model.BoardDto;
 import com.study.simpleboard.post.db.PostEntity;
 import com.study.simpleboard.reply.db.ReplyEntity;
+import com.study.simpleboard.reply.model.ReplyDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +34,9 @@ public record PostDto(
 	String title,
 	String content,
 	LocalDateTime postedAt,
-	List<ReplyEntity> replies
+	List<ReplyDto> replies
 ) {
+
 	public static PostDto toDto(final PostEntity post) {
 		return PostDto.builder()
 			.id(post.getId())
@@ -46,6 +48,14 @@ public record PostDto(
 			.title(post.getTitle())
 			.content(post.getContent())
 			.postedAt(post.getPostedAt())
+			.replies(repliesConverter(post.getReplies()))
 			.build();
 	}
+
+	public static List<ReplyDto> repliesConverter(final List<ReplyEntity> replies) {
+		return replies.stream()
+			.map(ReplyDto::toDto)
+			.toList();
+	}
+
 }
