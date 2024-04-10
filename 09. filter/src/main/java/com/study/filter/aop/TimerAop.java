@@ -2,10 +2,16 @@ package com.study.filter.aop;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -18,6 +24,25 @@ public class TimerAop {
 
 	@Pointcut(value = "within(com.study.filter.controller.UserApiController)")
 	public void timerPointCut() {}
+
+	@Before(value = "timerPointCut()")
+	public void before(final JoinPoint joinPoint) {
+		System.out.println("before");
+	}
+
+	@After(value = "timerPointCut()")
+	public void after(final JoinPoint joinPoint) {
+		System.out.println("after");
+	}
+
+	@AfterReturning(value = "timerPointCut()", returning = "result")
+	public void afterReturning(final JoinPoint joinPoint, final Object result) {
+		System.out.println("afterReturning");
+	}
+	@AfterThrowing(value = "timerPointCut()", throwing = "throwable")
+	public void afterThrowing(final JoinPoint joinPoint, final Throwable throwable) {
+		System.out.println("afterReturning");
+	}
 
 	@Around(value = "timerPointCut()")
 	public void around(final ProceedingJoinPoint joinPoint) throws Throwable {
