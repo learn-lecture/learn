@@ -1,24 +1,37 @@
 package com.study.simpleboard.reply.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.study.simpleboard.post.db.PostEntity;
-import com.study.simpleboard.post.db.PostRepository;
-import com.study.simpleboard.post.service.PostService;
+import com.study.simpleboard.common.Api;
+import com.study.simpleboard.curd.CRUDAbstractService;
 import com.study.simpleboard.reply.db.ReplyEntity;
-import com.study.simpleboard.reply.db.ReplyRepository;
 import com.study.simpleboard.reply.model.ReplyDto;
-import com.study.simpleboard.reply.model.ReplyRequest;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
-public class ReplyService {
+@RequiredArgsConstructor
+public class ReplyService extends CRUDAbstractService<ReplyDto, ReplyEntity> {
+	@Override
+	public Api<List<ReplyDto>> list(final Pageable pageable) {
+		final Api<List<ReplyDto>> pages = super.list(pageable);
 
+		final List<ReplyDto> replies = pages.body().stream()
+			.filter(it -> it.status().equals("REGISTERED"))
+			.toList();
+
+		return new Api<>(replies, pages.pagination());
+	}
+
+	@Override
+	public ReplyDto read(final Long id) {
+		return super.read(id).validation();
+	}
+
+	/*
 	private final ReplyRepository replyRepository;
 	private final PostRepository postRepository;
 
@@ -43,5 +56,5 @@ public class ReplyService {
 
 	public List<ReplyEntity> findAllByPostId(final Long postId) {
 		return replyRepository.findAllByPostIdAndStatusOrderByIdDesc(postId, "REGISTERED");
-	}
+	}*/
 }

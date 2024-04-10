@@ -12,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,12 +22,24 @@ import lombok.ToString;
 @Builder
 public record ReplyDto(
 	Long id,
+
+	@NotNull
 	Long postId,
+
+	@NotBlank
 	String userName,
+
+	@NotBlank
 	String password,
-	String status,
+
+	@NotBlank
 	String title,
+
+	@NotBlank
 	String content,
+
+	String status,
+
 	LocalDateTime repliedAt
 ) {
 
@@ -40,6 +54,13 @@ public record ReplyDto(
 			.content(reply.getContent())
 			.repliedAt(reply.getRepliedAt())
 			.build();
+	}
+
+	public ReplyDto validation() {
+		if (status.equals("UNREGISTERED")) {
+			throw new IllegalArgumentException("Not Found");
+		}
+		return this;
 	}
 
 }
