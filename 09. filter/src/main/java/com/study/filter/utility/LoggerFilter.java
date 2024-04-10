@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+//@Component
 public class LoggerFilter implements Filter {
 	@Override
 	public void doFilter(
