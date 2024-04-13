@@ -1,6 +1,7 @@
 package com.study.cookie.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +19,13 @@ public class AccountApiController {
 	private final UserService userService;
 
 	@PostMapping("/login")
-	public void login(
+	public String login(
 		@RequestBody
 		final LoginRequest loginRequest,
-		final HttpServletResponse httpServletResponse
+		final HttpServletResponse httpServletResponse,
+		final HttpSession session
 	){
-		userService.login(loginRequest, httpServletResponse);
+		return userService.login(loginRequest, httpServletResponse);
 	}
+
 }

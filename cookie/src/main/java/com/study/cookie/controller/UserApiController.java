@@ -2,6 +2,7 @@ package com.study.cookie.controller;
 
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,17 @@ public class UserApiController {
 
 		return null;
 	*/
+	}
+
+	@GetMapping("/me2")
+	public UserDto me2(
+		@RequestHeader(name = "authorization", required = false)
+		final String header
+	) {
+		log.info("authorization : {}", header);
+		return repository.findById(header).orElseThrow(() -> {
+			throw new IllegalArgumentException("Not Found!");
+		});
 	}
 
 }

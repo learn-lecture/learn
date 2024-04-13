@@ -17,7 +17,7 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	// login logic
-	public void login(
+	public String login(
 		final LoginRequest loginRequest,
 		final HttpServletResponse httpServletResponse
 	) {
@@ -29,15 +29,17 @@ public class UserService {
 		});
 
 		if (user.password().equals(pw)) {
-			final Cookie cookie = new Cookie("authorization-cookie", user.id());
+			/*final Cookie cookie = new Cookie("authorization-cookie", user.id());
 			cookie.setDomain("localhost");
 			cookie.setPath("/");
 			cookie.setHttpOnly(true);
 			//cookie.setSecure(true); // https 에서만 사용되도록 설정
 			cookie.setMaxAge(-1);
 
-			httpServletResponse.addCookie(cookie);
+			httpServletResponse.addCookie(cookie);*/
+			return user.id();
 		}
+		return id;
 	}
 
 }
