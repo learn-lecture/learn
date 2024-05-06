@@ -1,13 +1,13 @@
-package org.delivery.service;
+package org.delivery.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServiceApplication {
+public class ApiApplcation {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceApplication.class, args);
+		SpringApplication.run(ApiApplcation.class, args);
 	}
 
 }
