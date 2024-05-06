@@ -1,5 +1,6 @@
 package org.delivery.api.account;
 
+import org.delivery.api.account.model.AccountResponse;
 import org.delivery.db.account.AccountEntity;
 import org.delivery.db.account.AccountRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,8 @@ public class AccountApiController {
 	private final AccountRepository accountRepository;
 
 	@GetMapping
-	public void save() {
-		final AccountEntity entity = AccountEntity.builder().build();
-		accountRepository.save(entity);
+	public AccountResponse test() {
+		return new AccountResponse("DOT", 25, "male");
 	}
 
 }
