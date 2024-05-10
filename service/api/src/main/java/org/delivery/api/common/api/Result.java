@@ -1,14 +1,12 @@
 package org.delivery.api.common.api;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+public record Result(
+	Integer resultCode,
+	String resultMessage
+) {
 
-@Getter
-@AllArgsConstructor
-public abstract class Result {
-
-	protected Integer resultCode;
-	protected String resultMessage;
-	protected String resultDescription;
+	public static Result of(final ResultType resultType) {
+		return new Result(resultType.getCode(), resultType.getMessage());
+	}
 
 }

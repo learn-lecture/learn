@@ -52,7 +52,7 @@ public class LoggerFilter implements Filter {
 	) {
 		final String requestBody = new String(request.getContentAsByteArray());
 		final String requestHeaders = headerInfos(request);
-		log.info("\n{}\nuri: {}\nip: {}\nmethod: {}\nheader: {}\nbody: {}\n{}",
+		log.info("{} | uri: {} | ip: {} | method: {} | header: {} | body: {} |\n",
 			REQUEST_DIVIDE, uri, ip, method, requestHeaders, requestBody, REQUEST_DIVIDE);
 	}
 
@@ -64,7 +64,7 @@ public class LoggerFilter implements Filter {
 	) {
 		final String responseBody = new String(response.getContentAsByteArray());
 		final String responseHeaders = headerInfos(response);
-		log.info("\n{}\nuri: {}\nip: {}\nmethod: {}\nheader: {}\nbody: {}\n{}",
+		log.info("{} | uri: {} | ip: {} | method: {} | header: {} | body: {} |\n",
 			RESPONSE_DIVIDE, uri, ip, method, responseHeaders, responseBody, RESPONSE_DIVIDE);
 	}
 

@@ -7,4 +7,9 @@ public record Api<T>(
 	@Valid
 	T body
 ) {
+
+	public static <T> Api<T> ok(final Result result, final T body) {
+		return new Api<>(result, body);
+	}
+
 }
