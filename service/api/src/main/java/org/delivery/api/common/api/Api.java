@@ -8,7 +8,8 @@ public record Api<T>(
 	T body
 ) {
 
-	public static <T> Api<T> ok(final Result result, final T body) {
+	public static <T> Api<T> ok(final ResultType resultType, final T body) {
+		final Result result = Result.of(resultType);
 		return new Api<>(result, body);
 	}
 
