@@ -3,6 +3,7 @@ package org.delivery.api.domain.user.controller;
 import org.delivery.api.common.api.Api;
 import org.delivery.api.common.api.Result;
 import org.delivery.api.domain.user.business.UserBusiness;
+import org.delivery.api.domain.user.controller.model.UserLoginRequest;
 import org.delivery.api.domain.user.controller.model.UserRegisterRequest;
 import org.delivery.api.domain.user.controller.model.UserResponse;
 import org.delivery.api.domain.user.controller.model.info.UserDtoStatus;
@@ -26,6 +27,12 @@ public class UserOpenApiController {
 	public ResponseEntity<Api<UserResponse>> register(@Valid @RequestBody final UserRegisterRequest request) {
 		final UserResponse response = business.register(request);
 		return ResponseEntity.ok(Api.ok(UserDtoStatus.USER_REGISTERED_SUCCESS, response));
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<Api<UserResponse>> login(@Valid @RequestBody final UserLoginRequest request) {
+		final UserResponse response = business.login(request);
+		return ResponseEntity.ok(Api.ok(UserDtoStatus.USER_LOGIN_SUCCESS, response));
 	}
 
 }

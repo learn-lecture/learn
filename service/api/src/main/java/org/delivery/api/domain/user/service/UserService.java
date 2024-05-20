@@ -3,6 +3,8 @@ package org.delivery.api.domain.user.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.delivery.api.domain.user.exception.UserExceptionType;
+import org.delivery.api.exception.model.NotFoundException;
 import org.delivery.db.user.UserEntity;
 import org.delivery.db.user.UserRepository;
 import org.delivery.db.user.vo.UserStatus;
@@ -26,4 +28,18 @@ public class UserService {
 				return repository.save(entity);
 			}).orElseThrow();
 	}
+
+	public UserEntity login(final String email, final String password) {
+		final UserEntity user = getUser(email, password);
+		return user;
+	}
+
+	private UserEntity getUser(final String email, final String password) {
+		return repository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
+			email,
+			password,
+			UserStatus.REGISTERED
+		).orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
+	}
+
 }
