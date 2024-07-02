@@ -5,7 +5,9 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+import com.toby.config.MyAutoConfiguration;
+
+@MyAutoConfiguration
 public class TomcatWebServerConfig {
 
 	@Bean
