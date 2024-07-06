@@ -1,4 +1,4 @@
-package com.toby.spring.study;
+package com.toby.study;
 
 import java.util.Objects;
 
