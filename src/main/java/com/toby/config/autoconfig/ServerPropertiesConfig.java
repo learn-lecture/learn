@@ -1,5 +1,6 @@
 package com.toby.config.autoconfig;
 
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
@@ -10,12 +11,7 @@ public class ServerPropertiesConfig {
 
 	@Bean
 	public ServerProperties serverProperties(final Environment environment) {
-		final ServerProperties serverProperties = new ServerProperties();
-
-		serverProperties.setPath(environment.getProperty("contextPath"));
-		serverProperties.setPort(Integer.parseInt(environment.getProperty("port")));
-
-		return serverProperties;
+		return Binder.get(environment).bind("", ServerProperties.class).get();
 	}
 
 }

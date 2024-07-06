@@ -1,19 +1,16 @@
 package com.toby.config.autoconfig;
 
-import org.springframework.beans.factory.annotation.Value;
-
-
 public class ServerProperties {
 
-	private String path;
+	private String contextPath;
 	private int port;
 
-	public String getPath() {
-		return path;
+	public String getContextPath() {
+		return contextPath;
 	}
 
-	public void setPath(final String path) {
-		this.path = path;
+	public void setContextPath(final String contextPath) {
+		this.contextPath = contextPath;
 	}
 
 	public int getPort() {
