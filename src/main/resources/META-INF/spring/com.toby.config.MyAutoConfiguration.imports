@@ -3,3 +3,4 @@ com.toby.config.autoconfig.JettyWebServerConfig
 com.toby.config.autoconfig.DispatcherServletConfig
 com.toby.config.autoconfig.PropertyPlaceholderConfig
 com.toby.config.autoconfig.PropertyPostProcessorConfig
+com.toby.config.autoconfig.DataSourceConfig
