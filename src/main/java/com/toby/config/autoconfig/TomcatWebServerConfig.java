@@ -14,17 +14,12 @@ import org.springframework.core.env.Environment;
 @ConditionalMyOnClass("org.apache.catalina.startup.Tomcat")
 public class TomcatWebServerConfig {
 
-    final String path;
-
-    public TomcatWebServerConfig(@Value("${contextPath}") final String path) {
-        this.path = path;
-    }
-
     @Bean(name = "tomcatWebServetFactory")
     @ConditionalOnMissingBean
-    public ServletWebServerFactory servletWebServerFactory() {
+    public ServletWebServerFactory servletWebServerFactory(final ServerProperties properties) {
         final TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-        tomcat.setContextPath(this.path);
+        tomcat.setContextPath(properties.getPath());
+        tomcat.setPort(properties.getPort());
         return tomcat;
     }
 
