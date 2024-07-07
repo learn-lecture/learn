@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.toby.spring.Application;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = Application.class)
-@TestPropertySource("classpath:/application.properties")
+@HelloBootTest
 public class DataSourceTest {
 
 	@Autowired DataSource dataSource;
