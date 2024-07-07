@@ -18,6 +18,11 @@ public class HelloDecorator implements HelloService{
 		return "*" + helloService.sayHello(name) + "*";
 	}
 
+	@Override
+	public int countOf(final String name) {
+		return helloService.countOf(name);
+	}
+
 	/* TODO
 		Proxy Pattern을 적용해보기
 	*/
