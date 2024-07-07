@@ -1,4 +1,4 @@
-package com.study.datastructrue.nonlinear;
+package com.study.datastructrue.nonlinear.heap;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
