@@ -2,6 +2,7 @@ package com.toby.spring;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +11,7 @@ import com.toby.config.MySpringBootApplication;
 
 import jakarta.annotation.PostConstruct;
 
-@MySpringBootApplication
+@SpringBootApplication
 public class Application {
 
 	private final JdbcTemplate jdbcTemplate;
