@@ -34,15 +34,18 @@ public class PaymentService {
 		System.out.println(exRate);
 
 		// todo 금액 계산
+		final BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
 
 		// todo 유효 시간 계산
+		final LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(30);
+
 		return Payment.builder()
 			.orderId(orderId)
 			.currency(currency)
 			.foreignCurrencyAmount(foreignCurrencyAmount)
-			.exRate(BigDecimal.ZERO)
-			.convertedAmount(BigDecimal.ZERO)
-			.validUntil(LocalDateTime.now())
+			.exRate(exRate)
+			.convertedAmount(convertedAmount)
+			.validUntil(localDateTime)
 			.build();
 	}
 
