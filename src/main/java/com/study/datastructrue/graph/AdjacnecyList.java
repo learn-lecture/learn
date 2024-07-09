@@ -45,8 +45,8 @@ public class AdjacnecyList {
 	}
 
 	public void unDirAdd(int u, int v, int w) {
-		directedGraph.get(u).add(new Edge(v, w));
-		directedGraph.get(v).add(new Edge(u, w));
+		unDirectedGraph.get(u).add(new Edge(v, w));
+		unDirectedGraph.get(v).add(new Edge(u, w));
 	}
 
 	public void unDirPrint() {
