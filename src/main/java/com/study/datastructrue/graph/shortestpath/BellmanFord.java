@@ -1,4 +1,4 @@
-package com.study.datastructrue.mst;
+package com.study.datastructrue.graph.shortestpath;
 
 import java.util.ArrayList;
 import java.util.Arrays;
