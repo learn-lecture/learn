@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class WebApiExRateProvider {
+public class WebApiExRateProvider implements ExRateProvider {
 
-	BigDecimal getWebExRate(final String currency) throws IOException  {
+	@Override
+	public BigDecimal getExRate(final String currency) throws IOException  {
 		final URL url = new URL("https://open.er-api.com/v6/latest/" + currency);
 		final HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 		final BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
