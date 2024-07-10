@@ -3,9 +3,8 @@ package tobyspring.tobyspringtwo;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class SimpleExRatePaymentService extends PaymentService {
+public class SimpleExRateProvider {
 
-	@Override
 	BigDecimal getExRate(final String currency) throws IOException {
 		if (!currency.equals("USD")) {
 			throw new IllegalArgumentException("No");

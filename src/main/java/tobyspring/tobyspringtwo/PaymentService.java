@@ -4,14 +4,20 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-abstract public class PaymentService {
+public class PaymentService {
+
+	private final WebApiExRateProvider webApiExrateProvider;
+
+	public PaymentService() {
+		this.webApiExrateProvider = new WebApiExRateProvider();
+	}
 
 	public Payment prepare(
 		final Long orderId,
 		final String currency,
 		final BigDecimal foreignCurrencyAmount
 	) throws IOException {
-		final BigDecimal exRate = getExRate(currency);
+		final BigDecimal exRate = webApiExrateProvider.getWebExRate(currency);
 		final BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
 		final LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(30);
 
@@ -24,7 +30,5 @@ abstract public class PaymentService {
 			.validUntil(localDateTime)
 			.build();
 	}
-
-	abstract BigDecimal getExRate(final String currency) throws IOException;
 
 }
