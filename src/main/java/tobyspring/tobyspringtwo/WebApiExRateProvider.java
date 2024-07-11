@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component
 public class WebApiExRateProvider implements ExRateProvider {
 
 	@Override
@@ -25,6 +24,8 @@ public class WebApiExRateProvider implements ExRateProvider {
 
 		final ObjectMapper mapper = new ObjectMapper();
 		final ExRateData data = mapper.readValue(response, ExRateData.class);
+
+		System.out.println("API ExRate: " + data.rates().get("KRW"));
 
 		return data.rates().get("KRW");
 	}
