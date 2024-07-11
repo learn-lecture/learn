@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import tobyspring.tobyspringtwo.payment.Payment;
+import tobyspring.tobyspringtwo.payment.PaymentService;
 
 public class Client {
 

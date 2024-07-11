@@ -3,6 +3,10 @@ package tobyspring.tobyspringtwo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import tobyspring.tobyspringtwo.exrate.CachedExRateProvider;
+import tobyspring.tobyspringtwo.payment.ExRateProvider;
+import tobyspring.tobyspringtwo.exrate.WebApiExRateProvider;
+import tobyspring.tobyspringtwo.payment.PaymentService;
 
 @Configuration
 @ComponentScan
