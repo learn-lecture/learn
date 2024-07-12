@@ -1,4 +1,4 @@
-package tobyspring.tobyspringtwo;
+package tobyspring.tobyspringtwo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,13 +8,19 @@ import tobyspring.tobyspringtwo.payment.ExRateProvider;
 import tobyspring.tobyspringtwo.exrate.WebApiExRateProvider;
 import tobyspring.tobyspringtwo.payment.PaymentService;
 
+import java.time.Clock;
+
 @Configuration
 @ComponentScan
-public class ObjectFactory {
+public class PaymentConfig {
 
 	@Bean
 	public PaymentService paymentService() {
-		return new PaymentService(cachedExRateProvider());
+		return new PaymentService(cachedExRateProvider(), clock());
+	}
+
+	private Clock clock() {
+		return Clock.systemDefaultZone();
 	}
 
 	@Bean
