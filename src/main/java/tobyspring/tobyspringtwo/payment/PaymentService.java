@@ -20,18 +20,10 @@ public class PaymentService {
 		final String currency,
 		final BigDecimal foreignCurrencyAmount
 	) throws IOException {
+		// todo exRateProvider 를 parameter 로 전달해서 처리하도록 해보기
+		// todo clock 또한,
 		final BigDecimal exRate = exRateProvider.getExRate(currency);
-		final BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
-		final LocalDateTime localDateTime = LocalDateTime.now(clock).plusMinutes(30);
-
-		return Payment.builder()
-			.orderId(orderId)
-			.currency(currency)
-			.foreignCurrencyAmount(foreignCurrencyAmount)
-			.exRate(exRate)
-			.convertedAmount(convertedAmount)
-			.validUntil(localDateTime)
-			.build();
+		return Payment.createPrepared(orderId, currency, foreignCurrencyAmount, exRate, LocalDateTime.now(clock));
 	}
 
 }
