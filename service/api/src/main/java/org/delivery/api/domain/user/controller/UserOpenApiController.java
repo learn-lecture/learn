@@ -2,6 +2,7 @@ package org.delivery.api.domain.user.controller;
 
 import org.delivery.api.common.api.Api;
 import org.delivery.api.common.api.Result;
+import org.delivery.api.domain.token.controller.model.TokenResponse;
 import org.delivery.api.domain.user.business.UserBusiness;
 import org.delivery.api.domain.user.controller.model.UserLoginRequest;
 import org.delivery.api.domain.user.controller.model.UserRegisterRequest;
@@ -30,8 +31,8 @@ public class UserOpenApiController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Api<UserResponse>> login(@Valid @RequestBody final UserLoginRequest request) {
-		final UserResponse response = business.login(request);
+	public ResponseEntity<Api<TokenResponse>> login(@Valid @RequestBody final UserLoginRequest request) {
+		final TokenResponse response = business.login(request);
 		return ResponseEntity.ok(Api.ok(UserDtoStatus.USER_LOGIN_SUCCESS, response));
 	}
 

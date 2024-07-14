@@ -80,8 +80,7 @@ public class JwtTokenHelper implements TokenHelpersIfs {
 				.verifyWith(secretKey)
 				.build()
 				.parseSignedClaims(token);
-			return new HashMap<String, Object>(result.getPayload());
-
+			return new HashMap<>(result.getPayload());
 		} catch (final SignatureException e) {
 			throw new BadRequestException(AuthExceptionType.UNSUPPORTED_TOKEN);
 		} catch (final ExpiredJwtException e) {
