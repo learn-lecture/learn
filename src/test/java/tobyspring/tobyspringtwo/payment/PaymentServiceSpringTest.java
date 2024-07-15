@@ -31,7 +31,7 @@ class PaymentServiceSpringTest {
 
     @Test
     @DisplayName("prepare method 가 요구사항 3가지를 충족했는지 검증")
-    void convertedAmount() throws IOException {
+    void convertedAmount() {
         Payment prepare = paymentService.prepare(1L, "USD", TEN);
 
         assertThat(prepare.getExRate()).isEqualByComparingTo(valueOf(1_000));
@@ -45,7 +45,7 @@ class PaymentServiceSpringTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1_000)), clock);
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 

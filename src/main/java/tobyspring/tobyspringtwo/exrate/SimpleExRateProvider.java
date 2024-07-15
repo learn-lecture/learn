@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class SimpleExRateProvider implements ExRateProvider {
 
 	@Override
-	public BigDecimal getExRate(final String currency) throws IOException {
+	public BigDecimal getExRate(final String currency) {
 		if (!currency.equals("USD")) {
 			throw new IllegalArgumentException("No");
 		}

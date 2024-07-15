@@ -19,7 +19,7 @@ public class PaymentService {
 		final Long orderId,
 		final String currency,
 		final BigDecimal foreignCurrencyAmount
-	) throws IOException {
+	) {
 		// todo exRateProvider 를 parameter 로 전달해서 처리하도록 해보기
 		// todo clock 또한,
 		final BigDecimal exRate = exRateProvider.getExRate(currency);

@@ -11,7 +11,7 @@ import tobyspring.tobyspringtwo.payment.PaymentService;
 
 public class Client {
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) {
 		final BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class);
 		final PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 
