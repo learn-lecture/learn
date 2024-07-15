@@ -10,15 +10,26 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Setter
 public class ApiTemplate {
 
     private ApiExecutor apiExecutor;
     private ExRateExtractor exRateExtractor;
 
+    public ApiTemplate(final ApiExecutor apiExecutor, final ExRateExtractor exRateExtractor) {
+        this.apiExecutor = apiExecutor;
+        this.exRateExtractor = exRateExtractor;
+    }
+
     public ApiTemplate() {
-        this.apiExecutor = new HttpClientApiExecutor();
-        this.exRateExtractor = new ErApiExRateExtractor();
+        this(new HttpClientApiExecutor(), new ErApiExRateExtractor());
+    }
+
+    public ApiTemplate(final ApiExecutor apiExecutor) {
+        this(apiExecutor, new ErApiExRateExtractor());
+    }
+
+    public ApiTemplate(final ExRateExtractor exRateExtractor) {
+        this(new HttpClientApiExecutor(), exRateExtractor);
     }
 
     public BigDecimal getExRate(final String url) {
