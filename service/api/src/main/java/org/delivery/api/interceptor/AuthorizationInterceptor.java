@@ -7,6 +7,7 @@ import org.delivery.api.domain.token.exception.TokenExceptionType;
 import org.delivery.api.exception.BadRequestException;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -41,7 +42,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		}
 
 		// TODO handler 검증
-		final String accessToken = request.getHeader("authorization");
+		final String accessToken = generatedAccessToken(request);
+
 		if (accessToken == null) {
 			throw new BadRequestException(TokenExceptionType.NOTFOUND_TOKEN_EXCEPTION);
 		}
@@ -51,6 +53,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		context.setAttribute("userId", userId, RequestAttributes.SCOPE_REQUEST);
 
 		return true;
+	}
+
+	private static String generatedAccessToken(final HttpServletRequest request) {
+		final String accessToken = request.getHeader("authorization");
+		if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
+			return accessToken.split(" ")[1];
+		}
+		return null;
 	}
 
 }

@@ -3,6 +3,7 @@ package org.delivery.api.domain.token.helper;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class JwtTokenHelper implements TokenHelpersIfs {
 		} catch (final SignatureException e) {
 			throw new BadRequestException(AuthExceptionType.UNSUPPORTED_TOKEN);
 		} catch (final ExpiredJwtException e) {
-			throw new BadRequestException(AuthExceptionType.MALFORMED_TOKEN);
+			throw new IllegalArgumentException(e);
 		} catch (final UnsupportedJwtException e) {
 			throw new BadRequestException(AuthExceptionType.SIGNATURE_TOKEN);
 		} catch (final MalformedJwtException e) {

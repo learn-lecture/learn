@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.delivery.api.domain.user.exception.UserExceptionType;
 import org.delivery.api.exception.model.NotFoundException;
-import org.delivery.db.user.UserEntity;
+import org.delivery.db.user.User;
 import org.delivery.db.user.UserRepository;
 import org.delivery.db.user.vo.UserStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class UserService {
 	private final UserRepository repository;
 
 	@Transactional
-	public UserEntity register(final UserEntity entity) {
+	public User register(final User entity) {
 		return Optional.ofNullable(entity)
 			.map(it -> {
 				entity.setStatus(UserStatus.REGISTERED);
@@ -29,12 +29,12 @@ public class UserService {
 			}).orElseThrow();
 	}
 
-	public UserEntity login(final String email, final String password) {
-		final UserEntity user = getUserWithThrow(email, password);
+	public User login(final String email, final String password) {
+		final User user = getUserWithThrow(email, password);
 		return user;
 	}
 
-	private UserEntity getUserWithThrow(final String email, final String password) {
+	private User getUserWithThrow(final String email, final String password) {
 		return repository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
 			email,
 			password,
@@ -42,7 +42,7 @@ public class UserService {
 		).orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
 	}
 
-	public UserEntity getUserWithThrow(final Long userId) {
+	public User getUserWithThrow(final Long userId) {
 		return repository.findFirstByIdAndStatusOrderByIdDesc(userId, UserStatus.REGISTERED)
 			.orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
 	}

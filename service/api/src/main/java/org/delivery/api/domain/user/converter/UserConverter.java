@@ -5,8 +5,7 @@ import java.util.Optional;
 import org.delivery.api.common.annotation.Converter;
 import org.delivery.api.domain.user.controller.model.UserRegisterRequest;
 import org.delivery.api.domain.user.controller.model.UserResponse;
-import org.delivery.db.user.UserEntity;
-import org.springframework.stereotype.Service;
+import org.delivery.db.user.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserConverter {
 
-	public UserEntity toEntity(final UserRegisterRequest request) {
+	public User toEntity(final UserRegisterRequest request) {
 		return Optional.ofNullable(request)
-			.map(it -> UserEntity.builder()
+			.map(it -> User.builder()
 				.name(request.name())
 				.email(request.email())
 				.address(request.address())
@@ -25,7 +24,7 @@ public class UserConverter {
 			).orElseThrow();
 	}
 
-	public UserResponse toResponse(final UserEntity entity) {
+	public UserResponse toResponse(final User entity) {
 		return Optional.ofNullable(entity)
 			.map(it -> UserResponse.from(entity))
 			.orElseThrow();

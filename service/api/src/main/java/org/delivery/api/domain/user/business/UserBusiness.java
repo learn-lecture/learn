@@ -8,7 +8,7 @@ import org.delivery.api.domain.user.controller.model.UserRegisterRequest;
 import org.delivery.api.domain.user.controller.model.UserResponse;
 import org.delivery.api.domain.user.converter.UserConverter;
 import org.delivery.api.domain.user.service.UserService;
-import org.delivery.db.user.UserEntity;
+import org.delivery.db.user.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,19 +21,18 @@ public class UserBusiness {
 	private final TokenBusiness tokenBusiness;
 
 	public UserResponse register(final UserRegisterRequest request) {
-		final UserEntity entity = userConverter.toEntity(request);
-		final UserEntity register = userService.register(entity);
+		final User entity = userConverter.toEntity(request);
+		final User register = userService.register(entity);
 		return userConverter.toResponse(register);
 	}
 
 	public TokenResponse login(final UserLoginRequest request) {
-		final UserEntity user = userService.login(request.email(), request.password());
+		final User user = userService.login(request.email(), request.password());
 		final TokenResponse tokenResponse = tokenBusiness.issueToken(user);
 		return tokenResponse;
 	}
 
-	public UserResponse me(final Long userId) {
-		final UserEntity user = userService.getUserWithThrow(userId);
+	public UserResponse me(final User user) {
 		final UserResponse response = userConverter.toResponse(user);
 		return response;
 	}

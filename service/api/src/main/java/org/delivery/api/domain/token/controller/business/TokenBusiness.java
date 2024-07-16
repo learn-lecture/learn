@@ -9,7 +9,7 @@ import org.delivery.api.domain.token.controller.model.TokenResponse;
 import org.delivery.api.domain.token.model.TokenDto;
 import org.delivery.api.domain.token.service.TokenService;
 import org.delivery.api.exception.BadRequestException;
-import org.delivery.db.user.UserEntity;
+import org.delivery.db.user.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,7 @@ public class TokenBusiness {
 		}
 	};
 
-	public TokenResponse issueToken(final UserEntity user) {
+	public TokenResponse issueToken(final User user) {
 		return Optional.ofNullable(user)
 			.map(it -> {
 				final Long userId = it.getId();

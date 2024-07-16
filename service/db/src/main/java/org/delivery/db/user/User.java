@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class UserEntity extends BaseEntity {
+public class User extends BaseEntity {
 
 	@Column(length = 50, nullable = false)
 	private String name;

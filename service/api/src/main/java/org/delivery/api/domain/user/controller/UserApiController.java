@@ -1,9 +1,11 @@
 package org.delivery.api.domain.user.controller;
 
+import org.delivery.api.common.annotation.UserSession;
 import org.delivery.api.common.api.Api;
 import org.delivery.api.domain.user.business.UserBusiness;
 import org.delivery.api.domain.user.controller.model.UserResponse;
 import org.delivery.api.domain.user.controller.model.info.UserDtoStatus;
+import org.delivery.db.user.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +23,8 @@ public class UserApiController {
 	private final UserBusiness userBusiness;
 
 	@GetMapping("/me")
-	public ResponseEntity<Api<UserResponse>> me() {
-		final RequestAttributes requestContext = RequestContextHolder.getRequestAttributes();
-		final Object attr = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
-		final Long userId = Long.parseLong(attr.toString());
-		final UserResponse response = userBusiness.me(userId);
-
+	public ResponseEntity<Api<UserResponse>> me(@UserSession final User user) {
+		final UserResponse response = userBusiness.me(user);
 		return ResponseEntity.ok(Api.ok(UserDtoStatus.USER_PROFILE_SUCCESS, response));
 	}
 

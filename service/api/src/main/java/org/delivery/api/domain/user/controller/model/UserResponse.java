@@ -2,7 +2,7 @@ package org.delivery.api.domain.user.controller.model;
 
 import java.time.LocalDateTime;
 
-import org.delivery.db.user.UserEntity;
+import org.delivery.db.user.User;
 import org.delivery.db.user.vo.UserStatus;
 
 public record UserResponse(
@@ -16,7 +16,7 @@ public record UserResponse(
 	LocalDateTime lastLoginAt
 ) {
 
-	public static UserResponse from(final UserEntity entity) {
+	public static UserResponse from(final User entity) {
 		return new UserResponse(
 			entity.getId(),
 			entity.getName(),
