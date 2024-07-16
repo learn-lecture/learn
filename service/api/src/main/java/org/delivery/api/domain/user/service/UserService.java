@@ -30,16 +30,21 @@ public class UserService {
 	}
 
 	public UserEntity login(final String email, final String password) {
-		final UserEntity user = getUser(email, password);
+		final UserEntity user = getUserWithThrow(email, password);
 		return user;
 	}
 
-	private UserEntity getUser(final String email, final String password) {
+	private UserEntity getUserWithThrow(final String email, final String password) {
 		return repository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
 			email,
 			password,
 			UserStatus.REGISTERED
 		).orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
+	}
+
+	public UserEntity getUserWithThrow(final Long userId) {
+		return repository.findFirstByIdAndStatusOrderByIdDesc(userId, UserStatus.REGISTERED)
+			.orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
 	}
 
 }

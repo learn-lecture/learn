@@ -16,19 +16,25 @@ import lombok.RequiredArgsConstructor;
 @Business
 public class UserBusiness {
 
-	private final UserService service;
-	private final UserConverter converter;
+	private final UserService userService;
+	private final UserConverter userConverter;
 	private final TokenBusiness tokenBusiness;
 
 	public UserResponse register(final UserRegisterRequest request) {
-		final UserEntity entity = converter.toEntity(request);
-		final UserEntity register = service.register(entity);
-		return converter.toResponse(register);
+		final UserEntity entity = userConverter.toEntity(request);
+		final UserEntity register = userService.register(entity);
+		return userConverter.toResponse(register);
 	}
 
 	public TokenResponse login(final UserLoginRequest request) {
-		final UserEntity user = service.login(request.email(), request.password());
+		final UserEntity user = userService.login(request.email(), request.password());
 		final TokenResponse tokenResponse = tokenBusiness.issueToken(user);
 		return tokenResponse;
+	}
+
+	public UserResponse me(final Long userId) {
+		final UserEntity user = userService.getUserWithThrow(userId);
+		final UserResponse response = userConverter.toResponse(user);
+		return response;
 	}
 }

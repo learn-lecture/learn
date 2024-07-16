@@ -1,7 +1,14 @@
 package org.delivery.api.interceptor;
 
+import java.util.Objects;
+
+import org.delivery.api.domain.token.controller.business.TokenBusiness;
+import org.delivery.api.domain.token.exception.TokenExceptionType;
+import org.delivery.api.exception.BadRequestException;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
@@ -14,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
+
+	private final TokenBusiness tokenBusiness;
 
 	@Override
 	public boolean preHandle(
@@ -31,9 +40,17 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return true;
 		}
 
-
 		// TODO handler 검증
-		return false;
+		final String accessToken = request.getHeader("authorization");
+		if (accessToken == null) {
+			throw new BadRequestException(TokenExceptionType.NOTFOUND_TOKEN_EXCEPTION);
+		}
+
+		final Long userId = tokenBusiness.validationToken(accessToken);
+		final RequestAttributes context = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
+		context.setAttribute("userId", userId, RequestAttributes.SCOPE_REQUEST);
+
+		return true;
 	}
 
 }

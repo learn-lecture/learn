@@ -44,4 +44,8 @@ public class TokenBusiness {
 			});
 	}
 
+	public Long validationToken(final String accessToken) {
+		return tokenService.validationToken(accessToken);
+	}
+
 }
