@@ -3,6 +3,7 @@ package tobyspring.tobyspringtwo;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import tobyspring.tobyspringtwo.config.DataConfig;
@@ -30,8 +31,8 @@ public class DataClient {
 
                 return null;
             });
-        } catch (ConstraintViolationException e) {
-            System.out.println("왜 ConstraintViolationException ?");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("주문 번호 복구 작업 중.");
         }
     }
 
