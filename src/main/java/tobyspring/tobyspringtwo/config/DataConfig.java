@@ -1,12 +1,15 @@
 package tobyspring.tobyspringtwo.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import tobyspring.tobyspringtwo.db.OrderRepository;
@@ -23,22 +26,32 @@ public class DataConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 
-        em.setDataSource(dataSource());
-        em.setPackagesToScan("tobyspring.tobyspringtwo");
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {{
+        emf.setDataSource(dataSource());
+        emf.setPackagesToScan("tobyspring.tobyspringtwo");
+        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {{
             setDatabase(Database.H2);
             setGenerateDdl(true);
             setShowSql(true);
         }});
 
-        return em;
+        return emf;
     }
 
     @Bean
-    public OrderRepository orderRepository(EntityManagerFactory emf) {
-        return new OrderRepository(emf);
+    public BeanPostProcessor persistenceAnnotationBeanPostProcessor() {
+        return new PersistenceAnnotationBeanPostProcessor();
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
+
+    @Bean
+    public OrderRepository orderRepository() {
+        return new OrderRepository();
     }
 
 }
