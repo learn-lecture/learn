@@ -7,18 +7,13 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "orders")
 @Getter
 @ToString
 @NoArgsConstructor
 public class Order {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
     private String no;
 
     private BigDecimal total;
@@ -27,4 +22,5 @@ public class Order {
         this.no = no;
         this.total = total;
     }
+
 }
