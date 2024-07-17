@@ -2,12 +2,7 @@ package tobyspring.tobyspringtwo;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
-import tobyspring.tobyspringtwo.config.DataConfig;
 import tobyspring.tobyspringtwo.config.OrderConfig;
-import tobyspring.tobyspringtwo.db.OrderRepository;
 import tobyspring.tobyspringtwo.order.Order;
 import tobyspring.tobyspringtwo.order.OrderService;
 
