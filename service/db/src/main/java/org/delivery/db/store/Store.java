@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -34,6 +35,7 @@ public class Store extends BaseEntity {
 
 	@Column(length = 50, nullable = false)
 	@Enumerated(EnumType.STRING)
+	@Setter
 	private StoreStatus status;
 
 	@Column(length = 50, nullable = false)
@@ -41,6 +43,7 @@ public class Store extends BaseEntity {
 	private StoreCategory category;
 
 	@ColumnDefault("0")
+	@Setter
 	private double star;
 
 	@Column(length = 200, nullable = false)
