@@ -19,7 +19,7 @@ public class OrderServiceSpringTest {
 
     @Test
     void createOrder() {
-        var order = orderService.createOrder("0100", BigDecimal.TEN);
+        Order order = orderService.createOrder("0100", BigDecimal.TEN);
 
         Assertions.assertThat(order.getId()).isGreaterThan(0);
     }

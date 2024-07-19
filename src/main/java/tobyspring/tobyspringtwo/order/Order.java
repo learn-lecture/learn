@@ -3,6 +3,7 @@ package tobyspring.tobyspringtwo.order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Order {
 
+    @Setter
     private Long id;
 
     private String no;
