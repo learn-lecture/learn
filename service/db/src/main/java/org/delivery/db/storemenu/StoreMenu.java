@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -26,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 public class StoreMenu extends BaseEntity {
 
 	@Column(nullable = false)
-	private Long storedId;
+	private Long storeId;
 
 	@Column(length = 100, nullable = false)
 	private String name;
@@ -36,6 +37,7 @@ public class StoreMenu extends BaseEntity {
 
 	@Column(length = 50, nullable = false)
 	@Enumerated(EnumType.STRING)
+	@Setter
 	private StoreMenuStatus status;
 
 	@Column(length = 200, nullable = false)
