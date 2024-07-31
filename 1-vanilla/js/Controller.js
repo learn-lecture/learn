@@ -22,7 +22,8 @@ export default class Controller {
   }
 
   reset() {
-    console.log("reset");
+    this.store.reset();
+    this.render();
   }
 
   render() {
@@ -30,6 +31,7 @@ export default class Controller {
       this.searchResultView.show(this.store.searchResult);
       return;
     }
+    
     this.searchResultView.hide();
   }
 
