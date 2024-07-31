@@ -5,5 +5,14 @@ export default class Store {
     if (!storage) throw "no storage";
 
     this.storage = storage;
+    this.searchResult = [];
+    this.searchKeyword = "";
+  }
+
+  search(keyword) {
+    this.searchKeyword = keyword;
+    this.searchResult = this.storage.productData.filter((product) => 
+      product.name.includes(keyword)
+    );
   }
 }
