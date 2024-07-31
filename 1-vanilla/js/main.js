@@ -1,14 +1,16 @@
 import Controller from "./Controller.js";
 import Store from "./Store.js";
 import storage from "./storage.js";
+import SearchFormView from "./views/SearchFormVeiw.js";
 
 document.addEventListener("DOMContentLoaded", main);
 
 function main() {
   const store = new Store(storage);
 
+  console.log("/test");
   const views = {
-    // TODO
+    searchFormView: new SearchFormView()
   };
 
   new Controller(store, views);
