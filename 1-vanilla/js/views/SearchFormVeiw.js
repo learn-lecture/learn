@@ -9,19 +9,27 @@ export default class SearchFormView extends View {
         this.resetElement = qs("[type=reset]", this.element);
 
         this.showResetButton(false);
-        this.bindEvent()
+        this.bindEvents()
     }
 
     showResetButton(visible = true) {
         this.resetElement.style.display = visible ? "block" : "none";
     }
 
-    bindEvent() {
+    bindEvents() {
         on(this.inputElement, "keyup", () => this.handleKeyup());
+        on(this.element, "submit", event => this.handleSubmit(event));
     }
 
     handleKeyup() {
         const {value} = this.inputElement;
         this.showResetButton(value.length > 0);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        const {value} = this.inputElement;
+        this.emit("@submit", {value});
     }
 }

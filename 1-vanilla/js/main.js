@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", main);
 function main() {
   const store = new Store(storage);
 
-  console.log("/test");
   const views = {
     searchFormView: new SearchFormView()
   };
