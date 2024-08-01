@@ -1,3 +1,5 @@
+import { TabType } from "./views/TabView.js";
+
 const tag = "[Controller]";
 
 export default class Controller {
@@ -20,11 +22,14 @@ export default class Controller {
 
     this.tabView
     .on('@tabchange', (event) => {this.select(event.detail.tab);});
+
+    this.keywordListView
+    .on("@click", (event) => this.search(event.detail.value));
   }
 
   select(tab) {
     this.store.select(tab);
-    this.tabView.show(this.store.selectedTab);
+    this.renderTab();
   }
 
   search(keyword) {
@@ -42,14 +47,25 @@ export default class Controller {
       return this.renderSearchResult();
     }
 
-    this.tabView.show(this.store.selectedTab);
-    this.keywordListView.show(this.store.getKeywordList());
+    this.renderTab();
     this.searchResultView.hide();
   }
 
   renderSearchResult() {
     this.tabView.hide();
+    this.keywordListView.hide();
     this.searchResultView.show(this.store.searchResult);
+  }
+
+  renderTab() {
+    this.tabView.show(this.store.selectedTab);
+    if (this.store.selectedTab === TabType.KEYWORD) {
+      this.keywordListView.show(this.store.getKeywordList());
+    } else if (this.store.selectedTab === TabType.HISTORY) {
+      this.keywordListView.hide();
+    } else {
+      throw "사용할 수 없는 탭입니다.";
+    }
   }
 
 }
