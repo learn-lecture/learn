@@ -1,4 +1,4 @@
-import { qs, qsAll } from "../helpers.js";
+import { delegate, on, qs, qsAll } from "../helpers.js";
 import View from "./View.js";
 
 export const TabType = {
@@ -12,9 +12,13 @@ const TabLabel = {
 }
 
 export default class TabView extends View {
+
     constructor() {
         super(qs('#tab-view'));
+     
         this.template = new Template();
+
+        this.bindEvents();
     }
 
     show(selectedTab) {
@@ -26,6 +30,16 @@ export default class TabView extends View {
         
         super.show();
     }
+
+    bindEvents() {
+        delegate(this.element, "click", "li", (event) => this.handleClick(event));
+    }
+
+    handleClick(event) {
+        const tab = event.target.dataset.tab;
+        this.emit("@tabchange", { tab });
+    }
+
 }
 
 class Template {

@@ -23,4 +23,8 @@ export default class Store {
     this.searchKeyword = "";
   }
 
+  select(tab) {
+    this.selectedTab = tab;
+  }
+
 }
