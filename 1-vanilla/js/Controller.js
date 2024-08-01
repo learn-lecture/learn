@@ -3,6 +3,7 @@ import { TabType } from "./views/TabView.js";
 const tag = "[Controller]";
 
 export default class Controller {
+
   constructor(store, {searchFormView, searchResultView, tabView, keywordListView}) {
     this.store = store;
     
@@ -24,7 +25,8 @@ export default class Controller {
     .on('@tabchange', (event) => {this.select(event.detail.tab);});
 
     this.keywordListView
-    .on("@click", (event) => this.search(event.detail.value));
+    .on("@click", (event) => {this.search(event.detail.value)});
+
   }
 
   select(tab) {
@@ -52,6 +54,7 @@ export default class Controller {
   }
 
   renderSearchResult() {
+    this.searchFormView.show(this.store.searchKeyword);
     this.tabView.hide();
     this.keywordListView.hide();
     this.searchResultView.show(this.store.searchResult);
@@ -59,6 +62,7 @@ export default class Controller {
 
   renderTab() {
     this.tabView.show(this.store.selectedTab);
+
     if (this.store.selectedTab === TabType.KEYWORD) {
       this.keywordListView.show(this.store.getKeywordList());
     } else if (this.store.selectedTab === TabType.HISTORY) {

@@ -2,17 +2,18 @@ import { on, qs } from "../helpers.js";
 import View from "./View.js";
 
 export default class SearchFormView extends View {
+
     constructor() {
         super(qs("#search-form-view"));
         
         this.inputElement = qs("[type=text]", this.element);
         this.resetElement = qs("[type=reset]", this.element);
 
-        this.showResetButton(false);
+        this.showResetButton();
         this.bindEvents()
     }
 
-    showResetButton(visible = true) {
+    showResetButton(visible = false) {
         this.resetElement.style.display = visible ? "block" : "none";
     }
 
@@ -40,4 +41,12 @@ export default class SearchFormView extends View {
         this.emit("@reset");
         this.showResetButton(false);
     }
+
+    show(keyword = "") {
+        this.inputElement.value = keyword;
+        this.showResetButton(true);
+
+        super.show();
+    }
+
 }
