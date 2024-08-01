@@ -1,12 +1,13 @@
 const tag = "[Controller]";
 
 export default class Controller {
-  constructor(store, {searchFormView, searchResultView, tabView}) {
+  constructor(store, {searchFormView, searchResultView, tabView, keywordListView}) {
     this.store = store;
     
     this.searchFormView = searchFormView;
     this.searchResultView = searchResultView;
     this.tabView = tabView;
+    this.keywordListView = keywordListView;
 
     this.subscribeViewEvents();
     this.render();
@@ -42,6 +43,7 @@ export default class Controller {
     }
 
     this.tabView.show(this.store.selectedTab);
+    this.keywordListView.show(this.store.getKeywordList());
     this.searchResultView.hide();
   }
 

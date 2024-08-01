@@ -27,4 +27,8 @@ export default class Store {
     this.selectedTab = tab;
   }
 
+  getKeywordList() {
+    return this.storage.keywordData;
+  }
+
 }
