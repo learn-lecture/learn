@@ -4,13 +4,14 @@ const tag = "[Controller]";
 
 export default class Controller {
 
-  constructor(store, {searchFormView, searchResultView, tabView, keywordListView}) {
+  constructor(store, {searchFormView, searchResultView, tabView, keywordListView, historyListView}) {
     this.store = store;
     
     this.searchFormView = searchFormView;
     this.searchResultView = searchResultView;
     this.tabView = tabView;
     this.keywordListView = keywordListView;
+    this.historyListView = historyListView;
 
     this.subscribeViewEvents();
     this.render();
@@ -25,6 +26,9 @@ export default class Controller {
     .on('@tabchange', (event) => {this.select(event.detail.tab);});
 
     this.keywordListView
+    .on("@click", (event) => {this.search(event.detail.value)});
+
+    this.historyListView
     .on("@click", (event) => {this.search(event.detail.value)});
 
   }
@@ -57,6 +61,7 @@ export default class Controller {
     this.searchFormView.show(this.store.searchKeyword);
     this.tabView.hide();
     this.keywordListView.hide();
+    this.historyListView.hide();
     this.searchResultView.show(this.store.searchResult);
   }
 
@@ -64,9 +69,11 @@ export default class Controller {
     this.tabView.show(this.store.selectedTab);
 
     if (this.store.selectedTab === TabType.KEYWORD) {
+      this.historyListView.hide();
       this.keywordListView.show(this.store.getKeywordList());
     } else if (this.store.selectedTab === TabType.HISTORY) {
       this.keywordListView.hide();
+      this.historyListView.show(this.store.getHistoryList());
     } else {
       throw "사용할 수 없는 탭입니다.";
     }
