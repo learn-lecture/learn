@@ -1,3 +1,4 @@
+import { createNextId, createPastDate } from "./helpers.js";
 import { TabType } from "./views/TabView.js";
 
 const tag = "[store]";
@@ -17,6 +18,17 @@ export default class Store {
     this.searchResult = this.storage.productData.filter((product) => 
       product.name.includes(keyword)
     );
+    this.addHistory(keyword);
+  }
+
+  addHistory(keyword) {
+    const alreadySearch = this.storage.historyData.some((history) => history.keyword === keyword);
+    if (alreadySearch) {
+      this.removeHistory(keyword);
+    }
+    const id = createNextId(this.storage.historyData);
+    const date = new Date();
+    this.storage.historyData.push({id, keyword, date});
   }
 
   reset() {
