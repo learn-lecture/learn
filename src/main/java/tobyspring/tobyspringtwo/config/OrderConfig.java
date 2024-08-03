@@ -1,15 +1,14 @@
 package tobyspring.tobyspringtwo.config;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import tobyspring.tobyspringtwo.db.JdbcOrderRepository;
-import tobyspring.tobyspringtwo.db.JpaOrderRepository;
 import tobyspring.tobyspringtwo.order.OrderRepository;
+import tobyspring.tobyspringtwo.order.OrderSErviceTxProxy;
 import tobyspring.tobyspringtwo.order.OrderService;
+import tobyspring.tobyspringtwo.order.OrderServiceImpl;
 
 import javax.sql.DataSource;
 
@@ -28,7 +27,10 @@ public class OrderConfig {
             final PlatformTransactionManager transactionManager,
             final OrderRepository orderRepository
     ) {
-        return new OrderService(orderRepository, transactionManager);
+        return new OrderSErviceTxProxy(
+            new OrderServiceImpl(orderRepository),
+            transactionManager
+        );
     }
 
 
