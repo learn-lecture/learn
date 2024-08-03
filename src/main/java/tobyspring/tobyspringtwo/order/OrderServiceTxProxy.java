@@ -9,7 +9,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class OrderSErviceTxProxy implements OrderService {
+public class OrderServiceTxProxy implements OrderService {
 
 	private final OrderService target;
 	private final PlatformTransactionManager transactionManager;
