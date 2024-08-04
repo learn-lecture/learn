@@ -11,12 +11,17 @@ class App extends React.Component {
     handleChangeInput(event) {
         // this.state.searchKeyword = event.target.value;
         // this.forceUpdate();
-        this.setState({
-            searchKeyword: event.target.value,
-        });
+        const searchKeyword = event.target.value;
+        this.setState({ searchKeyword });
     }
 
     render() {
+        // let resetButton =null;
+
+        // if (this.state.searchKeyword.length > 0) {
+        //     resetButton = <button type="reset" className="btn-reset"></button>;
+        // }
+
         return (
             <>
                 <header>
@@ -31,7 +36,9 @@ class App extends React.Component {
                             onChange={event => this.handleChangeInput(event)}
                             autoFocus
                         />
-                        <button type="reset" className="btn-reset"></button>
+                        {this.state.searchKeyword.length > 0 && (
+                            <button type="reset" className="btn-reset"></button>
+                        )}
                     </form>
                 </div>
             </>
