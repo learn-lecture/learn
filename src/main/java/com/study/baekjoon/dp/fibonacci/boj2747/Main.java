@@ -1,4 +1,4 @@
-package com.study.baekjoon.dp.boj2747;
+package com.study.baekjoon.dp.fibonacci.boj2747;
 
 import java.io.*;
 
