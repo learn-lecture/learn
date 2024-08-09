@@ -24,15 +24,9 @@ public class Main {
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int seq = Integer.parseInt(st.nextToken());
-            int prev = 0;
-            for (int k = 0; k < seq; k++) {
+            int prev = Integer.parseInt(st.nextToken());
+            for (int k = 1; k < seq; k++) {
                 int now = Integer.parseInt(st.nextToken());
-                for (int check: graph[now]) {
-                    if (check == prev) {
-                        System.out.println(0);
-                        return ;
-                    }
-                }
                 graph[prev].add(now);
                 dist[now]++;
                 prev = now;
@@ -40,27 +34,28 @@ public class Main {
         }
 
         Queue<Integer> q = new LinkedList<>();
-        for (int x: graph[0]) {
-            if (--dist[x] == 0) {
-                q.add(x);
+        for (int i = 1; i <= n; i++) {
+            if (dist[i] == 0) {
+                q.add(i);
             }
         }
 
-        boolean[] visited = new boolean[n + 1];
+        List<Integer> ans = new ArrayList<>();
         while (!q.isEmpty()) {
             int now = q.poll();
-            visited[now] = true;
-            sb.append(now).append('\n');
+            ans.add(now);
             for (int next: graph[now]) {
                 if (--dist[next] > 0) continue;
                 q.add(next);
             }
         }
 
-        for (int i = 1; i <= n; i++) {
-            if (!visited[i]) {
-                sb.append(i).append('\n');
+        if (ans.size() == n) {
+            for (int x : ans) {
+                sb.append(x).append('\n');
             }
+        } else {
+            sb.append(0);
         }
 
         bw.write(sb.toString());
