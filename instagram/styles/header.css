@@ -77,3 +77,25 @@
     width: 24px;
     border-radius: 50%;
 }
+
+.header__theme_button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.header__theme-button-sun {
+    display: none;
+}
+
+.header__theme-button-moon {
+    display: unset;
+}
+
+:root.darkTheme .header__theme-button-sun {
+    display: unset;
+}
+
+:root.darkTheme .header__theme-button-moon {
+    display: none;
+}
