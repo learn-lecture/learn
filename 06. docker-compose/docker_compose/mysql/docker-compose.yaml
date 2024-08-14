@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: mysql:8.0.26
+    image: mysql:8.0
     restart: always
     command:
       - --lower_case_table_names=1
@@ -15,4 +15,4 @@ services:
       - MYSQL_ROOT_PASSWORD=1535
       - TZ=Asia/Seoul
     volumes:
-      - C:\jihwan\ETC\MYSQL:/var/lib/mysql
+      - ~/workspace/docker:/var/lib/mysql
