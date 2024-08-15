@@ -54,4 +54,9 @@ public class UserOrderService {
         return setStatus(userOrder, UserOrderStatus.COOKING);
     }
 
+    public UserOrder delivery(final UserOrder userOrder) {
+        userOrder.setDeliveryStartedAt(LocalDateTime.now());
+        return setStatus(userOrder, UserOrderStatus.DELIVERY);
+    }
+
 }
