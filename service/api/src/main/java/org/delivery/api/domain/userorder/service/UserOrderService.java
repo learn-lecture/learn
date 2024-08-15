@@ -44,4 +44,9 @@ public class UserOrderService {
         return userOrderRepository.save(userOrder);
     }
 
+    public UserOrder accept(final UserOrder userOrder) {
+        userOrder.setAcceptedAt(LocalDateTime.now());
+        return setStatus(userOrder, UserOrderStatus.ACCEPT);
+    }
+
 }
