@@ -76,4 +76,8 @@ public class UserOrderService {
         );
     }
 
+    public List<UserOrder> history(final Long userId) {
+        return getUserOrders(userId, List.of(UserOrderStatus.RECEIVE));
+    }
+
 }
