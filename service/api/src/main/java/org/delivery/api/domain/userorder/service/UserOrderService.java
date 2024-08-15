@@ -64,4 +64,16 @@ public class UserOrderService {
         return setStatus(userOrder, UserOrderStatus.RECEIVE);
     }
 
+    public List<UserOrder> current(final Long userId) {
+        return getUserOrders(
+                userId,
+                List.of(
+                        UserOrderStatus.ORDER,
+                        UserOrderStatus.COOKING,
+                        UserOrderStatus.DELIVERY,
+                        UserOrderStatus.RECEIVE
+                )
+        );
+    }
+
 }
