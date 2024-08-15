@@ -41,6 +41,7 @@ public class UserOrder extends BaseEntity {
     @Setter
     private LocalDateTime acceptedAt;
 
+    @Setter
     private LocalDateTime cookingStartedAt;
 
     private LocalDateTime deliveryStartedAt;
