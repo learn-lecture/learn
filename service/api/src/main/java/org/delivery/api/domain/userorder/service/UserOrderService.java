@@ -39,4 +39,9 @@ public class UserOrderService {
                 }).orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
     }
 
+    public UserOrder setStatus(final UserOrder userOrder, final UserOrderStatus status) {
+        userOrder.setStatus(status);
+        return userOrderRepository.save(userOrder);
+    }
+
 }
