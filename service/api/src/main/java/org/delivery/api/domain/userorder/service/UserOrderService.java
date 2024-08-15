@@ -59,4 +59,9 @@ public class UserOrderService {
         return setStatus(userOrder, UserOrderStatus.DELIVERY);
     }
 
+    public UserOrder receive(final UserOrder userOrder) {
+        userOrder.setReceivedAt(LocalDateTime.now());
+        return setStatus(userOrder, UserOrderStatus.RECEIVE);
+    }
+
 }
