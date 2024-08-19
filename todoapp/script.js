@@ -46,6 +46,29 @@ function createTodoElement(data) {
     remove.classList.add('material-icons', 'remove-btn');
     remove.innerText = 'remove_cycles';
 
+    input.addEventListener('input', () => {
+        data.text = input.value;
+    })
+
+    input.addEventListener('blur', () => {
+        input.setAttribute('disabled', '');
+    })
+
+    edit.addEventListener('click', () => {
+        input.removeAttribute('disabled');
+        input.focus();
+    })
+
+    remove.addEventListener('click', () => {
+        todos = todos.filter(t => t.id !== data.id);
+        item.remove();
+    })
+
+    checkBox.addEventListener('change', e => {
+        data.complete = checkBox.checked;
+        data.complete ? item.classList.add('complete') : item.classList.remove('complete');
+    })
+
     action.append(edit);
     action.append(remove);
 
