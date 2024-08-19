@@ -17,6 +17,7 @@ function createNewTodo() {
     list.prepend(item);
     input.removeAttribute('disabled');
     input.focus();
+    saveLocalStorage();
 }
 
 function createTodoElement(data) {
@@ -25,9 +26,10 @@ function createTodoElement(data) {
 
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
+    checkBox.checked = data.complete;
 
-    if (item.complete) {
-        item.className.add('complete');
+    if (data.complete) {
+        item.classList.add('complete');
     }
 
     const input = document.createElement('input');
@@ -48,6 +50,7 @@ function createTodoElement(data) {
 
     input.addEventListener('input', () => {
         data.text = input.value;
+        saveLocalStorage();
     })
 
     input.addEventListener('blur', () => {
@@ -55,6 +58,7 @@ function createTodoElement(data) {
     })
 
     edit.addEventListener('click', () => {
+        if (data.complete) { return; }
         input.removeAttribute('disabled');
         input.focus();
     })
@@ -62,11 +66,13 @@ function createTodoElement(data) {
     remove.addEventListener('click', () => {
         todos = todos.filter(t => t.id !== data.id);
         item.remove();
+        saveLocalStorage();
     })
 
     checkBox.addEventListener('change', e => {
         data.complete = checkBox.checked;
         data.complete ? item.classList.add('complete') : item.classList.remove('complete');
+        saveLocalStorage();
     })
 
     action.append(edit);
@@ -78,3 +84,26 @@ function createTodoElement(data) {
 
     return { item, input, edit, remove };
 }
+
+function saveLocalStorage() {
+    const data = JSON.stringify(todos);
+    localStorage.setItem('todos', data);
+}
+
+function loadFromLocalStorage() {
+    const data = localStorage.getItem('todos');
+    if (data) {
+        todos = JSON.parse(data);
+    }
+}
+
+function disPlayTodos() {
+    loadFromLocalStorage();
+    for (let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        const {item} = createTodoElement(todo);
+        list.append(item);
+    }
+}
+
+disPlayTodos();
