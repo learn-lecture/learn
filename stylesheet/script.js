@@ -26,13 +26,21 @@ class Cell {
 exportBtn.onclick = function (e) {
     let csv = "";
     for (let i = 0; i < spreadsheet.length; i++) {
+        if (i === 0) continue;
         csv +=
             spreadsheet[i]
                 .filter(item => !item.isHeader)
                 .map(item => item.data)
                 .join(',') + "\r\n";
     }
-    console.log(csv);
+
+    const csvObj = new Blob([csv]);
+    const csvUrl = URL.createObjectURL(csvObj);
+
+    const a = document.createElement("a");
+    a.href = csvUrl;
+    a.download = 'spreadsheet name.csv';
+    a.click();
 }
 
 function initSpreadsheet() {
@@ -94,6 +102,7 @@ function handleCellClick(cell) {
     const rowHeaderEl = document.querySelector("#cell_" + rowHeader.row + rowHeader.column);
     columnHeaderEl.classList.add('active');
     rowHeaderEl.classList.add('active');
+    document.querySelector("#cell-status").innerHTML = cell.columnName + cell.rowName;
 }
 
 function clearHeaderActiveStates() {
