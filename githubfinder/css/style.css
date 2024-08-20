@@ -8,7 +8,7 @@
 .profile-btn {
     color: white;
 }
-.gists, .watchers{
+.gists, .watchers {
     background-color: #ACB5BD;
 }
 .followers, .forks {
@@ -24,18 +24,23 @@ h2, h1 {
     font-weight: bold;
     color: #343A40;
 }
-
-.badge-container {
+.repo-info {
+    display: flex;
+    flex-direction: column;
+}
+.repo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.repo-stats {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
 }
-.badge-container .badge {
-    flex: 1 1 auto;
-    margin: 0.25rem;
-    text-align: center;
+.repo-stats .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
 }
-
 .repo-stats-mobile {
     display: none;
 }
@@ -47,18 +52,13 @@ h2, h1 {
     .repo-name {
         font-size: 20px;
     }
-    .badge-container {
-        justify-content: center;
-    }
-    .badge-container .badge {
-        flex-basis: calc(50% - 0.5rem);
-    }
     .repo-stats-mobile {
         display: flex;
-        justify-content: flex-start;
+        flex-wrap: wrap;
         margin-top: 0.5rem;
     }
     .repo-stats-mobile .badge {
         margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 }

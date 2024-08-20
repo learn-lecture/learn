@@ -9,71 +9,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <title>GitHub Finder</title>
-    <style>
-        .list-group-item, .form-control {
-            color: #585D62;
-        }
-        .navbar, .repo, .profile-btn, .stars {
-            background-color: #4285F4;
-        }
-        .profile-btn {
-            color: white;
-        }
-        .gists, .watchers {
-            background-color: #ACB5BD;
-        }
-        .followers, .forks {
-            background-color: #01B974;
-        }
-        .following {
-            background-color: #1AA1B8;
-        }
-        .lead {
-            color: #979CA4;
-        }
-        h2, h1 {
-            font-weight: bold;
-            color: #343A40;
-        }
-        .repo-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .repo-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .repo-stats {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .repo-stats .badge {
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .repo-stats-mobile {
-            display: none;
-        }
-
-        @media (max-width: 767px) {
-            .repo-stats {
-                display: none;
-            }
-            .repo-name {
-                font-size: 20px;
-            }
-            .repo-stats-mobile {
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: 0.5rem;
-            }
-            .repo-stats-mobile .badge {
-                margin-right: 0.5rem;
-                margin-bottom: 0.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body>
 <header>
@@ -84,7 +20,7 @@
     </nav>
 </header>
 <main class="container mt-4">
-    <section class="search-section">
+    <section id="search-section" class="search-section">
         <div class="card card-body">
             <h1>Search GitHub Users</h1>
             <p class="lead">Enter a username to fetch a user profile and repos</p>
@@ -145,5 +81,6 @@
 <footer class="text-center mt-5 p-3 bg-light">
     <p>&copy; 2024 GitHub Finder</p>
 </footer>
+<script src="./js/main.js" type="module"></script>
 </body>
 </html>
