@@ -23,6 +23,18 @@ class Cell {
 
 }
 
+exportBtn.onclick = function (e) {
+    let csv = "";
+    for (let i = 0; i < spreadsheet.length; i++) {
+        csv +=
+            spreadsheet[i]
+                .filter(item => !item.isHeader)
+                .map(item => item.data)
+                .join(',') + "\r\n";
+    }
+    console.log(csv);
+}
+
 function initSpreadsheet() {
     for (let i = 0; i < ROWS; i++) {
         let spreadsheetRow = [];
@@ -65,8 +77,13 @@ function createCellEl(cell) {
     }
 
     cellEl.onclick = () => handleCellClick(cell);
+    cellEl.onchange = (e) => handleOnChange(e.target.value, cell);
 
     return cellEl;
+}
+
+function handleOnChange(data, cell) {
+    cell.data = data;
 }
 
 function handleCellClick(cell) {
