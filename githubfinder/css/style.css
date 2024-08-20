@@ -1,0 +1,64 @@
+
+.list-group-item, .form-control {
+    color: #585D62;
+}
+.navbar, .repo, .profile-btn, .stars {
+    background-color: #4285F4;
+}
+.profile-btn {
+    color: white;
+}
+.gists, .watchers{
+    background-color: #ACB5BD;
+}
+.followers, .forks {
+    background-color: #01B974;
+}
+.following {
+    background-color: #1AA1B8;
+}
+.lead {
+    color: #979CA4;
+}
+h2, h1 {
+    font-weight: bold;
+    color: #343A40;
+}
+
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.badge-container .badge {
+    flex: 1 1 auto;
+    margin: 0.25rem;
+    text-align: center;
+}
+
+.repo-stats-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .repo-stats {
+        display: none;
+    }
+    .repo-name {
+        font-size: 20px;
+    }
+    .badge-container {
+        justify-content: center;
+    }
+    .badge-container .badge {
+        flex-basis: calc(50% - 0.5rem);
+    }
+    .repo-stats-mobile {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 0.5rem;
+    }
+    .repo-stats-mobile .badge {
+        margin-right: 0.5rem;
+    }
+}
