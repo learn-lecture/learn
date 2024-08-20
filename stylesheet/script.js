@@ -10,12 +10,14 @@ const spreadsheet = [];
 
 class Cell {
 
-    constructor(isHeader, disabled, data, row, column, active = false) {
+    constructor(isHeader, disabled, data, row, column, rowName, columnName, active = false) {
         this.isHeader = isHeader;
         this.disabled = disabled;
         this.data = data;
         this.row = row;
         this.column = column;
+        this.rowName = rowName;
+        this.columnName = columnName;
         this.active = active;
     }
 
@@ -42,7 +44,7 @@ function initSpreadsheet() {
             const rowName = i;
             const columnName = alphabets[j - 1];
 
-            const cell = new Cell(isHeader, disabled, cellData, i, j, false);
+            const cell = new Cell(isHeader, disabled, cellData, i, j, rowName, columnName, false);
             spreadsheetRow.push(cell);
         }
         spreadsheet.push(spreadsheetRow);
@@ -58,8 +60,33 @@ function createCellEl(cell) {
     cellEl.value = cell.data;
     cellEl.disabled = cell.disabled;
 
+    if (cell.isHeader) {
+        cellEl.classList.add("header");
+    }
+
+    cellEl.onclick = () => handleCellClick(cell);
+
     return cellEl;
 }
+
+function handleCellClick(cell) {
+    clearHeaderActiveStates();
+    const columnHeader = spreadsheet[0][cell.column];
+    const rowHeader = spreadsheet[cell.row][0];
+    const columnHeaderEl = document.querySelector("#cell_" + columnHeader.row + columnHeader.column);
+    const rowHeaderEl = document.querySelector("#cell_" + rowHeader.row + rowHeader.column);
+    columnHeaderEl.classList.add('active');
+    rowHeaderEl.classList.add('active');
+}
+
+function clearHeaderActiveStates() {
+    const headers = document.querySelectorAll('.header');
+
+    headers.forEach((header) => {
+        header.classList.remove('active');
+    })
+}
+
 
 function drawSheet() {
     for (let i = 0; i < spreadsheet.length; i++) {
