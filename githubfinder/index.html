@@ -10,12 +10,25 @@
           crossorigin="anonymous">
     <title>GitHub Finder</title>
     <style>
-        .navbar {
+        .navbar, .repo, .profile-btn {
             background-color: #4285F4;
+        }
+        .profile-btn {
+            color: white;
+        }
+        .gists {
+            background-color: #ACB5BD;
+        }
+        .followers {
+            background-color: #01B974;
+        }
+        .following {
+            background-color: #1AA1B8;
         }
         .lead {
             color: #979CA4;
         }
+
     </style>
 </head>
 <body>
@@ -35,6 +48,29 @@
         </div>
     </section>
     <section id="profile" class="mt-4">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <img class="img-fluid mb-3" src="https://via.placeholder.com/400x300" alt="">
+                    <a href="#" class ="btn mb-4 d-block profile-btn" target="_blank" rel="noopener noreferrer">View Profile</a>
+                </div>
+                <div class="col-md-9 ">
+                    <span class="badge p-2 repo">Public Repos: 0</span>
+                    <span class="badge p-2 gists">Public Gists: 0</span>
+                    <span class="badge p-2 followers">Followers: 0</span>
+                    <span class="badge p-2 following">Following: 0</span>
+                    <br><br>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">Name: 0</li>
+                        <li class="list-group-item">Company: 0</li>
+                        <li class="list-group-item">WebSite/Blog: 0</li>
+                        <li class="list-group-item">Location: 0</li>
+                        <li class="list-group-item">Member Since: 0</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 <footer class="text-center mt-5 p-3 bg-light">
