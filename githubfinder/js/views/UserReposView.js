@@ -10,10 +10,11 @@ export default class UserReposView extends View {
     }
 
     show(data = []) {
-        if (data === []) {
-            this.element.innerHTML = "보유중인 레파지토리가 없습니다.";
-        } else {
+        console.log(data);
+        if (data.length > 0) {
             this.element.innerHTML = this.template.getUserRepos(data);
+        } else {
+            this.element.innerHTML = "보유중인 레파지토리가 없습니다.";
         }
         super.show();
     }

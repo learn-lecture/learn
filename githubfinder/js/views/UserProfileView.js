@@ -9,6 +9,7 @@ export default class UserProfileView extends View {
         this.template = new Template();
     }
 
+
     show(data = null) {
         data === null ?
             this.element.innerHTML = this. template.getEmptyMessage() :

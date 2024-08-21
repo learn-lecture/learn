@@ -1,3 +1,5 @@
+import {qs} from "../global/helpers.js";
+
 export default class Controller {
 
   constructor(github, { searchUserView, userProfileView, userReposView }) {
@@ -5,6 +7,7 @@ export default class Controller {
     this.searchUserView = searchUserView;
     this.userProfileView = userProfileView;
     this.userReposView = userReposView;
+    this.spinner = qs('.spinner');
 
     this.subscribeViewEvents();
   }
@@ -15,15 +18,24 @@ export default class Controller {
   }
 
   async search({ nickname }) {
+    this.loading();
     const hasUser = await this.github.getUser(nickname);
+
     if (hasUser) {
       this.userProfileView.show(this.github.profile);
       this.userReposView.show(this.github.repos);
-      return ;
+    } else {
+      this.userProfileView.show();
     }
 
-    this.userProfileView.show();
+    this.spinner.style.display = "none";
+  }
+
+  loading() {
+    this.userProfileView.hide();
     this.userReposView.hide();
+
+    this.spinner.style.display = "block";
   }
 
 }
