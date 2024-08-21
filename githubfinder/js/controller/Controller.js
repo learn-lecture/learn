@@ -1,7 +1,7 @@
 export default class Controller {
 
-  constructor(user, { searchUserView }) {
-    this.user = user;
+  constructor(github, { searchUserView }) {
+    this.github = github;
     this.searchUserView = searchUserView;
 
     this.subscribeViewEvents();
@@ -12,8 +12,13 @@ export default class Controller {
         .on('search', (event) => this.search(event.detail));
   }
 
-  search({ nickname }) {
-    console.log(nickname);
+  async search({ nickname }) {
+    const response = await this.github.getUser(nickname);
+    if (response) {
+      console.log(this.github);
+    } else {
+      console.log("nono");
+    }
   }
 
 }

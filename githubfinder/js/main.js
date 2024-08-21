@@ -1,15 +1,15 @@
 import Controller from "./controller/Controller.js";
 import SearchUserView from "./views/SearchUserView.js";
-import User from "./model/User.js";
+import Github from "./model/Github.js";
 
 document.addEventListener("DOMContentLoaded", main);
 
 function main() {
-    const user = new User();
+    const github = new Github();
 
     const views = {
         searchUserView: new SearchUserView(),
     };
 
-    new Controller(user, views);
+    new Controller(github, views);
 }
