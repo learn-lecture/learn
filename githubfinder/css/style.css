@@ -62,3 +62,13 @@ h2, h1 {
         margin-bottom: 0.5rem;
     }
 }
+
+.empty-container {
+    border: 1px solid #e0e0e0;
+}
+
+.empty-container > h2 {
+    color: #6c757d;
+    font-size: 24px;
+    margin: 20px 0;
+}

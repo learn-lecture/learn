@@ -5,11 +5,15 @@ export default class Github {
     constructor() {
         this.login = null;
         this.avatar_url = null;
-        this.follower = null;
+        this.followers = null;
         this.following = null;
         this.public_repos = null;
         this.public_gists = null;
         this.html_url = null;
+        this.company = null;
+        this.blog = null;
+        this.location = null;
+        this.created_at = null;
     }
 
     async getUser(nickname) {
@@ -23,14 +27,18 @@ export default class Github {
         return true;
     }
 
-    parseUserData({ login, avatar_url, html_url, follower, following, public_repos, public_gists }) {
-        this.login = login;
-        this.avatar_url = avatar_url;
-        this.html_url = html_url;
-        this.follower = follower;
-        this.following = following;
-        this.public_repos = public_repos;
-        this.public_gists = public_gists;
+    parseUserData(data) {
+        this.login = data.login;
+        this.avatar_url = data.avatar_url;
+        this.html_url = data.html_url;
+        this.followers = data.followers;
+        this.following = data.following;
+        this.public_repos = data.public_repos;
+        this.public_gists = data.public_gists;
+        this.company = data.company;
+        this.blog = data.blog;
+        this.location = data.location;
+        this.created_at = data.created_at;
     }
 
 }

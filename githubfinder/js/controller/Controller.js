@@ -1,8 +1,9 @@
 export default class Controller {
 
-  constructor(github, { searchUserView }) {
+  constructor(github, { searchUserView, userProfileView }) {
     this.github = github;
     this.searchUserView = searchUserView;
+    this.UserProfileView = userProfileView;
 
     this.subscribeViewEvents();
   }
@@ -15,9 +16,9 @@ export default class Controller {
   async search({ nickname }) {
     const response = await this.github.getUser(nickname);
     if (response) {
-      console.log(this.github);
+      this.UserProfileView.show(this.github);
     } else {
-      console.log("nono");
+      this.UserProfileView.show();
     }
   }
 
