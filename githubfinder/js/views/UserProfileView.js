@@ -44,7 +44,8 @@ class Template {
                             <li class="list-group-item">Location: ${data.location}</li>
                             <li class="list-group-item">Member Since: ${data.createdAt}</li>
                         </ul>
-                    </div>
+                        <img class="img-fluid" src="https://ghchart.rshah.org/${data.login}" alt="${data.login}"/>
+                    </div> 
                 </div>
             </div>
         `;

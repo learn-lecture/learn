@@ -12,7 +12,7 @@ function main() {
     const views = {
         searchUserView: new SearchUserView(),
         userProfileView: new UserProfileView(),
-        userReposView: new UserReposView()
+        userReposView: new UserReposView(),
     };
 
     new Controller(github, views);

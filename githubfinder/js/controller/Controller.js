@@ -2,7 +2,7 @@ import {qs} from "../global/helpers.js";
 
 export default class Controller {
 
-  constructor(github, { searchUserView, userProfileView, userReposView }) {
+  constructor(github, { searchUserView, userProfileView, userReposView, userCommitsView }) {
     this.github = github;
     this.searchUserView = searchUserView;
     this.userProfileView = userProfileView;
