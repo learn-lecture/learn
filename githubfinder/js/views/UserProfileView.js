@@ -10,11 +10,9 @@ export default class UserProfileView extends View {
     }
 
     show(data = null) {
-        if (data !== null) {
+        data === null ?
+            this.element.innerHTML = this. template.getEmptyMessage() :
             this.element.innerHTML = this.template.getUserProfile(data);
-        } else {
-            this.element.innerHTML = this. template.getEmptyMessage();
-        }
 
         super.show();
     }
@@ -24,7 +22,6 @@ export default class UserProfileView extends View {
 class Template {
 
     getUserProfile(data) {
-        console.log(data);
         return `
             <div class="card card-body">
                 <div class="row">
@@ -61,4 +58,5 @@ class Template {
             </div>
         `;
     }
+
 }

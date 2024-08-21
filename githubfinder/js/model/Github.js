@@ -1,4 +1,4 @@
-let instance = null;
+import UserRepo from "./UserRepo.js";
 
 export default class Github {
 
@@ -14,6 +14,7 @@ export default class Github {
         this.blog = null;
         this.location = null;
         this.created_at = null;
+        this.repos = [];
     }
 
     async getUser(nickname) {
@@ -24,6 +25,20 @@ export default class Github {
 
         const data = await response.json();
         this.parseUserData(data);
+        return true;
+    }
+
+    async getUserRepo(nickname) {
+        const response = await fetch(`https://api.github.com/users/${nickname}/repos`);
+        if (response.status === 404) {
+            return false;
+        }
+
+        const data = await response.json();
+        this.repos = data
+            .map(repo => new UserRepo(repo))
+            .sort((a, b) => b.id - a.id);
+
         return true;
     }
 
