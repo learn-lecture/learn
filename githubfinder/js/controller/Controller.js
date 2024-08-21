@@ -15,19 +15,15 @@ export default class Controller {
   }
 
   async search({ nickname }) {
-    const response = await this.github.getUser(nickname);
-    if (response) {
-      this.userProfileView.show(this.github);
-    } else {
-      this.userProfileView.show();
+    const hasUser = await this.github.getUser(nickname);
+    if (hasUser) {
+      this.userProfileView.show(this.github.profile);
+      this.userReposView.show(this.github.repos);
+      return ;
     }
 
-    const repoResponse = await this.github.getUserRepo(nickname);
-    if (repoResponse) {
-      this.userReposView.show(this.github.repos);
-    } else {
-      this.userReposView.show();
-    }
+    this.userProfileView.show();
+    this.userReposView.hide();
   }
 
 }

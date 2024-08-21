@@ -31,13 +31,13 @@ class Template {
         `;
     }
 
-    getItem({ htmlUrl, stargazersCount, watchers, forks }) {
+    getItem({ name, htmlUrl, stargazersCount, watchers, forks }) {
         return `
             <div class="list-group-item">
                 <div class="repo-info">
                     <div class="repo-header">
-                        <h5 class="mb-1">
-                            <a href="#" class="text-primary text-decoration-none repo-name">${htmlUrl}</a>
+                        <h5 class="mb-1 repo-name">
+                            <a href="${htmlUrl}" class="text-primary text-decoration-none" title="${name}">${name}</a>
                         </h5>
                         <div class="repo-stats">
                             <span class="badge p-2 stars mt-2">Stars: ${stargazersCount}</span>

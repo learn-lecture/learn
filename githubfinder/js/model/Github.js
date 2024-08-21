@@ -1,30 +1,28 @@
 import UserRepo from "./UserRepo.js";
+import UserProfile from "./UserProfile.js";
 
 export default class Github {
 
     constructor() {
-        this.login = null;
-        this.avatar_url = null;
-        this.followers = null;
-        this.following = null;
-        this.public_repos = null;
-        this.public_gists = null;
-        this.html_url = null;
-        this.company = null;
-        this.blog = null;
-        this.location = null;
-        this.created_at = null;
+        this.profile = null;
         this.repos = [];
     }
 
     async getUser(nickname) {
+        const hasProfile = await this.getProfile(nickname);
+        const hasRepos = await this.getUserRepo(nickname);
+
+        return hasRepos && hasRepos;
+    }
+
+    async getProfile(nickname) {
         const response = await fetch(`https://api.github.com/users/${nickname}`);
         if (response.status === 404) {
             return false;
         }
 
         const data = await response.json();
-        this.parseUserData(data);
+        this.profile = new UserProfile(data);
         return true;
     }
 
@@ -40,20 +38,6 @@ export default class Github {
             .sort((a, b) => b.id - a.id);
 
         return true;
-    }
-
-    parseUserData(data) {
-        this.login = data.login;
-        this.avatar_url = data.avatar_url;
-        this.html_url = data.html_url;
-        this.followers = data.followers;
-        this.following = data.following;
-        this.public_repos = data.public_repos;
-        this.public_gists = data.public_gists;
-        this.company = data.company;
-        this.blog = data.blog;
-        this.location = data.location;
-        this.created_at = data.created_at;
     }
 
 }
