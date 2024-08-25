@@ -12,6 +12,7 @@ import org.delivery.api.domain.userorder.dto.resp.info.UserOrderResponseStatus;
 import org.delivery.db.user.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,15 @@ public class UserOrderController {
     ) {
         final List<UserOrderDetailResponse> response = userOrderBusiness.history(user);
         return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_HISTORY_SUCCESS, response));
+    }
+
+    @GetMapping("/id/{orderId}")
+    public ResponseEntity<Api<UserOrderDetailResponse>> read(
+            @UserSession final User user,
+            @PathVariable final Long orderId
+    ) {
+        final UserOrderDetailResponse response = userOrderBusiness.read(user, orderId);
+        return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_CURRENT_READ_SUCCESS, response));
     }
 
 }

@@ -79,4 +79,19 @@ public class UserOrderBusiness {
         }).toList();
     }
 
+    public UserOrderDetailResponse read(final User user, final Long orderId) {
+        var userOrder = userOrderService.getUserOrderWithThrow(user.getId(), orderId);
+        var orderMenu = orderMenuService.getOrderMenu(userOrder.getId());
+        var storeMenus = orderMenu.stream()
+                .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+                .toList();
+        var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
+        
+        return new UserOrderDetailResponse(
+                userOrderConverter.toResponse(userOrder),
+                storeConverter.toResponse(store),
+                storeMenuConverter.toResponse(storeMenus)
+        );
+    }
+
 }
