@@ -63,4 +63,20 @@ public class UserOrderBusiness {
         }).toList();
     }
 
+    public List<UserOrderDetailResponse> history(final User user) {
+        var history = userOrderService.history(user.getId());
+        return history.stream().map(it -> {
+            var orderMenu = orderMenuService.getOrderMenu(it.getId());
+            var storeMenus = orderMenu.stream()
+                    .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+                    .toList();
+            var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
+            return new UserOrderDetailResponse(
+                    userOrderConverter.toResponse(it),
+                    storeConverter.toResponse(store),
+                    storeMenuConverter.toResponse(storeMenus)
+            );
+        }).toList();
+    }
+
 }

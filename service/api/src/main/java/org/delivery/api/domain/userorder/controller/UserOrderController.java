@@ -43,4 +43,12 @@ public class UserOrderController {
         return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_CURRENT_SUCCESS, response));
     }
 
+    @GetMapping("/history")
+    public ResponseEntity<Api<List<UserOrderDetailResponse>>> history(
+            @UserSession final User user
+    ) {
+        final List<UserOrderDetailResponse> response = userOrderBusiness.history(user);
+        return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_HISTORY_SUCCESS, response));
+    }
+
 }
