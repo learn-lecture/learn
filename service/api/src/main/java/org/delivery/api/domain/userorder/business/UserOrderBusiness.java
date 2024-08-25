@@ -18,11 +18,14 @@ import org.delivery.db.order.UserOrder;
 import org.delivery.db.ordermenu.OrderMenu;
 import org.delivery.db.storemenu.StoreMenu;
 import org.delivery.db.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
 @Business
 public class UserOrderBusiness {
 
+    private static final Logger log = LoggerFactory.getLogger(UserOrderBusiness.class);
     private final UserOrderService userOrderService;
     private final UserOrderConverter userOrderConverter;
     private final StoreMenuService storeMenuService;
@@ -80,13 +83,13 @@ public class UserOrderBusiness {
     }
 
     public UserOrderDetailResponse read(final User user, final Long orderId) {
-        var userOrder = userOrderService.getUserOrderWithThrow(user.getId(), orderId);
+        var userOrder = userOrderService.getUserOrderWithOutStatusWithThrow(orderId, user.getId());
         var orderMenu = orderMenuService.getOrderMenu(userOrder.getId());
         var storeMenus = orderMenu.stream()
                 .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
                 .toList();
         var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
-        
+
         return new UserOrderDetailResponse(
                 userOrderConverter.toResponse(userOrder),
                 storeConverter.toResponse(store),

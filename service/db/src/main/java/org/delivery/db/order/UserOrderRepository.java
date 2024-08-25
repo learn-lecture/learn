@@ -13,4 +13,5 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Long> {
 
     Optional<UserOrder> findAllByIdAndStatusAndUserId(final Long id, final UserOrderStatus status, final Long userId);
 
+    Optional<UserOrder> findAllByIdAndUserId(Long id, Long userId);
 }

@@ -17,6 +17,11 @@ public class UserOrderService {
 
     private final UserOrderRepository userOrderRepository;
 
+    public UserOrder getUserOrderWithOutStatusWithThrow(final Long id, final Long userId) {
+        return userOrderRepository.findAllByIdAndUserId(id, userId)
+                .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
+    }
+
     public UserOrder getUserOrderWithThrow(final Long id, final Long userId) {
         return userOrderRepository.findAllByIdAndStatusAndUserId(id, UserOrderStatus.REGISTERED, userId)
                 .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
