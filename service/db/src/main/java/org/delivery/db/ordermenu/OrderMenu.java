@@ -28,9 +28,9 @@ public class OrderMenu extends BaseEntity {
     @Column(nullable = false)
     private Long storeMenuId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 50, nullable = false)
     @Setter
+    @Column(length = 50, nullable = false, columnDefinition = "varchar(50)")
+    @Enumerated(EnumType.STRING)
     private OrderMenuStatus status;
 
 }

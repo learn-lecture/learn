@@ -20,11 +20,11 @@ public class OrderMenuService {
         return orderMenuRepository.findAllByUserOrderIdAndStatus(orderId, OrderMenuStatus.REGISTERED);
     }
 
-    public OrderMenu order(final OrderMenu orderMenu) {
-        return Optional.ofNullable(orderMenu)
+    public void order(final OrderMenu orderMenu) {
+        Optional.ofNullable(orderMenu)
                 .map(it -> {
                     it.setStatus(OrderMenuStatus.REGISTERED);
-                    return it;
+                    return orderMenuRepository.save(it);
                 })
                 .orElseThrow(() -> new NotFoundException(OrderMenuExceptionType.NOT_FOUND_EXCEPTION));
     }

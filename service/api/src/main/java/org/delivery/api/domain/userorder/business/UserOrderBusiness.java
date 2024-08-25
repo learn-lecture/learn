@@ -32,11 +32,10 @@ public class UserOrderBusiness {
         final UserOrder order = userOrderConverter.toEntity(user, storeMenus);
         final UserOrder orderResult = userOrderService.order(order);
 
-        final List<OrderMenu> orderMenus = storeMenus.stream()
-                .map(it -> orderMenuConverter.toEntity(orderResult, it))
-                .toList();
-
-        orderMenus.forEach(orderMenuService::order);
+        storeMenus.forEach(it -> {
+            OrderMenu entity = orderMenuConverter.toEntity(orderResult, it);
+            orderMenuService.order(entity);
+        });
 
         return userOrderConverter.toResponse(orderResult);
     }

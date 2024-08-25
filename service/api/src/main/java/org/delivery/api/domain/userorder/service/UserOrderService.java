@@ -35,7 +35,6 @@ public class UserOrderService {
                 .map(it -> {
                     it.setStatus(UserOrderStatus.ORDER);
                     it.setOrderedAt(LocalDateTime.now());
-                    System.out.println(it.toString());
                     return userOrderRepository.save(it);
                 }).orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
     }

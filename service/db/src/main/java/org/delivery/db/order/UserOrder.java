@@ -30,7 +30,7 @@ public class UserOrder extends BaseEntity {
     private Long userId;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, columnDefinition = "varchar(50)")
     @Setter
     private UserOrderStatus status;
 

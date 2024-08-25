@@ -13,6 +13,6 @@ public enum UserOrderStatus {
     DELIVERY("배달중"),
     RECEIVE("완료");
 
-    private String description;
+    private final String description;
 
 }

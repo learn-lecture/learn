@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 public enum UserStatus {
 
-	REGISTERED("등록"),
-	UNREGISTERED("해지");
+    REGISTERED("등록"),
+    UNREGISTERED("해지");
 
-	private String description;
+    private final String description;
 
 }
