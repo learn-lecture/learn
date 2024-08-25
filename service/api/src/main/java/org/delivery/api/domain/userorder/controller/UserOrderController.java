@@ -1,14 +1,17 @@
 package org.delivery.api.domain.userorder.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.delivery.api.common.annotation.UserSession;
 import org.delivery.api.common.api.Api;
 import org.delivery.api.domain.userorder.business.UserOrderBusiness;
 import org.delivery.api.domain.userorder.dto.req.UserOrderRequest;
+import org.delivery.api.domain.userorder.dto.resp.UserOrderDetailResponse;
 import org.delivery.api.domain.userorder.dto.resp.UserOrderResponse;
 import org.delivery.api.domain.userorder.dto.resp.info.UserOrderResponseStatus;
 import org.delivery.db.user.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,4 +34,13 @@ public class UserOrderController {
                 userOrderBusiness.userOrder(request, user)
         ));
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<Api<List<UserOrderDetailResponse>>> current(
+            @UserSession final User user
+    ) {
+        final List<UserOrderDetailResponse> response = userOrderBusiness.current(user);
+        return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_CURRENT_SUCCESS, response));
+    }
+
 }

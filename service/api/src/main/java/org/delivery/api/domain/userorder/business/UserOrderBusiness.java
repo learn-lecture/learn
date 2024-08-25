@@ -5,9 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.delivery.api.common.annotation.Business;
 import org.delivery.api.domain.ordermenu.converter.OrderMenuConverter;
 import org.delivery.api.domain.ordermenu.service.OrderMenuService;
+import org.delivery.api.domain.sotremenu.converter.StoreMenuConverter;
 import org.delivery.api.domain.sotremenu.service.StoreMenuService;
+import org.delivery.api.domain.store.converter.StoreConverter;
+import org.delivery.api.domain.store.service.StoreService;
 import org.delivery.api.domain.userorder.converter.UserOrderConverter;
 import org.delivery.api.domain.userorder.dto.req.UserOrderRequest;
+import org.delivery.api.domain.userorder.dto.resp.UserOrderDetailResponse;
 import org.delivery.api.domain.userorder.dto.resp.UserOrderResponse;
 import org.delivery.api.domain.userorder.service.UserOrderService;
 import org.delivery.db.order.UserOrder;
@@ -20,10 +24,13 @@ import org.delivery.db.user.User;
 public class UserOrderBusiness {
 
     private final UserOrderService userOrderService;
-    private final StoreMenuService storeMenuService;
     private final UserOrderConverter userOrderConverter;
-    private final OrderMenuConverter orderMenuConverter;
+    private final StoreMenuService storeMenuService;
+    private final StoreMenuConverter storeMenuConverter;
     private final OrderMenuService orderMenuService;
+    private final OrderMenuConverter orderMenuConverter;
+    private final StoreService storeService;
+    private final StoreConverter storeConverter;
 
     public UserOrderResponse userOrder(final UserOrderRequest request, final User user) {
         final List<StoreMenu> storeMenus = request.storeMenus().stream()
@@ -39,4 +46,21 @@ public class UserOrderBusiness {
 
         return userOrderConverter.toResponse(orderResult);
     }
+
+    public List<UserOrderDetailResponse> current(final User user) {
+        var current = userOrderService.current(user.getId());
+        return current.stream().map(it -> {
+            var orderMenu = orderMenuService.getOrderMenu(it.getId());
+            var storeMenus = orderMenu.stream()
+                    .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+                    .toList();
+            var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
+            return new UserOrderDetailResponse(
+                    userOrderConverter.toResponse(it),
+                    storeConverter.toResponse(store),
+                    storeMenuConverter.toResponse(storeMenus)
+            );
+        }).toList();
+    }
+
 }
