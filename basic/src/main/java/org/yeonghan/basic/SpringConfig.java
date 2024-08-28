@@ -1,7 +1,9 @@
 package org.yeonghan.basic;
 
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.yeonghan.basic.repository.JdbcMemberRepository;
 import org.yeonghan.basic.repository.MemberRepository;
 import org.yeonghan.basic.repository.MemoryMemberRepository;
 import org.yeonghan.basic.service.MemberService;
@@ -15,8 +17,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+    public MemberRepository memberRepository(DataSource dataSource) {
+        return new JdbcMemberRepository(dataSource);
     }
 
 }
