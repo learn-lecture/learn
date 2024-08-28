@@ -19,9 +19,4 @@ public class SpringConfig {
         return new MemberService(memberRepository);
     }
 
-    @Bean
-    public MemberRepository memberRepository(EntityManager entityManager) {
-        return new JpaMemberRepository(entityManager);
-    }
-
 }
