@@ -3,10 +3,12 @@ package org.yeonghan.basic.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.yeonghan.basic.domain.Member;
 import org.yeonghan.basic.repository.MemberRepository;
 import org.yeonghan.basic.repository.MemoryMemberRepository;
 
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
