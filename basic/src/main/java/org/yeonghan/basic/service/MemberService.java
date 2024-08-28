@@ -7,7 +7,6 @@ import org.yeonghan.basic.domain.Member;
 import org.yeonghan.basic.repository.MemberRepository;
 import org.yeonghan.basic.repository.MemoryMemberRepository;
 
-@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
