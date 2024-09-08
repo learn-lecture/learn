@@ -50,4 +50,12 @@ public class Comment {
         this.content.updateContent(content);
     }
 
+    public int getLikeCount() {
+        return this.likeCount.getCount();
+    }
+
+    public String getContent() {
+        return this.content.getContentText();
+    }
+
 }
