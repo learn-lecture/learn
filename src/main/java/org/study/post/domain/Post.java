@@ -45,7 +45,7 @@ public class Post {
         }
 
         this.state = state;
-        this.content.updateContentText(content);
+        this.content.updateContent(content);
     }
 
 }

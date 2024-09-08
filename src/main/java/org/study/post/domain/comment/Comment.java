@@ -50,7 +50,7 @@ public class Comment {
             throw new IllegalArgumentException();
         }
 
-        this.content.updateContentText(content);
+        this.content.updateContent(content);
     }
 
 }
