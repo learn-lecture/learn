@@ -82,4 +82,8 @@ public class Post {
         return this.author;
     }
 
+    public PostPublicationState getState() {
+        return this.state;
+    }
+
 }
