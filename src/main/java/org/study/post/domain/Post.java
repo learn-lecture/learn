@@ -15,11 +15,11 @@ public class Post {
     private PostPublicationState state;
 
     public static Post createPost(Long id, User author, String content, PostPublicationState state) {
-        return new Post(null, author, new PostContent(content), state);
+        return new Post(id, author, new PostContent(content), state);
     }
 
     public static Post createDefalutPost(Long id, User author, String content) {
-        return new Post(null, author, new PostContent(content));
+        return new Post(id, author, new PostContent(content));
     }
 
     protected Post(Long id, User author, Content content) {
@@ -73,4 +73,13 @@ public class Post {
     public String getContent() {
         return this.content.getContentText();
     }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public User getAuthor() {
+        return this.author;
+    }
+
 }

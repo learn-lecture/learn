@@ -14,11 +14,11 @@ public class Comment {
     private final Content content;
     private final PositiveIntegerCounter likeCount;
 
-    public static Comment createComment(Post post, User user, String content) {
-        return new Comment(null, post, user, new CommentContent(content));
+    public static Comment createComment(Long id, Post post, User user, String content) {
+        return new Comment(id, post, user, new CommentContent(content));
     }
 
-    public Comment(Long id, Post post, User author, Content content) {
+    protected Comment(Long id, Post post, User author, Content content) {
         if (author == null) {
             throw new IllegalArgumentException();
         }
@@ -61,6 +61,18 @@ public class Comment {
 
     public String getContent() {
         return this.content.getContentText();
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Post getPost() {
+        return this.post;
+    }
+
+    public User getAuthor() {
+        return this.author;
     }
 
 }

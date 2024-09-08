@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.study.user.domain.User;
 
-public class FakerUserRelationRepository implements UserRelationRepository {
+public class FakeUserRelationRepository implements UserRelationRepository {
 
     private final Set<Relation> store = new HashSet<>();
 
