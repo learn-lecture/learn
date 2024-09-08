@@ -1,13 +1,11 @@
 package org.study.post.application;
 
 import org.study.post.application.dto.CreatePostRequestDto;
-import org.study.post.application.dto.LikePostRequestDto;
+import org.study.post.application.dto.LikeRequestDto;
 import org.study.post.application.dto.UpdatePostRequestDto;
 import org.study.post.application.interfaces.LikeRepository;
 import org.study.post.application.interfaces.PostRepository;
 import org.study.post.domain.Post;
-import org.study.post.domain.content.Content;
-import org.study.post.domain.content.PostContent;
 import org.study.user.application.UserService;
 import org.study.user.domain.User;
 
@@ -42,8 +40,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void likePost(LikePostRequestDto dto) {
-        Post post = getPost(dto.postId());
+    public void likePost(LikeRequestDto dto) {
+        Post post = getPost(dto.targetId());
         User user = userService.getUser(dto.userId());
 
         if (likeRepository.checkLike(post, user)) {
@@ -53,8 +51,8 @@ public class PostService {
         likeRepository.like(post, user);
     }
 
-    public void unlikePost(LikePostRequestDto dto) {
-        Post post = getPost(dto.postId());
+    public void unlikePost(LikeRequestDto dto) {
+        Post post = getPost(dto.targetId());
         User user = userService.getUser(dto.userId());
 
         if (likeRepository.checkLike(post, user)) {

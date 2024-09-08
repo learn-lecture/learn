@@ -2,6 +2,7 @@ package org.study.post.domain.comment;
 
 import org.study.common.domain.PositiveIntegerCounter;
 import org.study.post.domain.Post;
+import org.study.post.domain.content.CommentContent;
 import org.study.post.domain.content.Content;
 import org.study.user.domain.User;
 
@@ -12,6 +13,10 @@ public class Comment {
     private final User author;
     private final Content content;
     private final PositiveIntegerCounter likeCount;
+
+    public static Comment createComment(Post post, User user, String content) {
+        return new Comment(null, post, user, new CommentContent(content));
+    }
 
     public Comment(Long id, Post post, User author, Content content) {
         if (author == null) {
