@@ -1,4 +1,4 @@
-package org.study.user.application.interfaces;
+package org.study.user.repository;
 
 import org.study.user.domain.User;
 
