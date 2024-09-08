@@ -57,7 +57,7 @@ public class CommentService {
         likeRepository.like(comment, user);
     }
 
-    public void unlikePost(LikeRequestDto dto) {
+    public void unlikeComment(LikeRequestDto dto) {
         Comment comment = getComment(dto.targetId());
         User user = userService.getUser(dto.userId());
 
