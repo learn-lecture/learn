@@ -1,6 +1,7 @@
 package org.study.post.domain;
 
 import org.study.common.domain.PositiveIntegerCounter;
+import org.study.post.domain.content.Content;
 import org.study.post.domain.content.PostContent;
 import org.study.post.domain.content.PostPublicationState;
 import org.study.user.domain.User;
@@ -32,10 +33,7 @@ public class Post {
         likeCount.increment();
     }
 
-    public void unlike(User user) {
-        if (this.author.equals(user)) {
-            throw new IllegalArgumentException();
-        }
+    public void unlike() {
         likeCount.decrement();
     }
 
@@ -48,4 +46,11 @@ public class Post {
         this.content.updateContent(content);
     }
 
+    public int getLikeCount() {
+        return this.likeCount.getCount();
+    }
+
+    public String getContent() {
+        return this.content.getContentText();
+    }
 }

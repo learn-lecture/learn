@@ -38,10 +38,7 @@ public class Comment {
         likeCount.increment();
     }
 
-    public void unlike(User user) {
-        if (this.author.equals(user)) {
-            throw new IllegalArgumentException();
-        }
+    public void unlike() {
         likeCount.decrement();
     }
 
