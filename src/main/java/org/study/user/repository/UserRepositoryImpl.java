@@ -1,11 +1,13 @@
 package org.study.user.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import org.study.user.application.interfaces.UserRepository;
 import org.study.user.domain.User;
 import org.study.user.repository.entity.UserEntity;
 import org.study.user.repository.jpa.JpaUserRepository;
 
+@Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 

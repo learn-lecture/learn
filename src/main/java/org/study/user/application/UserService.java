@@ -1,10 +1,12 @@
 package org.study.user.application;
 
+import org.springframework.stereotype.Service;
 import org.study.user.application.dto.CreateUserRequestDto;
 import org.study.user.application.interfaces.UserRepository;
 import org.study.user.domain.User;
 import org.study.user.domain.UserInfo;
 
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
