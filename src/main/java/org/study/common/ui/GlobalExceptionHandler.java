@@ -11,12 +11,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public Response<Void> handleIllegalArgumentException() {
-        return Response.error(ErrorCode.INTERNAL_ERROR);
+        return Response.error(ErrorCode.INVALID_INPUT_VALUE);
     }
 
     @ExceptionHandler(Exception.class)
     public Response<Void> handleException(Exception e) {
-        log.error(e.getMessage());
+        log.error("Unexpected exception occurred: ", e);
         return Response.error(ErrorCode.INTERNAL_ERROR);
     }
 
