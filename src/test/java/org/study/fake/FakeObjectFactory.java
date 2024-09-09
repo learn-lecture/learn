@@ -12,8 +12,8 @@ import org.study.user.application.UserRelationService;
 import org.study.user.application.UserService;
 import org.study.user.repository.FakeUserRepository;
 import org.study.user.repository.FakeUserRelationRepository;
-import org.study.user.repository.UserRelationRepository;
-import org.study.user.repository.UserRepository;
+import org.study.user.application.interfaces.UserRelationRepository;
+import org.study.user.application.interfaces.UserRepository;
 
 public class FakeObjectFactory {
 

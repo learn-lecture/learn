@@ -1,7 +1,7 @@
 package org.study.user.application;
 
 import org.study.user.application.dto.CreateUserRequestDto;
-import org.study.user.repository.UserRepository;
+import org.study.user.application.interfaces.UserRepository;
 import org.study.user.domain.User;
 import org.study.user.domain.UserInfo;
 
@@ -21,8 +21,7 @@ public class UserService {
     }
 
     public User getUser(Long id) {
-        return userRepository.findById(id)
-            .orElseThrow(IllegalArgumentException::new);
+        return userRepository.findById(id);
     }
 
 }

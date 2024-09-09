@@ -1,7 +1,7 @@
 package org.study.user.application;
 
 import org.study.user.application.dto.FollowUserRequestDto;
-import org.study.user.repository.UserRelationRepository;
+import org.study.user.application.interfaces.UserRelationRepository;
 import org.study.user.domain.User;
 
 public class UserRelationService {

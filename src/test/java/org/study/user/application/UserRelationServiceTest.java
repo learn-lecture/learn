@@ -9,10 +9,6 @@ import org.study.fake.FakeObjectFactory;
 import org.study.user.application.dto.CreateUserRequestDto;
 import org.study.user.application.dto.FollowUserRequestDto;
 import org.study.user.domain.User;
-import org.study.user.repository.FakeUserRepository;
-import org.study.user.repository.FakeUserRelationRepository;
-import org.study.user.repository.UserRelationRepository;
-import org.study.user.repository.UserRepository;
 
 public class UserRelationServiceTest {
 

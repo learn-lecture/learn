@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.study.fake.FakeObjectFactory;
 import org.study.user.application.dto.CreateUserRequestDto;
-import org.study.user.repository.FakeUserRepository;
-import org.study.user.repository.UserRepository;
 import org.study.user.domain.User;
 import org.study.user.domain.UserInfo;
 

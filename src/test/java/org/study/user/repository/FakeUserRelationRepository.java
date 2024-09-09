@@ -2,6 +2,7 @@ package org.study.user.repository;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.study.user.application.interfaces.UserRelationRepository;
 import org.study.user.domain.User;
 
 public class FakeUserRelationRepository implements UserRelationRepository {
