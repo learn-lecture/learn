@@ -1,14 +1,20 @@
 package org.study.user.domain;
 
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.study.common.domain.PositiveIntegerCounter;
 
+@Builder
+@AllArgsConstructor
+@Getter
 public class User {
 
-    private final Long id;
-    private final UserInfo info;
-    private final PositiveIntegerCounter followingCount;
-    private final PositiveIntegerCounter followerCount;
+    private Long id;
+    private UserInfo info;
+    private PositiveIntegerCounter followingCount;
+    private PositiveIntegerCounter followerCount;
 
     public User(Long id, UserInfo userInfo) {
         if (userInfo == null) {
@@ -64,10 +70,6 @@ public class User {
         return Objects.hashCode(id);
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public int followerCount() {
         return followerCount.getCount();
     }
@@ -76,8 +78,12 @@ public class User {
         return followingCount.getCount();
     }
 
-    public UserInfo getInfo() {
-        return info;
+    public String getName() {
+        return this.info.getName();
+    }
+
+    public String getProfileImage() {
+        return this.info.getProfileImageUrl();
     }
 
 }
