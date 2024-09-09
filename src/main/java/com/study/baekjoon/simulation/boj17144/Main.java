@@ -1,4 +1,4 @@
-package com.study.baekjoon.implement.simulation.boj17144;
+package com.study.baekjoon.simulation.boj17144;
 
 import java.io.*;
 import java.util.*;
