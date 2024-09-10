@@ -13,6 +13,7 @@ import org.study.user.application.UserService;
 import org.study.user.application.dto.CreateUserRequestDto;
 import org.study.user.application.dto.GetUserListResponseDto;
 import org.study.user.domain.User;
+import org.study.user.repository.jpa.JpaUserListQueryRepository;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,11 +21,22 @@ import org.study.user.domain.User;
 public class UserController {
 
     private final UserService userService;
+    private final JpaUserListQueryRepository userListQueryRepository;
 
     @PostMapping
     public Response<Long> createUser(@RequestBody CreateUserRequestDto dto) {
         User user = userService.createUser(dto);
         return Response.ok(user.getId());
+    }
+
+    @GetMapping("/{userId}/follower")
+    public Response<List<GetUserListResponseDto>> getFollowerList(@PathVariable(name="userId") Long id) {
+        return Response.ok(userListQueryRepository.getFollowUsers(id));
+    }
+
+    @GetMapping("/{userId}/following")
+    public Response<List<GetUserListResponseDto>> getFollowingList(@PathVariable(name="userId") Long id) {
+        return Response.ok(userListQueryRepository.getFollowingUsers(id));
     }
 
 }
