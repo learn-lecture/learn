@@ -2,6 +2,7 @@ package org.study.user.application;
 
 import org.springframework.stereotype.Service;
 import org.study.user.application.dto.CreateUserRequestDto;
+import org.study.user.application.dto.GetUserResponseDto;
 import org.study.user.application.interfaces.UserRepository;
 import org.study.user.domain.User;
 import org.study.user.domain.UserInfo;
@@ -24,6 +25,11 @@ public class UserService {
 
     public User getUser(Long id) {
         return userRepository.findById(id);
+    }
+
+    public GetUserResponseDto getUserProfile(Long id) {
+        User user = getUser(id);
+        return new GetUserResponseDto(user);
     }
 
 }

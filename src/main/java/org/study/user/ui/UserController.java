@@ -12,6 +12,7 @@ import org.study.common.ui.Response;
 import org.study.user.application.UserService;
 import org.study.user.application.dto.CreateUserRequestDto;
 import org.study.user.application.dto.GetUserListResponseDto;
+import org.study.user.application.dto.GetUserResponseDto;
 import org.study.user.domain.User;
 import org.study.user.repository.jpa.JpaUserListQueryRepository;
 
@@ -37,6 +38,11 @@ public class UserController {
     @GetMapping("/{userId}/following")
     public Response<List<GetUserListResponseDto>> getFollowingList(@PathVariable(name="userId") Long id) {
         return Response.ok(userListQueryRepository.getFollowingUsers(id));
+    }
+
+    @GetMapping("/{userId}")
+    public Response<GetUserResponseDto> getUserProfile(@PathVariable(name="userId") Long id) {
+        return Response.ok(userService.getUserProfile(id));
     }
 
 }
