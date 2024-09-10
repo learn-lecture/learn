@@ -1,5 +1,7 @@
 package org.study.post.application;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.study.post.application.dto.CreatePostRequestDto;
 import org.study.post.application.dto.LikeRequestDto;
 import org.study.post.application.dto.UpdatePostRequestDto;
@@ -9,21 +11,16 @@ import org.study.post.domain.Post;
 import org.study.user.application.UserService;
 import org.study.user.domain.User;
 
+@Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final UserService userService;
     private final PostRepository postRepository;
     private final LikeRepository likeRepository;
 
-    public PostService(UserService userService, PostRepository postRepository, LikeRepository likeRepository) {
-        this.userService = userService;
-        this.postRepository = postRepository;
-        this.likeRepository = likeRepository;
-    }
-
     public Post getPost(Long id) {
-        return postRepository.findById(id)
-            .orElseThrow(IllegalArgumentException::new);
+        return postRepository.findById(id);
     }
 
     public Post createPost(CreatePostRequestDto dto) {
@@ -32,8 +29,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(UpdatePostRequestDto dto) {
-        Post post = getPost(dto.postId());
+    public Post updatePost(Long postId, UpdatePostRequestDto dto) {
+        Post post = getPost(postId);
         User user = userService.getUser(dto.userId());
 
         post.updatePost(user, dto.content(), dto.state());
