@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import hello.core.scope.PrototypeTest.PrototypeBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.inject.Provider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
@@ -47,10 +48,10 @@ public class SingletonWithPrototypeTest1 {
     @Scope("singleton")
     @RequiredArgsConstructor
     static class ClientBean {
-        private final ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        private final Provider<PrototypeBean> prototypeBeanProvider;
 
         public int logic() {
-            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
             prototypeBean.addCount();
             return prototypeBean.getCount();
         }
