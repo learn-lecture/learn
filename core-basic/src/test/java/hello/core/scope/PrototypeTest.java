@@ -27,12 +27,12 @@ public class PrototypeTest {
     static class PrototypeBean {
         @PostConstruct
         public void init() {
-            System.out.println("SingletonBean init");
+            System.out.println("PrototypeBean init");
         }
 
         @PreDestroy
         public void destroy() {
-            System.out.println("SingletonBean destroy");
+            System.out.println("PrototypeBean destroy");
         }
     }
 
