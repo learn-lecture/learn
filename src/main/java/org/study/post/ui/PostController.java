@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.study.common.ui.Response;
 import org.study.post.application.PostService;
 import org.study.post.application.dto.CreatePostRequestDto;
+import org.study.post.application.dto.LikeRequestDto;
 import org.study.post.application.dto.UpdatePostRequestDto;
 import org.study.post.domain.Post;
 
@@ -33,6 +34,18 @@ public class PostController {
     ) {
         Post post = postService.updatePost(postId, dto);
         return Response.ok(post.getId());
+    }
+
+    @PostMapping("/like")
+    public Response<Void> likePost(@RequestBody LikeRequestDto dto) {
+        postService.likePost(dto);
+        return Response.ok(null);
+    }
+
+    @PostMapping("/unlike")
+    public Response<Void> unlikePost(@RequestBody LikeRequestDto dto) {
+        postService.unlikePost(dto);
+        return Response.ok(null);
     }
 
 }
