@@ -33,10 +33,10 @@ public class CommentServiceTest extends PostApplicationTestTemplate {
         // given
         Comment comment = commentService.createComment(commentDto);
         String updatedCommentContent = "this is updated comment";
-        UpdateCommentRequestDto updateCommentRequestDto = new UpdateCommentRequestDto(comment.getId(), user.getId(), updatedCommentContent);
+        UpdateCommentRequestDto updateCommentRequestDto = new UpdateCommentRequestDto(user.getId(), updatedCommentContent);
 
         // when
-        Comment updatedComment = commentService.updateComment(updateCommentRequestDto);
+        Comment updatedComment = commentService.updateComment(comment.getId(), updateCommentRequestDto);
 
         // then
         String content = updatedComment.getContent();

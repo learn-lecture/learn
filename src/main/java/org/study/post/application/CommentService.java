@@ -1,5 +1,7 @@
 package org.study.post.application;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.study.post.application.dto.CreateCommentRequestDto;
 import org.study.post.application.dto.LikeRequestDto;
 import org.study.post.application.dto.UpdateCommentRequestDto;
@@ -10,20 +12,14 @@ import org.study.post.domain.comment.Comment;
 import org.study.user.application.UserService;
 import org.study.user.domain.User;
 
+@Service
+@RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
     private final UserService userService;
     private final PostService postService;
-
-    public CommentService(CommentRepository commentRepository, LikeRepository likeRepository,
-        UserService userService, PostService postService) {
-        this.commentRepository = commentRepository;
-        this.likeRepository = likeRepository;
-        this.userService = userService;
-        this.postService = postService;
-    }
 
     public Comment getComment(Long id) {
         return commentRepository.findById(id);
@@ -37,8 +33,8 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(UpdateCommentRequestDto dto) {
-        Comment comment = getComment(dto.commentId());
+    public Comment updateComment(Long commentId, UpdateCommentRequestDto dto) {
+        Comment comment = getComment(commentId);
         User user = userService.getUser(dto.userId());
 
         comment.updateComment(user, dto.content());

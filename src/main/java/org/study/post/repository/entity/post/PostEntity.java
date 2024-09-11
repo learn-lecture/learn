@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicUpdate;
 import org.study.common.domain.PositiveIntegerCounter;
 import org.study.common.repository.entity.TimeBaseEntity;
 import org.study.post.domain.Post;
@@ -41,7 +40,7 @@ public class PostEntity extends TimeBaseEntity {
 
     @Convert(converter = PostPublicationStateConverter.class)
     private PostPublicationState state;
-    private Integer likeCounter;
+    private Integer likeCount;
 
     @ColumnDefault("0")
     private int commentCounter;
@@ -51,7 +50,7 @@ public class PostEntity extends TimeBaseEntity {
         this.author = new UserEntity(post.getAuthor());
         this.content = post.getContent();
         this.state = post.getState();
-        this.likeCounter = post.getLikeCount();
+        this.likeCount = post.getLikeCount();
     }
 
     public Post toPost() {
@@ -60,7 +59,7 @@ public class PostEntity extends TimeBaseEntity {
             .author(author.toUser())
             .content(new PostContent(content))
             .state(state)
-            .likeCount(new PositiveIntegerCounter(likeCounter))
+            .likeCount(new PositiveIntegerCounter(likeCount))
             .build();
     }
 
