@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.post.repository.postqueue.UserPostQueueCommandRepository;
 import org.study.user.application.interfaces.UserRelationRepository;
 import org.study.user.domain.User;
 import org.study.user.repository.entity.UserEntity;
@@ -18,6 +19,7 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
 
     private final JpaUserRelationRepository jpaUserRelationRepository;
     private final JpaUserRepository jpaUserRepository;
+    private final UserPostQueueCommandRepository commandRepository;
 
     @Override
     public boolean isAlreadyFollow(User user, User targetUser) {
@@ -31,6 +33,7 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
         UserRelationEntity entity = new UserRelationEntity(user.getId(), targetUser.getId());
         jpaUserRelationRepository.save(entity);
         jpaUserRepository.saveAll(List.of(new UserEntity(user), new UserEntity(targetUser)));
+        commandRepository.saveFollowPost(user.getId(), targetUser.getId());
     }
 
     @Override
@@ -39,6 +42,7 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
         UserRelationId id = new UserRelationId(user.getId(), targetUser.getId());
         jpaUserRelationRepository.deleteById(id);
         jpaUserRepository.saveAll(List.of(new UserEntity(user), new UserEntity(targetUser)));
+        commandRepository.deleteUnFollowPost(user.getId(), targetUser.getId());
     }
 
 }

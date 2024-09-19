@@ -1,5 +1,6 @@
 package org.study.post.repository.jpa;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,5 +29,8 @@ public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
         WHERE p.id = :id
         """)
     void incrementCommentCount(Long id);
+
+    @Query("select p.id from PostEntity p where p.author.id = :authorId")
+    List<Long> findAllPostIdsByAuthorId(Long authorId);
 
 }

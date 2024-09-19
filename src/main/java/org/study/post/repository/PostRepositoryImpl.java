@@ -7,12 +7,14 @@ import org.study.post.application.interfaces.PostRepository;
 import org.study.post.domain.Post;
 import org.study.post.repository.entity.post.PostEntity;
 import org.study.post.repository.jpa.JpaPostRepository;
+import org.study.post.repository.postqueue.UserPostQueueCommandRepository;
 
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
 
     private final JpaPostRepository jpaPostRepository;
+    private final UserPostQueueCommandRepository commandRepository;
 
     @Override
     @Transactional
@@ -22,7 +24,10 @@ public class PostRepositoryImpl implements PostRepository {
             jpaPostRepository.updatePostEntity(postEntity);
             return postEntity.toPost();
         }
-        return jpaPostRepository.save(postEntity).toPost();
+
+        postEntity = jpaPostRepository.save(postEntity);
+        commandRepository.publishPost(postEntity);
+        return postEntity.toPost();
     }
 
     @Override
