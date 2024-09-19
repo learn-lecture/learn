@@ -7,12 +7,14 @@ import org.study.post.application.interfaces.CommentRepository;
 import org.study.post.domain.comment.Comment;
 import org.study.post.repository.entity.comment.CommentEntity;
 import org.study.post.repository.jpa.JpaCommentRepository;
+import org.study.post.repository.jpa.JpaPostRepository;
 
 @Repository
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository {
 
     private final JpaCommentRepository jpaCommentRepository;
+    private final JpaPostRepository jpaPostRepository;
 
     @Override
     @Transactional
@@ -22,6 +24,8 @@ public class CommentRepositoryImpl implements CommentRepository {
             jpaCommentRepository.updateComment(commentEntity);
             return commentEntity.toComment();
         }
+
+        jpaPostRepository.incrementCommentCount(comment.getPost().getId());
         return jpaCommentRepository.save(commentEntity).toComment();
     }
 
