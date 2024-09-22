@@ -30,7 +30,7 @@ public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
         """)
     void incrementCommentCount(Long id);
 
-    @Query("select p.id from PostEntity p where p.author.id = :authorId")
-    List<Long> findAllPostIdsByAuthorId(Long authorId);
+    @Query("select p from PostEntity p where p.author.id = :authorId")
+    List<PostEntity> findAllPostIdsByAuthorId(Long authorId);
 
 }
