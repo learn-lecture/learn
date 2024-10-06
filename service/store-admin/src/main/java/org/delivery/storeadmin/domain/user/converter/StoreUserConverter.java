@@ -3,6 +3,7 @@ package org.delivery.storeadmin.domain.user.converter;
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.store.Store;
 import org.delivery.db.storeuser.StoreUser;
+import org.delivery.storeadmin.domain.authorization.model.UserSession;
 import org.delivery.storeadmin.domain.user.dto.StoreResponse;
 import org.delivery.storeadmin.domain.user.dto.StoreUserRegisterRequest;
 import org.delivery.storeadmin.domain.user.dto.StoreUserResponse;
@@ -33,6 +34,21 @@ public class StoreUserConverter {
             storeUser.getLastLoginAt()
         );
         StoreResponse storeResponse = new StoreResponse(store.getId(), store.getName());
+
+        return new StoreUserResponse(userResponse, storeResponse);
+    }
+
+    public StoreUserResponse toResponse(UserSession userSession) {
+        UserResponse userResponse = new UserResponse(
+            userSession.getStoreId(),
+            userSession.getEmail(),
+            userSession.getStatus(),
+            userSession.getRole(),
+            userSession.getRegisteredAt(),
+            userSession.getUnregisteredAt(),
+            userSession.getLastLoginAt()
+        );
+        StoreResponse storeResponse = new StoreResponse(userSession.getStoreId(), userSession.getStoreName());
 
         return new StoreUserResponse(userResponse, storeResponse);
     }

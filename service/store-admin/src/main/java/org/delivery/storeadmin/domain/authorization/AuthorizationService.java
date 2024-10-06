@@ -1,10 +1,12 @@
 package org.delivery.storeadmin.domain.authorization;
 
 import lombok.RequiredArgsConstructor;
+import org.delivery.db.store.Store;
+import org.delivery.db.store.StoreRepository;
+import org.delivery.db.store.vo.StoreStatus;
 import org.delivery.db.storeuser.StoreUser;
+import org.delivery.storeadmin.domain.authorization.model.UserSession;
 import org.delivery.storeadmin.domain.user.service.StoreUserService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,26 @@ import org.springframework.stereotype.Service;
 public class AuthorizationService implements UserDetailsService {
 
     private final StoreUserService storeUserService;
+    private final StoreRepository storeRepository;
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        StoreUser storeUser = storeUserService.getRegisterUser(username)
+    public UserSession loadUserByUsername(final String username) throws UsernameNotFoundException {
+        StoreUser user = storeUserService.getRegisterUser(username)
             .orElseThrow(() -> new UsernameNotFoundException(username));
-        return User.builder()
-            .username(storeUser.getEmail())
-            .password(storeUser.getPassword())
-            .roles(storeUser.getRole().toString())
+        Store store = storeRepository.findFirstByIdAndStatusOrderByIdDesc(user.getStoreId(), StoreStatus.REGISTERED)
+            .orElseThrow(() -> new IllegalArgumentException(username));
+
+        return UserSession.builder()
+            .userId(user.getId())
+            .email(user.getEmail())
+            .password(user.getPassword())
+            .status(user.getStatus())
+            .role(user.getRole())
+            .registeredAt(user.getRegisteredAt())
+            .unregisteredAt(user.getUnregisteredAt())
+            .lastLoginAt(user.getLastLoginAt())
+            .storeId(store.getId())
+            .storeName(store.getName())
             .build();
     }
 
