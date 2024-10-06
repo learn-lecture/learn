@@ -13,6 +13,7 @@ import org.delivery.api.domain.userorder.converter.UserOrderConverter;
 import org.delivery.api.domain.userorder.dto.req.UserOrderRequest;
 import org.delivery.api.domain.userorder.dto.resp.UserOrderDetailResponse;
 import org.delivery.api.domain.userorder.dto.resp.UserOrderResponse;
+import org.delivery.api.domain.userorder.producer.UserOrderProducer;
 import org.delivery.api.domain.userorder.service.UserOrderService;
 import org.delivery.db.order.UserOrder;
 import org.delivery.db.ordermenu.OrderMenu;
@@ -34,11 +35,12 @@ public class UserOrderBusiness {
     private final OrderMenuConverter orderMenuConverter;
     private final StoreService storeService;
     private final StoreConverter storeConverter;
+    private final UserOrderProducer userOrderProducer;
 
     public UserOrderResponse userOrder(final UserOrderRequest request, final User user) {
         final List<StoreMenu> storeMenus = request.storeMenus().stream()
-                .map(storeMenuService::getStoreMenuWithThrow)
-                .toList();
+            .map(storeMenuService::getStoreMenuWithThrow)
+            .toList();
         final UserOrder order = userOrderConverter.toEntity(user, storeMenus);
         final UserOrder orderResult = userOrderService.order(order);
 
@@ -46,6 +48,8 @@ public class UserOrderBusiness {
             OrderMenu entity = orderMenuConverter.toEntity(orderResult, it);
             orderMenuService.order(entity);
         });
+
+        userOrderProducer.sendOrder(orderResult);
 
         return userOrderConverter.toResponse(orderResult);
     }
@@ -55,13 +59,13 @@ public class UserOrderBusiness {
         return current.stream().map(it -> {
             var orderMenu = orderMenuService.getOrderMenu(it.getId());
             var storeMenus = orderMenu.stream()
-                    .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
-                    .toList();
+                .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+                .toList();
             var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
             return new UserOrderDetailResponse(
-                    userOrderConverter.toResponse(it),
-                    storeConverter.toResponse(store),
-                    storeMenuConverter.toResponse(storeMenus)
+                userOrderConverter.toResponse(it),
+                storeConverter.toResponse(store),
+                storeMenuConverter.toResponse(storeMenus)
             );
         }).toList();
     }
@@ -71,13 +75,13 @@ public class UserOrderBusiness {
         return history.stream().map(it -> {
             var orderMenu = orderMenuService.getOrderMenu(it.getId());
             var storeMenus = orderMenu.stream()
-                    .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
-                    .toList();
+                .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+                .toList();
             var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
             return new UserOrderDetailResponse(
-                    userOrderConverter.toResponse(it),
-                    storeConverter.toResponse(store),
-                    storeMenuConverter.toResponse(storeMenus)
+                userOrderConverter.toResponse(it),
+                storeConverter.toResponse(store),
+                storeMenuConverter.toResponse(storeMenus)
             );
         }).toList();
     }
@@ -86,14 +90,14 @@ public class UserOrderBusiness {
         var userOrder = userOrderService.getUserOrderWithOutStatusWithThrow(orderId, user.getId());
         var orderMenu = orderMenuService.getOrderMenu(userOrder.getId());
         var storeMenus = orderMenu.stream()
-                .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
-                .toList();
+            .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenuId()))
+            .toList();
         var store = storeService.getStoreWithTrhow(storeMenus.stream().findFirst().get().getStoreId());
 
         return new UserOrderDetailResponse(
-                userOrderConverter.toResponse(userOrder),
-                storeConverter.toResponse(store),
-                storeMenuConverter.toResponse(storeMenus)
+            userOrderConverter.toResponse(userOrder),
+            storeConverter.toResponse(store),
+            storeMenuConverter.toResponse(storeMenus)
         );
     }
 
