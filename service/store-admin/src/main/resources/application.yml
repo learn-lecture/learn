@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: store-admin
+  rabbitmq:
+    username: admin
+    password: admin123!@#
+    port: 5672
   jpa:
     show-sql: true
     properties:
