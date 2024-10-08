@@ -3,13 +3,13 @@ package org.delivery.storeadmin.domain.sse.connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
-import org.delivery.storeadmin.domain.sse.connection.ifs.ConnectionPoolIfs;
+import org.delivery.storeadmin.domain.sse.connection.ifs.UserSseConnectionPool;
 import org.delivery.storeadmin.domain.sse.connection.model.UserSseConnection;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
-public class SseConnectionPool implements ConnectionPoolIfs<String, UserSseConnection> {
+@Component
+public class SseConnectionPool implements UserSseConnectionPool {
 
     private static final Map<String, UserSseConnection> connections = new ConcurrentHashMap<>();
 

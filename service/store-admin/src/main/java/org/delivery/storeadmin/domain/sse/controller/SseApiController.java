@@ -6,7 +6,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.delivery.storeadmin.domain.authorization.model.UserSession;
-import org.delivery.storeadmin.domain.sse.connection.ifs.ConnectionPoolIfs;
+import org.delivery.storeadmin.domain.sse.connection.ifs.UserSseConnectionPool;
 import org.delivery.storeadmin.domain.sse.connection.model.UserSseConnection;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 @Slf4j
 public class SseApiController {
 
-    private final ConnectionPoolIfs<String, UserSseConnection> sseConnectionPool;
+    private final UserSseConnectionPool sseConnectionPool;
     private final ObjectMapper objectMapper;
 
     @GetMapping(path = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
