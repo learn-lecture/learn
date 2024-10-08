@@ -1,4 +1,4 @@
-package org.delivery.storeadmin.domain.user.service;
+package org.delivery.storeadmin.domain.storeuser.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

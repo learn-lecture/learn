@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.delivery.db.storeuser.vo.StoreUserRole;
 import org.delivery.db.storeuser.vo.StoreUserStatus;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Builder
 @Getter
+@ToString
 public class UserSession implements UserDetails {
 
     private Long userId;

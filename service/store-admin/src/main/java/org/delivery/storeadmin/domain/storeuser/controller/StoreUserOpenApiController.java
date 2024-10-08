@@ -1,10 +1,10 @@
-package org.delivery.storeadmin.domain.user.controller;
+package org.delivery.storeadmin.domain.storeuser.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.delivery.storeadmin.domain.user.business.StoreUserBusiness;
-import org.delivery.storeadmin.domain.user.dto.StoreUserRegisterRequest;
-import org.delivery.storeadmin.domain.user.dto.StoreUserResponse;
+import org.delivery.storeadmin.domain.storeuser.business.StoreUserBusiness;
+import org.delivery.storeadmin.domain.storeuser.dto.StoreUserRegisterRequest;
+import org.delivery.storeadmin.domain.storeuser.dto.StoreUserResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +21,5 @@ public class StoreUserOpenApiController {
     public StoreUserResponse register(@Valid @RequestBody StoreUserRegisterRequest request) {
         return storeUserBusiness.register(request);
     }
-    
+
 }

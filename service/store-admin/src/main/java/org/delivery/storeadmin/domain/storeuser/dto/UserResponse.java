@@ -1,4 +1,4 @@
-package org.delivery.storeadmin.domain.user.dto;
+package org.delivery.storeadmin.domain.storeuser.dto;
 
 
 import java.time.LocalDateTime;

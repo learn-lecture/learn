@@ -1,13 +1,13 @@
-package org.delivery.storeadmin.domain.user.converter;
+package org.delivery.storeadmin.domain.storeuser.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.store.Store;
 import org.delivery.db.storeuser.StoreUser;
 import org.delivery.storeadmin.domain.authorization.model.UserSession;
-import org.delivery.storeadmin.domain.user.dto.StoreResponse;
-import org.delivery.storeadmin.domain.user.dto.StoreUserRegisterRequest;
-import org.delivery.storeadmin.domain.user.dto.StoreUserResponse;
-import org.delivery.storeadmin.domain.user.dto.UserResponse;
+import org.delivery.storeadmin.domain.storeuser.dto.StoreResponse;
+import org.delivery.storeadmin.domain.storeuser.dto.StoreUserRegisterRequest;
+import org.delivery.storeadmin.domain.storeuser.dto.StoreUserResponse;
+import org.delivery.storeadmin.domain.storeuser.dto.UserResponse;
 import org.springframework.stereotype.Service;
 
 @Service
