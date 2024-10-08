@@ -11,27 +11,28 @@ import org.delivery.db.user.User;
 @Converter
 public class UserOrderConverter {
 
-    public UserOrder toEntity(final User user, final List<StoreMenu> storeMenus) {
+    public UserOrder toEntity(final User user, final Long storeId, final List<StoreMenu> storeMenus) {
         final BigDecimal totalAmount = storeMenus.stream()
-                .map(StoreMenu::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .map(StoreMenu::getAmount)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return UserOrder.builder()
-                .userId(user.getId())
-                .amount(totalAmount)
-                .build();
+            .userId(user.getId())
+            .storeId(storeId)
+            .amount(totalAmount)
+            .build();
     }
 
     public UserOrderResponse toResponse(final UserOrder userOrder) {
         return new UserOrderResponse(
-                userOrder.getId(),
-                userOrder.getStatus(),
-                userOrder.getAmount(),
-                userOrder.getOrderedAt(),
-                userOrder.getAcceptedAt(),
-                userOrder.getCookingStartedAt(),
-                userOrder.getDeliveryStartedAt(),
-                userOrder.getReceivedAt()
+            userOrder.getId(),
+            userOrder.getStatus(),
+            userOrder.getAmount(),
+            userOrder.getOrderedAt(),
+            userOrder.getAcceptedAt(),
+            userOrder.getCookingStartedAt(),
+            userOrder.getDeliveryStartedAt(),
+            userOrder.getReceivedAt()
         );
     }
 

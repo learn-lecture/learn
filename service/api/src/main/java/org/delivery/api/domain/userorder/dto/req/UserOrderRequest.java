@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record UserOrderRequest(
-        @NotNull List<Long> storeMenus
+    @NotNull Long storeId,
+    @NotNull List<Long> storeMenus
 ) {
 }

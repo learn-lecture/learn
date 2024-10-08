@@ -41,7 +41,7 @@ public class UserOrderBusiness {
         final List<StoreMenu> storeMenus = request.storeMenus().stream()
             .map(storeMenuService::getStoreMenuWithThrow)
             .toList();
-        final UserOrder order = userOrderConverter.toEntity(user, storeMenus);
+        final UserOrder order = userOrderConverter.toEntity(user, request.storeId(), storeMenus);
         final UserOrder orderResult = userOrderService.order(order);
 
         storeMenus.forEach(it -> {

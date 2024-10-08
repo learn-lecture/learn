@@ -29,6 +29,9 @@ public class UserOrder extends BaseEntity {
     @Column(nullable = false)
     private Long userId;
 
+    @Column(nullable = false)
+    private Long storeId;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false, columnDefinition = "varchar(50)")
     @Setter
