@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.common.health;
 
 import lombok.RequiredArgsConstructor;
@@ -18,3 +19,4 @@ public class HealthOpenApiController {
     }
 
 }
+*/
