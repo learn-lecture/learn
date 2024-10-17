@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.config;
 
 import java.util.List;
@@ -40,3 +41,4 @@ public class SwaggerConfig {
 	}
 
 }
+*/
