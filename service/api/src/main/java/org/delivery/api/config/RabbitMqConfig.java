@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,3 +44,4 @@ public class RabbitMqConfig {
     }
 
 }
+*/
