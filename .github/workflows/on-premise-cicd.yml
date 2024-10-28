@@ -1,0 +1,41 @@
+name: on-premise-cicd
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Set Tags Name'
+        required: true
+        default: main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.set-version.outputs.VERSION_NAME }}
+    steps:
+      - id: set-version
+        run: |
+          echo "VERSION_NAME=$(echo "${{ github.event.inputs.tags }}" | sed "s/\./\-/g")" >> $GITHUB_OUTPUT
+      - name: Check Version Name
+        run: |
+          echo "Check Version -> ${{ steps.set-version.outputs.VERSION_NAME }}"
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          ref: '${{ github.event.inputs.tags }}'
+      - name: Grant execute permission for gradlew
+        run: chmod +w gradlew
+      - name: Setup JDk 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'corretto'
+      - name: Build with Gradlew
+        run: ./gradlew clean test bootJar
+      - name: Add version
+        run: |
+          mv build/libs/cicd-study-0.0.1-SNAPSHOT.jar build/libs/cicd-study-${{ steps.set-version.outputs.VERSION_NAME }}.jar
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cicd-study-application
+          path: build/libs/cicd-study-${{ steps.set-version.outputs.VERSION_NAME }}.jar
