@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER_NAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: docker image ppush
+      - name: docker image push
         run: docker push ${{ secrets.DOCKERHUB_USER_NAME }}/cicd-study
   run-docker-image-on-ec2:
     runs-on: self-hosted
@@ -47,13 +47,13 @@ jobs:
       - build
     steps:
       - name: docker pull
-        run: docker pull ${{ secrets.DOCKERHUB_USER_NAME }}/cicd-study
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USER_NAME }}/cicd-study
 
       - name: docker app service container stop
-        run: docker-compose down app
+        run: sudo docker-compose down app
 
       - name: docker app service container start
-        run: docker-compose up app -d
+        run: sudo docker-compose up app -d
 
       - name: delete old docker image
-        run: docker system prune -f
+        run: sudo docker system prune -f
