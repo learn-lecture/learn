@@ -1,5 +1,8 @@
 name: on-premise-cicd
 on:
+  push:
+    tags:
+      - '*'
   workflow_dispatch:
     inputs:
       tags:
@@ -56,17 +59,11 @@ jobs:
           
           echo "SCP transfer start"
           # SCP 전송
-          until scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/cicd-study-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar
-          do
-          echo "SCP transfer failed, retrying..."
-          sleep 5
-          done
+          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/cicd-study-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar
           echo "SCP transfer completed"
           
-          # 잠시 대기
-          sleep 5
-          
           # SSH 명령 실행
-          ssh -i private_key.pem -o ConnectTimeout=10 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pgrep java | xargs kill -9; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pkill -f 'java -jar' || true; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
+          echo "deply completed"
           
           rm -f private_key.pem
