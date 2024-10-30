@@ -61,11 +61,6 @@ jobs:
           rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" build/libs/cicd-study-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/
           echo "rsync transfer completed"
           
-          # SSH 연결 테스트
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "echo 'Connection test successful'"
-          echo "ssh connection successed"
-          
-           # 2. Java 프로세스 종료
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} << 'ENDSSH'
           if pgrep -f 'java -jar'; then
           pkill -f 'java -jar'
@@ -73,9 +68,10 @@ jobs:
           else
           echo "No Java process found"
           fi
+          nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &
+          echo "New Java process started"
           ENDSSH
+          echo "deploy completed"
           
-          # 3. 새 Java 프로세스 시작
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
           
           rm -f private_key.pem
