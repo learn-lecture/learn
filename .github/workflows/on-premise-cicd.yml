@@ -57,13 +57,12 @@ jobs:
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           
-          echo "SCP transfer start"
-          # SCP 전송
-          scp -i private_key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/cicd-study-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar
-          echo "SCP transfer completed"
+          echo "rsync transfer start"
+          rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" build/libs/cicd-study-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/
+          echo "rsync transfer completed"
           
           # SSH 명령 실행
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pkill -f 'java -jar' || true; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
+          ssh -v -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pkill -f 'java -jar' || true; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-study-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
           echo "deply completed"
           
           rm -f private_key.pem
