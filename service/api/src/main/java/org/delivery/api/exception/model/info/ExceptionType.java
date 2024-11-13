@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.exception.model.info;
 
 import org.delivery.api.common.api.ResultType;
@@ -22,3 +23,4 @@ public enum ExceptionType implements ResultType {
 	}
 
 }
+*/

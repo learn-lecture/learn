@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.exception.model;
 
 import org.delivery.api.common.api.Result;
@@ -16,3 +17,4 @@ public record ErrorResponse(
 	}
 
 }
+*/

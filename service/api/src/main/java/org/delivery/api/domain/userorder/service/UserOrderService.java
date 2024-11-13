@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.delivery.api.domain.userorder.exception.UserOrderExceptionType;
-import org.delivery.api.exception.model.NotFoundException;
+import org.delivery.common.exception.model.NotFoundException;
 import org.delivery.db.order.UserOrder;
 import org.delivery.db.order.UserOrderRepository;
 import org.delivery.db.order.vo.UserOrderStatus;
@@ -19,12 +19,12 @@ public class UserOrderService {
 
     public UserOrder getUserOrderWithOutStatusWithThrow(final Long id, final Long userId) {
         return userOrderRepository.findAllByIdAndUserId(id, userId)
-                .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
+            .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
     }
 
     public UserOrder getUserOrderWithThrow(final Long id, final Long userId) {
         return userOrderRepository.findAllByIdAndStatusAndUserId(id, UserOrderStatus.REGISTERED, userId)
-                .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
+            .orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
     }
 
     public List<UserOrder> getUserOrders(final Long userId) {
@@ -37,11 +37,11 @@ public class UserOrderService {
 
     public UserOrder order(final UserOrder userOrder) {
         return Optional.ofNullable(userOrder)
-                .map(it -> {
-                    it.setStatus(UserOrderStatus.ORDER);
-                    it.setOrderedAt(LocalDateTime.now());
-                    return userOrderRepository.save(it);
-                }).orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
+            .map(it -> {
+                it.setStatus(UserOrderStatus.ORDER);
+                it.setOrderedAt(LocalDateTime.now());
+                return userOrderRepository.save(it);
+            }).orElseThrow(() -> new NotFoundException(UserOrderExceptionType.NOT_FOUND_EXCEPTION));
     }
 
     public UserOrder setStatus(final UserOrder userOrder, final UserOrderStatus status) {
@@ -71,13 +71,13 @@ public class UserOrderService {
 
     public List<UserOrder> current(final Long userId) {
         return getUserOrders(
-                userId,
-                List.of(
-                        UserOrderStatus.ORDER,
-                        UserOrderStatus.COOKING,
-                        UserOrderStatus.DELIVERY,
-                        UserOrderStatus.RECEIVE
-                )
+            userId,
+            List.of(
+                UserOrderStatus.ORDER,
+                UserOrderStatus.COOKING,
+                UserOrderStatus.DELIVERY,
+                UserOrderStatus.RECEIVE
+            )
         );
     }
 

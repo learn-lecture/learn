@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.delivery.api.domain.ordermenu.exception.OrderMenuExceptionType;
-import org.delivery.api.exception.model.NotFoundException;
+import org.delivery.common.exception.model.NotFoundException;
 import org.delivery.db.ordermenu.OrderMenu;
 import org.delivery.db.ordermenu.OrderMenuRepository;
 import org.delivery.db.ordermenu.vo.OrderMenuStatus;
@@ -22,11 +22,11 @@ public class OrderMenuService {
 
     public void order(final OrderMenu orderMenu) {
         Optional.ofNullable(orderMenu)
-                .map(it -> {
-                    it.setStatus(OrderMenuStatus.REGISTERED);
-                    return orderMenuRepository.save(it);
-                })
-                .orElseThrow(() -> new NotFoundException(OrderMenuExceptionType.NOT_FOUND_EXCEPTION));
+            .map(it -> {
+                it.setStatus(OrderMenuStatus.REGISTERED);
+                return orderMenuRepository.save(it);
+            })
+            .orElseThrow(() -> new NotFoundException(OrderMenuExceptionType.NOT_FOUND_EXCEPTION));
     }
 
 }

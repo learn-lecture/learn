@@ -1,7 +1,7 @@
 package org.delivery.api.domain.userorder.dto.resp.info;
 
 import lombok.Getter;
-import org.delivery.api.common.api.ResultType;
+import org.delivery.common.api.ResultType;
 
 @Getter
 public enum UserOrderResponseStatus implements ResultType {

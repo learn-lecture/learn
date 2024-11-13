@@ -1,7 +1,7 @@
 package org.delivery.api.domain.ordermenu.exception;
 
 import lombok.Getter;
-import org.delivery.api.common.api.ResultType;
+import org.delivery.common.api.ResultType;
 
 @Getter
 public enum OrderMenuExceptionType implements ResultType {

@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.common.api;
 
 public interface ResultType {
@@ -6,3 +7,4 @@ public interface ResultType {
 	String getMessage();
 
 }
+*/
