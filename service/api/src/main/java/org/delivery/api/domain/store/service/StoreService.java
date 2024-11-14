@@ -17,7 +17,7 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
 
-    public Store getStoreWithTrhow(final Long id) {
+    public Store getStoreWithThrow(final Long id) {
         return Optional.ofNullable(storeRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreStatus.REGISTERED))
             .orElseThrow(() -> new BadRequestException(StoreExceptionType.NOT_FOUND_EXCEPTION));
     }

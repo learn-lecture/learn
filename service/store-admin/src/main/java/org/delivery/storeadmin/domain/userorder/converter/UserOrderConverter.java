@@ -11,7 +11,7 @@ public class UserOrderConverter {
         return UserOrderResponse.builder()
             .id(userOrder.getId())
             .userId(userOrder.getUserId())
-            .storeId(userOrder.getStoreId())
+            .storeId(userOrder.getStore().getId())
             .status(userOrder.getStatus())
             .amount(userOrder.getAmount())
             .orderedAt(userOrder.getOrderedAt())

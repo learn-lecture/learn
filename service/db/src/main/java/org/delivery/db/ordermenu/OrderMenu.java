@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -12,7 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.delivery.db.BaseEntity;
+import org.delivery.db.order.UserOrder;
 import org.delivery.db.ordermenu.vo.OrderMenuStatus;
+import org.delivery.db.storemenu.StoreMenu;
 
 @Entity
 @Table(name = "order_menu")
@@ -22,11 +26,13 @@ import org.delivery.db.ordermenu.vo.OrderMenuStatus;
 @Getter
 public class OrderMenu extends BaseEntity {
 
-    @Column(nullable = false)
-    private Long userOrderId;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private UserOrder userOrder;
 
-    @Column(nullable = false)
-    private Long storeMenuId;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private StoreMenu storeMenu;
 
     @Setter
     @Column(length = 50, nullable = false, columnDefinition = "varchar(50)")

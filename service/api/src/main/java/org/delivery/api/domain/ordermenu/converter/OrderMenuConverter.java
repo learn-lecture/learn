@@ -13,8 +13,8 @@ public class OrderMenuConverter {
         final StoreMenu storeMenu
     ) {
         return OrderMenu.builder()
-            .userOrderId(userOrder.getId())
-            .storeMenuId(storeMenu.getId())
+            .userOrder(userOrder)
+            .storeMenu(storeMenu)
             .build();
     }
 

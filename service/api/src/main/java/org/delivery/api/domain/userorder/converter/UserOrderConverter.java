@@ -5,20 +5,21 @@ import java.util.List;
 import org.delivery.api.domain.userorder.dto.resp.UserOrderResponse;
 import org.delivery.common.annotation.Converter;
 import org.delivery.db.order.UserOrder;
+import org.delivery.db.store.Store;
 import org.delivery.db.storemenu.StoreMenu;
 import org.delivery.db.user.User;
 
 @Converter
 public class UserOrderConverter {
 
-    public UserOrder toEntity(final User user, final Long storeId, final List<StoreMenu> storeMenus) {
+    public UserOrder toEntity(final User user, final Store store, final List<StoreMenu> storeMenus) {
         final BigDecimal totalAmount = storeMenus.stream()
             .map(StoreMenu::getAmount)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return UserOrder.builder()
             .userId(user.getId())
-            .storeId(storeId)
+            .store(store)
             .amount(totalAmount)
             .build();
     }

@@ -7,15 +7,16 @@ import org.delivery.api.domain.sotremenu.dto.response.StoreMenuResponse;
 import org.delivery.api.domain.sotremenu.exception.StoreMenuExceptionType;
 import org.delivery.common.annotation.Converter;
 import org.delivery.common.exception.model.BadRequestException;
+import org.delivery.db.store.Store;
 import org.delivery.db.storemenu.StoreMenu;
 
 @Converter
 public class StoreMenuConverter {
 
-    public StoreMenu toEntity(final StoreMenuRegisterRequest request) {
+    public StoreMenu toEntity(final StoreMenuRegisterRequest request, final Store store) {
         return Optional.ofNullable(request)
             .map(it -> StoreMenu.builder()
-                .storeId(request.storeId())
+                .store(store)
                 .name(request.name())
                 .amount(request.amount())
                 .thumbnailUrl(request.thumbnailUrl())
@@ -27,7 +28,7 @@ public class StoreMenuConverter {
         return Optional.ofNullable(storeMenu)
             .map(it -> new StoreMenuResponse(
                 storeMenu.getId(),
-                storeMenu.getStoreId(),
+                storeMenu.getStore().getId(),
                 storeMenu.getName(),
                 storeMenu.getAmount(),
                 storeMenu.getStatus(),

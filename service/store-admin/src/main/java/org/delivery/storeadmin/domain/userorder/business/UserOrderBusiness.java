@@ -36,14 +36,14 @@ public class UserOrderBusiness {
         UserOrderResponse userOrderResponse = userOrderConverter.toResponse(userOrder);
         List<StoreMenuResponse> storeMenuResponses = userOrderMenuService.getUserOrderMenus(userOrderId)
             .stream()
-            .map(userOrderMenu -> storeMenuService.getStoreMenuWithThrow(userOrderMenu.getStoreMenuId()))
+            .map(userOrderMenu -> storeMenuService.getStoreMenuWithThrow(userOrderMenu.getStoreMenu().getId()))
             .map(storeMenuConverter::toResponse)
             .toList();
 
         UserOrderDetailResponse response = new UserOrderDetailResponse(userOrderResponse, storeMenuResponses);
         log.info("response = {}", response);
 
-        UserSseConnection connection = userSseConnectionPool.getConnection(userOrder.getStoreId().toString());
+        UserSseConnection connection = userSseConnectionPool.getConnection(userOrder.getStore().getId().toString());
         connection.sendMessage(response);
     }
 }

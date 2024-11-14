@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.delivery.db.BaseEntity;
+import org.delivery.db.store.Store;
 import org.delivery.db.storemenu.vo.StoreMenuStatus;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -24,8 +27,9 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 public class StoreMenu extends BaseEntity {
 
-    @Column(nullable = false)
-    private Long storeId;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private Store store;
 
     @Column(length = 100, nullable = false)
     private String name;
