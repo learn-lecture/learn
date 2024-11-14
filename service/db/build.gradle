@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'org.jetbrains.kotlin.plugin.jpa'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'org.delivery'
@@ -19,6 +21,12 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll '-Xjsr305=strict'
+    }
 }
 
 dependencies {

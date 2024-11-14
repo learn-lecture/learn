@@ -17,7 +17,9 @@ public class StoreMenuService {
     private final StoreMenuRepository storeMenuRepository;
 
     public StoreMenu getStoreMenuWithThrow(final Long id) {
-        return storeMenuRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreMenuStatus.REGISTERED)
+        return Optional.ofNullable(
+                storeMenuRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreMenuStatus.REGISTERED)
+            )
             .orElseThrow(() -> new BadRequestException(StoreMenuExceptionType.INVALID_MENU_EXCEPTION));
     }
 

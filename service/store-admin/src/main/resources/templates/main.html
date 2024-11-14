@@ -37,16 +37,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="order in orders" :key="order.user_order.id">
-            <td>{{ order.user_order.id }}</td>
+        <tr v-for="order in orders" :key="order.userOrder.id">
+            <td>{{ order.userOrder.id }}</td>
             <td>
                 <ul>
-                    <li v-for="item in order.store_menus" :key="item.id">
+                    <li v-for="item in order.storeMenus" :key="item.id">
                         {{ item.name }} {{ item.amount }}
                     </li>
                 </ul>
             </td>
-            <td>{{ order.user_order.status }}</td>
+            <td>{{ order.userOrder.status }}</td>
             <td class="button-container">
                 <button @click="acceptOrder(order)">주문수락</button>
                 <button @click="startCooking(order)">조리시작</button>
@@ -80,7 +80,7 @@
         },
         mounted() {
             // SSE 연결
-            const url = "http://localhost:8081/api/sse/connect";    // 접속주소
+            const url = "http://localhost:8082/api/sse/connect";    // 접속주소
             const eventSource = new EventSource(url);               // sse 연결
 
             eventSource.onopen = event => {

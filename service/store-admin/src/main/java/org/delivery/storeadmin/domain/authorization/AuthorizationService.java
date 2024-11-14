@@ -1,5 +1,6 @@
 package org.delivery.storeadmin.domain.authorization;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.store.Store;
 import org.delivery.db.store.StoreRepository;
@@ -22,21 +23,14 @@ public class AuthorizationService implements UserDetailsService {
     public UserSession loadUserByUsername(final String username) throws UsernameNotFoundException {
         StoreUser user = storeUserService.getRegisterUser(username)
             .orElseThrow(() -> new UsernameNotFoundException(username));
-        Store store = storeRepository.findFirstByIdAndStatusOrderByIdDesc(user.getStoreId(), StoreStatus.REGISTERED)
+        Store store = Optional.ofNullable(
+                storeRepository.findFirstByIdAndStatusOrderByIdDesc(user.getStoreId(), StoreStatus.REGISTERED))
             .orElseThrow(() -> new IllegalArgumentException(username));
 
-        return UserSession.builder()
-            .userId(user.getId())
-            .email(user.getEmail())
-            .password(user.getPassword())
-            .status(user.getStatus())
-            .role(user.getRole())
-            .registeredAt(user.getRegisteredAt())
-            .unregisteredAt(user.getUnregisteredAt())
-            .lastLoginAt(user.getLastLoginAt())
-            .storeId(store.getId())
-            .storeName(store.getName())
-            .build();
+        return UserSession.builder().userId(user.getId()).email(user.getEmail()).password(user.getPassword())
+            .status(user.getStatus()).role(user.getRole()).registeredAt(user.getRegisteredAt())
+            .unregisteredAt(user.getUnregisteredAt()).lastLoginAt(user.getLastLoginAt()).storeId(store.getId())
+            .storeName(store.getName()).build();
     }
 
 }

@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.store;
 
 import java.util.List;
@@ -17,3 +18,4 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findFirstByNameAndStatusOrderByIdDesc(final String name, final StoreStatus status);
 
 }
+*/

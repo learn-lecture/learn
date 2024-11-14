@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.storemenu;
 
 import java.util.List;
@@ -12,3 +13,4 @@ public interface StoreMenuRepository extends JpaRepository<StoreMenu, Long> {
 	List<StoreMenu> findAllByStoreIdAndStatusOrderBySequenceDesc(final Long sotreId, final StoreMenuStatus status);
 
 }
+*/

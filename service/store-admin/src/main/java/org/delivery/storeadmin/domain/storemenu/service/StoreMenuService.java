@@ -1,5 +1,6 @@
 package org.delivery.storeadmin.domain.storemenu.service;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.storemenu.StoreMenu;
 import org.delivery.db.storemenu.StoreMenuRepository;
@@ -13,7 +14,9 @@ public class StoreMenuService {
     private final StoreMenuRepository storeMenuRepository;
 
     public StoreMenu getStoreMenuWithThrow(Long id) {
-        return storeMenuRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreMenuStatus.REGISTERED)
+        return Optional.ofNullable(
+                storeMenuRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreMenuStatus.REGISTERED)
+            )
             .orElseThrow(IllegalArgumentException::new);
     }
 }

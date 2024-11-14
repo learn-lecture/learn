@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.ordermenu;
 
 import java.util.List;
@@ -9,3 +10,4 @@ public interface OrderMenuRepository extends JpaRepository<OrderMenu, Long> {
     List<OrderMenu> findAllByUserOrderIdAndStatus(final Long userOrderId, final OrderMenuStatus status);
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.order;
 
 import java.util.List;
@@ -15,3 +16,4 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Long> {
 
     Optional<UserOrder> findAllByIdAndUserId(Long id, Long userId);
 }
+*/

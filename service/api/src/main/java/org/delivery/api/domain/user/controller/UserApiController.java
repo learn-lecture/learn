@@ -1,5 +1,6 @@
 package org.delivery.api.domain.user.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.delivery.api.domain.user.business.UserBusiness;
 import org.delivery.api.domain.user.controller.model.UserResponse;
@@ -20,7 +21,7 @@ public class UserApiController {
     private final UserBusiness userBusiness;
 
     @GetMapping("/me")
-    public ResponseEntity<Api<UserResponse>> me(@UserSession final User user) {
+    public ResponseEntity<Api<UserResponse>> me(@Parameter(hidden = true) @UserSession final User user) {
         final UserResponse response = userBusiness.me(user);
         return ResponseEntity.ok(Api.ok(UserDtoStatus.USER_PROFILE_SUCCESS, response));
     }

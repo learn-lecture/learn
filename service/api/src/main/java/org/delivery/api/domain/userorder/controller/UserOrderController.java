@@ -1,5 +1,6 @@
 package org.delivery.api.domain.userorder.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.delivery.api.domain.userorder.business.UserOrderBusiness;
@@ -28,7 +29,7 @@ public class UserOrderController {
     @PostMapping
     public ResponseEntity<Api<UserOrderResponse>> userOrder(
         @RequestBody final UserOrderRequest request,
-        @UserSession final User user
+        @Parameter(hidden = true) @UserSession final User user
     ) {
         return ResponseEntity.ok(Api.ok(
             UserOrderResponseStatus.USER_ORDER_SUCCESS,
@@ -38,7 +39,7 @@ public class UserOrderController {
 
     @GetMapping("/current")
     public ResponseEntity<Api<List<UserOrderDetailResponse>>> current(
-        @UserSession final User user
+        @Parameter(hidden = true) @UserSession final User user
     ) {
         final List<UserOrderDetailResponse> response = userOrderBusiness.current(user);
         return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_CURRENT_SUCCESS, response));
@@ -46,7 +47,7 @@ public class UserOrderController {
 
     @GetMapping("/history")
     public ResponseEntity<Api<List<UserOrderDetailResponse>>> history(
-        @UserSession final User user
+        @Parameter(hidden = true) @UserSession final User user
     ) {
         final List<UserOrderDetailResponse> response = userOrderBusiness.history(user);
         return ResponseEntity.ok(Api.ok(UserOrderResponseStatus.GET_HISTORY_SUCCESS, response));
@@ -54,7 +55,7 @@ public class UserOrderController {
 
     @GetMapping("/id/{orderId}")
     public ResponseEntity<Api<UserOrderDetailResponse>> read(
-        @UserSession final User user,
+        @Parameter(hidden = true) @UserSession final User user,
         @PathVariable final Long orderId
     ) {
         final UserOrderDetailResponse response = userOrderBusiness.read(user, orderId);

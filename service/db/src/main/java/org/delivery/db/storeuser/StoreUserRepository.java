@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.storeuser;
 
 import java.util.Optional;
@@ -9,3 +10,4 @@ public interface StoreUserRepository extends JpaRepository<StoreUser, Long> {
     Optional<StoreUser> findFirstByEmailAndStatusOrderByIdDesc(String email, StoreUserStatus status);
 
 }
+*/

@@ -33,15 +33,15 @@ public class UserService {
     }
 
     private User getUserWithThrow(final String email, final String password) {
-        return repository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
+        return Optional.ofNullable(repository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
             email,
             password,
             UserStatus.REGISTERED
-        ).orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
+        )).orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
     }
 
     public User getUserWithThrow(final Long userId) {
-        return repository.findFirstByIdAndStatusOrderByIdDesc(userId, UserStatus.REGISTERED)
+        return Optional.ofNullable(repository.findFirstByIdAndStatusOrderByIdDesc(userId, UserStatus.REGISTERED))
             .orElseThrow(() -> new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION));
     }
 

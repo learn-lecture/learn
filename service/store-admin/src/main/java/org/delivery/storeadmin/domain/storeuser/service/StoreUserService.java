@@ -25,7 +25,9 @@ public class StoreUserService {
     }
 
     public Optional<StoreUser> getRegisterUser(final String email) {
-        return storeUserRepository.findFirstByEmailAndStatusOrderByIdDesc(email, StoreUserStatus.REGISTERED);
+        return Optional.ofNullable(
+            storeUserRepository.findFirstByEmailAndStatusOrderByIdDesc(email, StoreUserStatus.REGISTERED)
+        );
     }
 
 }

@@ -1,5 +1,6 @@
 package org.delivery.storeadmin.domain.storeuser.business;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.delivery.db.store.Store;
 import org.delivery.db.store.StoreRepository;
@@ -23,7 +24,9 @@ public class StoreUserBusiness {
         StoreUserRegisterRequest request
     ) {
         String storeName = request.storeName();
-        Store store = storeRepository.findFirstByNameAndStatusOrderByIdDesc(storeName, StoreStatus.REGISTERED)
+        Store store = Optional.ofNullable(
+                storeRepository.findFirstByNameAndStatusOrderByIdDesc(storeName, StoreStatus.REGISTERED)
+            )
             .orElseThrow(IllegalAccessError::new);
 
         StoreUser storeUser = storeUserConverter.toEntity(request, store);
