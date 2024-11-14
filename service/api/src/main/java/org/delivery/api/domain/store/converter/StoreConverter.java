@@ -1,10 +1,10 @@
 package org.delivery.api.domain.store.converter;
 
 import java.util.Optional;
-import org.delivery.api.common.annotation.Converter;
 import org.delivery.api.domain.store.dto.request.StoreRegisterRequest;
 import org.delivery.api.domain.store.dto.response.StoreResponse;
 import org.delivery.api.domain.store.exception.StoreExceptionType;
+import org.delivery.common.annotation.Converter;
 import org.delivery.common.exception.model.BadRequestException;
 import org.delivery.db.store.Store;
 

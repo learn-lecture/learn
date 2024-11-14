@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.common.annotation;
 
 import java.lang.annotation.ElementType;
@@ -17,3 +18,4 @@ public @interface Converter {
 	String value() default "";
 
 }
+*/

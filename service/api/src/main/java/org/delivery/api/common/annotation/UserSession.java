@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.common.annotation;
 
 import java.lang.annotation.ElementType;
@@ -12,3 +13,4 @@ import io.swagger.v3.oas.annotations.Hidden;
 @Target(ElementType.PARAMETER)
 public @interface UserSession {
 }
+*/

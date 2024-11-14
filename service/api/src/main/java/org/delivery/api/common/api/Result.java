@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.common.api;
 
 import org.delivery.common.api.ResultType;
@@ -12,3 +13,4 @@ public record Result(
     }
 
 }
+*/
