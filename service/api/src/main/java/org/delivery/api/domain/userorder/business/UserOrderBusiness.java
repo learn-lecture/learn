@@ -42,6 +42,7 @@ public class UserOrderBusiness {
     public UserOrderResponse userOrder(final UserOrderRequest request, final User user) {
         final List<StoreMenu> storeMenus = getStoreMenus(request);
         final Store store = storeService.getStoreWithThrow(request.storeId());
+        log.info("user: {}", user);
         final UserOrder order = userOrderConverter.toEntity(user, store, storeMenus);
         final UserOrder orderResult = userOrderService.order(order);
 

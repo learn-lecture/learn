@@ -1,3 +1,4 @@
+/*
 package org.delivery.db.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,3 +72,4 @@ public class UserOrder extends BaseEntity {
     private List<OrderMenu> userOrderMenus = new ArrayList<>();
 
 }
+*/

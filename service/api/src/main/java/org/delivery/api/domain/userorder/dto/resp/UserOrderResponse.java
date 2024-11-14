@@ -1,3 +1,4 @@
+/*
 package org.delivery.api.domain.userorder.dto.resp;
 
 import java.math.BigDecimal;
@@ -15,3 +16,4 @@ public record UserOrderResponse(
         LocalDateTime receivedAt
 ) {
 }
+*/

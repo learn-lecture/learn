@@ -9,12 +9,15 @@ import org.delivery.common.exception.model.NotFoundException;
 import org.delivery.db.order.UserOrder;
 import org.delivery.db.order.UserOrderRepository;
 import org.delivery.db.order.vo.UserOrderStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class UserOrderService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserOrderService.class);
     private final UserOrderRepository userOrderRepository;
 
     public UserOrder getUserOrderWithOutStatusWithThrow(final Long id, final Long userId) {
@@ -41,6 +44,7 @@ public class UserOrderService {
     public UserOrder order(final UserOrder userOrder) {
         return Optional.ofNullable(userOrder)
             .map(it -> {
+                log.info("userOrder: {}", it);
                 it.setStatus(UserOrderStatus.ORDER);
                 it.setOrderedAt(LocalDateTime.now());
                 return userOrderRepository.save(it);

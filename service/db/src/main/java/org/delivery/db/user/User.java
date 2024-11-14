@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.delivery.db.BaseEntity;
 import org.delivery.db.user.vo.UserStatus;
@@ -21,6 +22,7 @@ import org.delivery.db.user.vo.UserStatus;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@ToString(callSuper = true)
 public class User extends BaseEntity {
 
     @Column(length = 50, nullable = false)
