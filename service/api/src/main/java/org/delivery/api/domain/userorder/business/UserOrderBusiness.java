@@ -20,11 +20,15 @@ import org.delivery.db.ordermenu.OrderMenu;
 import org.delivery.db.store.Store;
 import org.delivery.db.storemenu.StoreMenu;
 import org.delivery.db.user.User;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
 @Business
 public class UserOrderBusiness {
 
+    private static final Logger log = LoggerFactory.getLogger(UserOrderBusiness.class);
     private final UserOrderService userOrderService;
     private final UserOrderConverter userOrderConverter;
     private final StoreMenuService storeMenuService;
@@ -36,10 +40,8 @@ public class UserOrderBusiness {
     private final UserOrderProducer userOrderProducer;
 
     public UserOrderResponse userOrder(final UserOrderRequest request, final User user) {
-        final List<StoreMenu> storeMenus = request.storeMenus().stream()
-            .map(storeMenuService::getStoreMenuWithThrow)
-            .toList();
-        Store store = storeService.getStoreWithThrow(request.storeId());
+        final List<StoreMenu> storeMenus = getStoreMenus(request);
+        final Store store = storeService.getStoreWithThrow(request.storeId());
         final UserOrder order = userOrderConverter.toEntity(user, store, storeMenus);
         final UserOrder orderResult = userOrderService.order(order);
 
@@ -53,51 +55,43 @@ public class UserOrderBusiness {
         return userOrderConverter.toResponse(orderResult);
     }
 
+    private List<StoreMenu> getStoreMenus(UserOrderRequest request) {
+        return request.storeMenus()
+            .stream()
+            .map(storeMenuService::getStoreMenuWithThrow)
+            .toList();
+    }
+
     public List<UserOrderDetailResponse> current(final User user) {
-        var current = userOrderService.current(user.getId());
-        return current.stream().map(it -> {
-            var orderMenu = orderMenuService.getOrderMenu(it.getId());
-            var storeMenus = orderMenu.stream()
-                .map(orderMenuEntity ->
-                    storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenu().getId()))
-                .toList();
-            var store = storeService.getStoreWithThrow(storeMenus.stream().findFirst().get().getStore().getId());
-            return new UserOrderDetailResponse(
-                userOrderConverter.toResponse(it),
-                storeConverter.toResponse(store),
-                storeMenuConverter.toResponse(storeMenus)
-            );
-        }).toList();
+        return userOrderService.current(user.getId())
+            .stream()
+            .map(this::getUserOrderDetailResponse)
+            .toList();
     }
 
     public List<UserOrderDetailResponse> history(final User user) {
-        var history = userOrderService.history(user.getId());
-        return history.stream().map(it -> {
-            var orderMenu = orderMenuService.getOrderMenu(it.getId());
-            var storeMenus = orderMenu.stream()
-                .map(orderMenuEntity ->
-                    storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenu().getId()))
-                .toList();
-            var store = storeService.getStoreWithThrow(storeMenus.stream().findFirst().get().getStore().getId());
-            return new UserOrderDetailResponse(
-                userOrderConverter.toResponse(it),
-                storeConverter.toResponse(store),
-                storeMenuConverter.toResponse(storeMenus)
-            );
-        }).toList();
+        return userOrderService.history(user.getId())
+            .stream()
+            .map(this::getUserOrderDetailResponse)
+            .toList();
     }
 
     public UserOrderDetailResponse read(final User user, final Long orderId) {
-        var userOrder = userOrderService.getUserOrderWithOutStatusWithThrow(orderId, user.getId());
-        var orderMenu = orderMenuService.getOrderMenu(userOrder.getId());
-        var storeMenus = orderMenu.stream()
-            .map(orderMenuEntity -> storeMenuService.getStoreMenuWithThrow(orderMenuEntity.getStoreMenu().getId()))
+        return getUserOrderDetailResponse(
+            userOrderService.getUserOrderWithOutStatusWithThrow(orderId, user.getId())
+        );
+    }
+
+    @NotNull
+    private UserOrderDetailResponse getUserOrderDetailResponse(UserOrder userOrder) {
+        final var storeMenus = userOrder.getUserOrderMenus()
+            .stream()
+            .map(OrderMenu::getStoreMenu)
             .toList();
-        var store = storeService.getStoreWithThrow(storeMenus.stream().findFirst().get().getStore().getId());
 
         return new UserOrderDetailResponse(
             userOrderConverter.toResponse(userOrder),
-            storeConverter.toResponse(store),
+            storeConverter.toResponse(userOrder.getStore()),
             storeMenuConverter.toResponse(storeMenus)
         );
     }
