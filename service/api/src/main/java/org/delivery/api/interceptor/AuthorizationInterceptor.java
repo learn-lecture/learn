@@ -6,8 +6,8 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.delivery.api.domain.token.controller.business.TokenBusiness;
-import org.delivery.api.domain.token.exception.TokenExceptionType;
-import org.delivery.common.exception.model.BadRequestException;
+import org.delivery.api.domain.user.exception.UserExceptionType;
+import org.delivery.common.exception.model.NotFoundException;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -40,13 +40,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         }
 
         // TODO handler 검증
-        final String accessToken = generatedAccessToken(request);
-
-        if (accessToken == null) {
-            throw new BadRequestException(TokenExceptionType.NOTFOUND_TOKEN_EXCEPTION);
+        //final String accessToken = generatedAccessToken(request);
+        final String userId = request.getHeader("x-user-id");
+        if (userId == null) {
+            throw new NotFoundException(UserExceptionType.NOT_FOUND_EXCEPTION);
         }
 
-        final Long userId = tokenBusiness.validationToken(accessToken);
+        //final Long userId = tokenBusiness.validationToken(accessToken);
         final RequestAttributes context = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
         context.setAttribute("userId", userId, RequestAttributes.SCOPE_REQUEST);
 

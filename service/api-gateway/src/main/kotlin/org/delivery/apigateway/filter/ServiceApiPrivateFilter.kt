@@ -22,7 +22,9 @@ import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 @Component
-class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFilter.Config>(Config::class.java) {
+class ServiceApiPrivateFilter(
+    private val webClient: WebClient
+) : AbstractGatewayFilterFactory<ServiceApiPrivateFilter.Config>(Config::class.java) {
 
     companion object : Log
 
@@ -39,6 +41,9 @@ class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFi
 
 
             // 토큰 유효성 검증
+            val request = TokenValidationRequest(tokenDto = TokenDto(token = token, expiredAt = LocalDateTime.now()))
+            log.info("\ntoken:{}\nrequest: {}", token, request);
+
             val accountApiUrl = UriComponentsBuilder.fromUriString("http://localhost")
                 .port(8083)
                 .path("/internal-api/token/validation")
@@ -46,11 +51,8 @@ class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFi
                 .encode()
                 .toUriString()
 
-            val webClient = WebClient.builder().baseUrl(accountApiUrl).build()
-            val request = TokenValidationRequest(tokenDto = TokenDto(token = token, expiredAt = LocalDateTime.now()))
-            log.info("\ntoken:{}\nrequest: {}", token, request);
-
             webClient.post()
+                .uri(accountApiUrl)
                 .body(Mono.just(request), object : ParameterizedTypeReference<TokenValidationRequest>() {})
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
@@ -70,12 +72,24 @@ class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFi
                 .flatMap { response ->
                     log.info("response: {}", response)
                     // 사용자 정보 추가
-                    val mono = chain.filter(exchange)
+                    val userId = response.userId?.toString()
+                    val proxyRequest = exchange.request
+                        .mutate()
+                        .header("x-user-id", userId)
+                        .build()
+
+                    val requestBuild = exchange.mutate()
+                        .request(proxyRequest)
+                        .build();
+
+                    val mono = chain.filter(requestBuild)
                     mono
                 }
-
+                .onErrorMap { e ->
+                    log.error("error: {}", e)
+                    e
+                }
         }
-
     }
 
     private fun generatedAccessToken(request: ServerHttpRequest): String? {
