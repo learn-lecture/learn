@@ -12,7 +12,9 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
+import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.stereotype.Component
+import org.springframework.util.StringUtils
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
@@ -32,14 +34,9 @@ class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFi
             val uri = exchange.request.uri
             log.info("service api private filter route uri: {}", uri)
 
-            val headers = exchange.request.headers["Authorization"] ?: listOf()
-
-            if (headers.isEmpty()) {
-                throw NotFoundException(TokenException.NOT_FOUND_TOKEN)
-            }
-
-            val token = headers.first()
+            val token = generatedAccessToken(exchange.request)
             log.info("Authorization: {}", token)
+
 
             // 토큰 유효성 검증
             val accountApiUrl = UriComponentsBuilder.fromUriString("http://localhost")
@@ -79,6 +76,24 @@ class ServiceApiPrivateFilter : AbstractGatewayFilterFactory<ServiceApiPrivateFi
 
         }
 
+    }
+
+    private fun generatedAccessToken(request: ServerHttpRequest): String? {
+        val accessToken = getHeaders(request).first()
+
+        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
+            return accessToken.split(" ")[1]
+        }
+        throw NotFoundException(TokenException.NOT_FOUND_TOKEN)
+    }
+
+    private fun getHeaders(request: ServerHttpRequest): List<String> {
+        val headers = request.headers["Authorization"] ?: listOf()
+
+        if (headers.isEmpty()) {
+            throw NotFoundException(TokenException.NOT_FOUND_TOKEN)
+        }
+        return headers
     }
 
 }
