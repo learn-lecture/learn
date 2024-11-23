@@ -17,7 +17,7 @@ class TokenInternalApiController(
 
     companion object : Log
 
-    @PostMapping(value = ["/token"])
+    @PostMapping(value = ["/validation"])
     fun tokenValidation(
         @RequestBody
         tokenValidationRequest: TokenValidationRequest?
