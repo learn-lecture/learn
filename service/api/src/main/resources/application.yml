@@ -1,7 +1,20 @@
 server:
   name: delivery-api
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 spring:
+  boot:
+    admin:
+      client:
+        url:
+          - http://localhost:8085
   rabbitmq:
     username: admin
     password: admin123!@#
@@ -26,3 +39,8 @@ token:
     plus-hour: 3600000
   refresh-token:
     plus-hour: 43200000
+
+logging:
+  config: classpath:logback.xml
+  file:
+    name: logFile.log

@@ -22,7 +22,8 @@ class WebConfig(
     private val DEFAULT_EXCLUDE = listOf(
         "/",
         "favicon.ico",
-        "/error"
+        "/error",
+        "/actuator/**"
     )
 
     private val SWAGGER = listOf(
