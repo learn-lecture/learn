@@ -7,8 +7,15 @@ management:
       exposure:
         include: "*"
   endpoint:
+    prometheus:
+      enabled: true
     health:
       show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 spring:
   boot:
     admin:
