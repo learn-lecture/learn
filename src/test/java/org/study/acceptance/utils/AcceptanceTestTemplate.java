@@ -22,4 +22,12 @@ public class AcceptanceTestTemplate {
         loader.loadData();
     }
 
+    protected String getEmailToken(String email) {
+        return loader.getEmailToken(email);
+    }
+
+    protected void cleanUp() {
+        cleanUp.execute();
+    }
+
 }
