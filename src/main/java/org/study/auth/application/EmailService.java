@@ -2,6 +2,7 @@ package org.study.auth.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.auth.application.dto.SendEmailRequestDto;
 import org.study.auth.application.interfaces.EmailSendRepository;
 import org.study.auth.application.interfaces.EmailVerificationRepository;
@@ -21,6 +22,11 @@ public class EmailService {
 
         emailSendRepository.sendEmail(email, token);
         emailVerificationRepository.createEmailVerification(email, token);
+    }
+
+    public void verifyEmail(String email, String token) {
+        Email emailValue = Email.createEmail(email);
+        emailVerificationRepository.verifyEmail(emailValue, token);
     }
 
 }

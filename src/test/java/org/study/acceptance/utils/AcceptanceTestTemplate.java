@@ -30,4 +30,8 @@ public class AcceptanceTestTemplate {
         cleanUp.execute();
     }
 
+    protected boolean isEmailVerified(String email) {
+        return loader.isEmailVerified(email);
+    }
+
 }

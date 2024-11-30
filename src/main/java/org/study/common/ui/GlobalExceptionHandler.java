@@ -1,6 +1,7 @@
 package org.study.common.ui;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.study.common.domain.exception.ErrorCode;
@@ -9,7 +10,7 @@ import org.study.common.domain.exception.ErrorCode;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalArgumentException.class, InvalidDataAccessApiUsageException.class})
     public Response<Void> handleIllegalArgumentException() {
         return Response.error(ErrorCode.INVALID_INPUT_VALUE);
     }

@@ -18,4 +18,15 @@ public class SignUpAcceptanceSteps {
                 .jsonPath().get("code");
     }
 
+    public static Integer requestVerifyEmail(String email, String token) {
+        return RestAssured.given().log().all()
+                .queryParam("email", email)
+                .queryParam("token", token)
+                .when()
+                .get("/signup/verify-token")
+                .then()
+                .extract()
+                .jsonPath().get("code");
+    }
+
 }
