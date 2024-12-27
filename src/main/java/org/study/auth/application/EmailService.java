@@ -2,7 +2,6 @@ package org.study.auth.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.study.auth.application.dto.SendEmailRequestDto;
 import org.study.auth.application.interfaces.EmailSendRepository;
 import org.study.auth.application.interfaces.EmailVerificationRepository;

@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.study.acceptance.steps.SignUpAcceptanceSteps.registerUser;
 import static org.study.acceptance.steps.SignUpAcceptanceSteps.requestSendEmail;
 import static org.study.acceptance.steps.SignUpAcceptanceSteps.requestVerifyEmail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.study.acceptance.utils.AcceptanceTestTemplate;
+import org.study.auth.application.dto.CreateUserAuthRequestDto;
 import org.study.auth.application.dto.SendEmailRequestDto;
 
 public class SignUpAcceptanceTest extends AcceptanceTestTemplate {
@@ -91,7 +93,7 @@ public class SignUpAcceptanceTest extends AcceptanceTestTemplate {
     }
 
     @Test
-    void givenSendEmailVerified_whenVerifyAgain_thenThrowError2() {
+    void givenSendUnVerifiedEmail_whenVerify_thenThrowError() {
         // given
         // when
         Integer code = requestVerifyEmail("test@email.test", "token");
@@ -107,6 +109,36 @@ public class SignUpAcceptanceTest extends AcceptanceTestTemplate {
 
         // when
         Integer code = requestVerifyEmail("wrong Email", "token");
+
+        // then
+        assertEquals(400, code);
+    }
+
+    @Test
+    void givenVerifiedEmail_whenRegister_thenUserRegistered() {
+        // given
+        requestSendEmail(new SendEmailRequestDto(email));
+        String token = getEmailToken(email);
+        requestVerifyEmail(email, token);
+
+        // when
+        CreateUserAuthRequestDto dto = new CreateUserAuthRequestDto(email, "password", "USER", "name", "imageUrl");
+        Integer code = registerUser(dto);
+
+        // then
+        assertEquals(0, code);
+        Long userId = getUserId(email);
+        assertEquals(1L, userId);
+    }
+
+    @Test
+    void givenUnverifiedEmail_whenRegister_thenThrowError() {
+        // given
+        requestSendEmail(new SendEmailRequestDto(email));
+
+        // when
+        CreateUserAuthRequestDto dto = new CreateUserAuthRequestDto(email, "password", "USER", "name", "imageUrl");
+        Integer code = registerUser(dto);
 
         // then
         assertEquals(400, code);

@@ -30,16 +30,16 @@ public class EmailVerificationRepositoryImpl implements EmailVerificationReposit
     @Transactional
     public void verifyEmail(Email email, String token) {
         EmailVerificationEntity emailVerificationEntity = getEmailVerificationEntityWithThrow(email.getEmailText());
-        if (!emailVerificationEntity.hasSameToken(token)) {
-            throw new IllegalArgumentException("토큰 값이 유효하지 않습니다.");
-        }
-        //Assert.isTrue(emailVerificationEntity.hasSameToken(token), "토큰 값이 유효하지 않습니다.");
-        if (emailVerificationEntity.isVerified()) {
-            throw new IllegalArgumentException("이미 인증된 이메일입니다.");
-        }
-//ㅂ        Assert.isFalse(emailVerificationEntity.isVerified(), "이미 인증된 이메일입니다.");
+        Assert.isTrue(emailVerificationEntity.hasSameToken(token), "토큰 값이 유효하지 않습니다.");
+        Assert.isFalse(emailVerificationEntity.isVerified(), "이미 인증된 이메일입니다.");
 
         emailVerificationEntity.verity();
+    }
+
+    @Override
+    public boolean isEmailVerified(Email email) {
+        EmailVerificationEntity emailVerificationEntity = getEmailVerificationEntityWithThrow(email.getEmailText());
+        return emailVerificationEntity.isVerified();
     }
 
     private EmailVerificationEntity getEmailVerificationEntityWithThrow(String emailAddress) {
