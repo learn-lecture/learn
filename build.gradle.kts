@@ -25,6 +25,11 @@ dependencies {
     implementation ("org.projectlombok:lombok")
     annotationProcessor ("org.projectlombok:lombok")
 
+    // jwt
+    implementation ("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
     // querydsl
     implementation ("com.querydsl:querydsl-jpa:5.1.0:jakarta")
     annotationProcessor ("com.querydsl:querydsl-apt:5.1.0:jakarta")

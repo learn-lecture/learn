@@ -1,12 +1,15 @@
 package org.study.acceptance.utils;
 
-import static org.study.acceptance.steps.UserAcceptanceSteps.createUser;
+import static org.study.acceptance.steps.SignUpAcceptanceSteps.registerUser;
+import static org.study.acceptance.steps.SignUpAcceptanceSteps.requestSendEmail;
+import static org.study.acceptance.steps.SignUpAcceptanceSteps.requestVerifyEmail;
 import static org.study.acceptance.steps.UserAcceptanceSteps.followUser;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
-import org.study.user.application.dto.CreateUserRequestDto;
+import org.study.auth.application.dto.CreateUserAuthRequestDto;
+import org.study.auth.application.dto.SendEmailRequestDto;
 import org.study.user.application.dto.FollowUserRequestDto;
 
 @Component
@@ -16,10 +19,9 @@ public class DataLoader {
     private EntityManager entityManager;
 
     public void loadData() {
-        CreateUserRequestDto dto = new CreateUserRequestDto("test", "");
-        createUser(dto);
-        createUser(dto);
-        createUser(dto);
+        for (int i = 1; i <= 3; i++) {
+            createUser("user" + i + "@test.com");
+        }
 
         followUser(new FollowUserRequestDto(1L, 2L));
         followUser(new FollowUserRequestDto(1L, 3L));
@@ -50,6 +52,13 @@ public class DataLoader {
                 )
                 .setParameter(1, email)
                 .getSingleResult();
+    }
+
+    public void createUser(String email) {
+        requestSendEmail(new SendEmailRequestDto(email));
+        String token = getEmailToken(email);
+        requestVerifyEmail(email, token);
+        registerUser(new CreateUserAuthRequestDto(email, "password", "USER", "name", ""));
     }
 
 }
