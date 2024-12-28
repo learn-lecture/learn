@@ -13,7 +13,7 @@ public class LoginAcceptanceSteps {
                 .body(dto)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .post("login")
+                .post("/login")
                 .then()
                 .extract()
                 .jsonPath()

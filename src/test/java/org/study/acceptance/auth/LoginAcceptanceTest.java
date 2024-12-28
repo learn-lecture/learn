@@ -12,7 +12,7 @@ import org.study.auth.application.dto.LoginRequestDto;
 
 public class LoginAcceptanceTest extends AcceptanceTestTemplate {
 
-    private final String email = "email@email.com";
+    private final String email = "email1@email.com";
 
     @BeforeEach
     void setUp() {

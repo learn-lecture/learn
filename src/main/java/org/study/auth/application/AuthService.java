@@ -3,9 +3,12 @@ package org.study.auth.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.study.auth.application.dto.CreateUserAuthRequestDto;
+import org.study.auth.application.dto.LoginRequestDto;
+import org.study.auth.application.dto.UserAccessTokenResponseDto;
 import org.study.auth.application.interfaces.EmailVerificationRepository;
 import org.study.auth.application.interfaces.UserAuthRepository;
 import org.study.auth.domain.Email;
+import org.study.auth.domain.TokenProvider;
 import org.study.auth.domain.UserAuth;
 import org.study.user.domain.User;
 
@@ -15,6 +18,7 @@ public class AuthService {
 
     private final UserAuthRepository userAuthRepository;
     private final EmailVerificationRepository emailVerificationRepository;
+    private final TokenProvider tokenProvider;
 
     public Long registerUser(CreateUserAuthRequestDto dto) {
         validateEmailVerification(dto);
@@ -24,6 +28,12 @@ public class AuthService {
         userAuth = userAuthRepository.registerUser(userAuth, user);
 
         return userAuth.getUserId();
+    }
+
+    public UserAccessTokenResponseDto login(LoginRequestDto dto) {
+        UserAuth userAuth = userAuthRepository.loginUser(dto.email(), dto.password());
+        String token = tokenProvider.createToken(userAuth.getUserId(), userAuth.getUserRole());
+        return new UserAccessTokenResponseDto(token);
     }
 
     private void validateEmailVerification(CreateUserAuthRequestDto dto) {
