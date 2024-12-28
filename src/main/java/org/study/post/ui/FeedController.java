@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.study.common.principle.AuthPrinciple;
+import org.study.common.principle.UserPrinciple;
 import org.study.common.ui.Response;
 import org.study.post.repository.postqueue.UserPostQueueQueryRepository;
 import org.study.post.ui.dto.GetPostContentResponseDto;
@@ -17,13 +19,12 @@ public class FeedController {
 
     private final UserPostQueueQueryRepository queueQueryRepository;
 
-    @GetMapping("/{userId}")
+    @GetMapping("")
     public Response<List<GetPostContentResponseDto>> getPostFeed(
-        @PathVariable Long userId,
+        @AuthPrinciple UserPrinciple principle,
         Long lastPostId
     ) {
-        List<GetPostContentResponseDto> response = queueQueryRepository.getContentResponse(userId, lastPostId);
-        return Response.ok(response);
+        return Response.ok(queueQueryRepository.getContentResponse(principle.getUserId(), lastPostId));
     }
 
 }
