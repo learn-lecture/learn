@@ -26,10 +26,14 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
     }
 
     @Override
+    @Transactional
     public UserAuth loginUser(String email, String password) {
         UserAuthEntity userAuthEntity = getUserAuthEntityWithThrow(email);
         UserAuth userAuth = userAuthEntity.toUserAuth();
+
         validatePassword(password, userAuth);
+
+        userAuthEntity.updateLastLoginAt();
         return userAuth;
     }
 

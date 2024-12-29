@@ -12,12 +12,16 @@ public class Password {
     }
 
     public static Password createEncryptPassword(String password) {
-        Assert.hasText(password, "패스워드는 빈 값 일 수 없습니다.");
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("패스워드는 빈 값 일 수 없습니다.");
+        }
         return new Password(SHA256.encrypt(password));
     }
 
     public static Password createPassword(String password) {
-        Assert.hasText(password, "패스워드는 빈 값 일 수 없습니다.");
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("패스워드는 빈 값 일 수 없습니다.");
+        }
         return new Password(password);
     }
 

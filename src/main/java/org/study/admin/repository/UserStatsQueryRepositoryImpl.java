@@ -7,10 +7,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.study.admin.ui.dto.GetDailyRegisterUserResponseDto;
+import org.study.admin.ui.dto.users.GetDailyRegisterUserResponseDto;
 import org.study.admin.ui.query.UserStatsQueryRepository;
-import org.study.common.TimeCalculator;
-import org.study.user.repository.entity.QUserEntity;
+import org.study.common.utils.TimeCalculator;
 
 @Repository
 @RequiredArgsConstructor

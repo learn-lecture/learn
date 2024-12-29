@@ -15,8 +15,12 @@ public class Email {
     }
 
     public static Email createEmail(String email) {
-        Assert.hasText(email, "email is not valid");
-        Assert.isTrue(PATTERN.matcher(email).matches(), "email is not valid");
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("email은 빈 값 일 수 없습니다.");
+        }
+        if (!PATTERN.matcher(email).matches()) {
+            throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
+        }
 
         return new Email(email);
     }

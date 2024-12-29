@@ -1,6 +1,7 @@
 package org.study.post.repository;
 
 import java.util.List;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.study.post.repository.entity.post.PostEntity;
 import org.study.post.repository.postqueue.UserQueueRedisRepository;

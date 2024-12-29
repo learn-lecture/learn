@@ -30,8 +30,11 @@ public class EmailVerificationRepositoryImpl implements EmailVerificationReposit
     @Transactional
     public void verifyEmail(Email email, String token) {
         EmailVerificationEntity emailVerificationEntity = getEmailVerificationEntityWithThrow(email.getEmailText());
-        Assert.isTrue(emailVerificationEntity.hasSameToken(token), "토큰 값이 유효하지 않습니다.");
-        Assert.isFalse(emailVerificationEntity.isVerified(), "이미 인증된 이메일입니다.");
+
+        if (!emailVerificationEntity.hasSameToken(token)) {
+            throw new IllegalArgumentException("토큰 값이 유효하지 않습니다.");
+        }
+        validateAlreadyVerify(emailVerificationEntity);
 
         emailVerificationEntity.verity();
     }
@@ -50,11 +53,17 @@ public class EmailVerificationRepositoryImpl implements EmailVerificationReposit
     private boolean checkAlreadyVerification(String token, String emailAddress) {
         return jpaEmailVerificationRepository.findByEmail(emailAddress)
                 .map(entity -> {
-                    Assert.isFalse(entity.isVerified(), "이미 인증된 이메일입니다.");
+                    validateAlreadyVerify(entity);
                     entity.updateToken(token);
                     return true;
                 })
                 .orElse(false);
+    }
+
+    private static void validateAlreadyVerify(EmailVerificationEntity entity) {
+        if (entity.isVerified()) {
+            throw new IllegalArgumentException("이미 인증된 이메일입니다.");
+        }
     }
 
 }

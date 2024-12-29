@@ -11,7 +11,8 @@ import org.study.common.domain.exception.ErrorCode;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({IllegalArgumentException.class, InvalidDataAccessApiUsageException.class})
-    public Response<Void> handleIllegalArgumentException() {
+    public Response<Void> handleIllegalArgumentException(Exception e) {
+        log.error("error ==> {}", e);
         return Response.error(ErrorCode.INVALID_INPUT_VALUE);
     }
 
