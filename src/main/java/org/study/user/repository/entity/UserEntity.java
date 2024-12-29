@@ -1,14 +1,18 @@
 package org.study.user.repository.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
 import org.study.common.domain.PositiveIntegerCounter;
 import org.study.common.repository.entity.TimeBaseEntity;
 import org.study.user.domain.User;
@@ -29,6 +33,10 @@ public class UserEntity extends TimeBaseEntity {
     private String profileImage;
     private Integer followerCount;
     private Integer followingCount;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDate regDate;
 
     public UserEntity(User user) {
         this.id = user.getId();
