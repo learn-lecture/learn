@@ -7,6 +7,7 @@ import org.study.post.repository.entity.post.PostEntity;
 import org.study.post.repository.postqueue.UserQueueRedisRepository;
 
 @Repository
+@Profile({"!test"})
 public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository {
 
     @Override
