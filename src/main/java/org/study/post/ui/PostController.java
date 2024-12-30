@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.study.common.idempotency.Idempotent;
 import org.study.common.ui.Response;
 import org.study.post.application.PostService;
 import org.study.post.application.dto.CreatePostRequestDto;
@@ -36,12 +37,14 @@ public class PostController {
         return Response.ok(post.getId());
     }
 
+    @Idempotent
     @PostMapping("/like")
     public Response<Void> likePost(@RequestBody LikeRequestDto dto) {
         postService.likePost(dto);
         return Response.ok(null);
     }
 
+    @Idempotent
     @PostMapping("/unlike")
     public Response<Void> unlikePost(@RequestBody LikeRequestDto dto) {
         postService.unlikePost(dto);
