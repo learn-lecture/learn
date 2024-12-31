@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.study.auth.domain.UserAuth;
 import org.study.common.repository.entity.TimeBaseEntity;
 
@@ -15,6 +16,7 @@ import org.study.common.repository.entity.TimeBaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@DynamicUpdate
 public class UserAuthEntity extends TimeBaseEntity {
 
     @Id

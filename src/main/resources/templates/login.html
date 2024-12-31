@@ -11,6 +11,13 @@
 
   // Firebase configuration
   const firebaseConfig = {
+    apiKey: "AIzaSyA9Cbzmz_nEUKZu76OzRUk1fr_cBoYZ0oA",
+    authDomain: "community-service-79c21.firebaseapp.com",
+    projectId: "community-service-79c21",
+    storageBucket: "community-service-79c21.firebasestorage.app",
+    messagingSenderId: "424022109712",
+    appId: "1:424022109712:web:9e4b7345c6a66b7bbde495",
+    measurementId: "G-5QSQHT3MHC"
   };
 
   // Initialize Firebase
@@ -20,7 +27,7 @@
   // Function to retrieve FCM token
   async function retrieveToken() {
     try {
-      const currentToken = await getToken(messaging, {vapidKey: ""});
+      const currentToken = await getToken(messaging, {vapidKey: "BNy0Tesa0kx5T1UoCnH3i85xS3ZmvSFGr3ZiNLQAOa6EjQE8MwuYRIfgQ653euJNkRm4a92et0rhHhl53hsFBaE"});
       if (currentToken) {
         console.log(currentToken);
         return currentToken;

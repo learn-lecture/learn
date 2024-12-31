@@ -27,6 +27,7 @@ out/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+/src/main/resources/firebase-adminsdk.json
 
 ### NetBeans ###
 /nbproject/private/
