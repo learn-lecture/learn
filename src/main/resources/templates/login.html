@@ -6,8 +6,8 @@
 </head>
 <script type="module">
 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-messaging.js";
 
   // Firebase configuration
   const firebaseConfig = {
@@ -24,9 +24,21 @@
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
+  async function requestNotificationPermission() {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        throw new Error('알림 권한이 거부되었습니다.');
+      }
+    } catch (error) {
+      console.error('알림 권한 요청 실패:', error);
+    }
+  }
+
   // Function to retrieve FCM token
   async function retrieveToken() {
     try {
+      await requestNotificationPermission(); // 권한 요청 추가
       const currentToken = await getToken(messaging, {vapidKey: "BNy0Tesa0kx5T1UoCnH3i85xS3ZmvSFGr3ZiNLQAOa6EjQE8MwuYRIfgQ653euJNkRm4a92et0rhHhl53hsFBaE"});
       if (currentToken) {
         console.log(currentToken);

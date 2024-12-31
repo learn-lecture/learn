@@ -3,6 +3,7 @@ package org.study.post.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.study.message.application.interfaces.FcmMessageRepository;
 import org.study.post.application.interfaces.LikeRepository;
 import org.study.post.domain.Post;
 import org.study.post.domain.comment.Comment;
@@ -21,6 +22,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     private final JpaPostRepository jpaPostRepository;
     private final JpaCommentRepository jpaCommentRepository;
     private final JpaLikeRepository jpaLikeRepository;
+    private final FcmMessageRepository fcmMessageRepository;
 
     @Override
     public boolean checkLike(Post post, User user) {
@@ -34,6 +36,7 @@ public class LikeRepositoryImpl implements LikeRepository {
         LikeEntity likeEntity = new LikeEntity(post, user);
         jpaLikeRepository.save(likeEntity);
         jpaPostRepository.updateLikeCount(post.getId(), 1);
+        fcmMessageRepository.sendLikeMessage(user, post.getAuthor());
     }
 
     @Override

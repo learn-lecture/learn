@@ -7,6 +7,8 @@ import org.study.auth.application.interfaces.UserAuthRepository;
 import org.study.auth.domain.UserAuth;
 import org.study.auth.repository.entity.UserAuthEntity;
 import org.study.auth.repository.jpa.JpaUserAuthRepository;
+import org.study.message.repository.JpaFcmTokenRepository;
+import org.study.message.repository.entity.FcmTokenEntity;
 import org.study.user.application.interfaces.UserRepository;
 import org.study.user.domain.User;
 
@@ -15,6 +17,7 @@ import org.study.user.domain.User;
 public class UserAuthRepositoryImpl implements UserAuthRepository {
 
     private final JpaUserAuthRepository jpaUserAuthRepository;
+    private final JpaFcmTokenRepository jpaFcmTokenRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -27,13 +30,14 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
 
     @Override
     @Transactional
-    public UserAuth loginUser(String email, String password) {
+    public UserAuth loginUser(String email, String password, String fcmToken) {
         UserAuthEntity userAuthEntity = getUserAuthEntityWithThrow(email);
         UserAuth userAuth = userAuthEntity.toUserAuth();
 
         validatePassword(password, userAuth);
 
         userAuthEntity.updateLastLoginAt();
+        jpaFcmTokenRepository.save(new FcmTokenEntity(userAuthEntity.getUserId(), fcmToken));
         return userAuth;
     }
 

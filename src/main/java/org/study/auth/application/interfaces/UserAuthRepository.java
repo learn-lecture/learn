@@ -6,6 +6,6 @@ import org.study.user.domain.User;
 public interface UserAuthRepository {
 
     UserAuth registerUser(UserAuth userAuth, User user);
-    UserAuth loginUser(String email, String password);
+    UserAuth loginUser(String email, String password, String fcmToken);
 
 }
