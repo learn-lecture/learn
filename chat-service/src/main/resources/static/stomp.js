@@ -4,14 +4,13 @@ const stompClient = new StompJs.Client({
 
 stompClient.onConnect = (frame) => {
   setConnected(true);
-  console.log('Connected: ' + frame);
   stompClient.subscribe('/sub/chats', (chatMessage) => {
     showMessage(JSON.parse(chatMessage.body));
   });
   stompClient.publish({
     destination: "/pub/chats",
     body: JSON.stringify(
-        {'sender': $("#username").val(), 'message': "connected"})
+        {'message': "connected"})
   })
 };
 
@@ -49,7 +48,7 @@ function sendMessage() {
   stompClient.publish({
     destination: "/pub/chats",
     body: JSON.stringify(
-        {'sender': $("#username").val(), 'message': $("#message").val()})
+        {'message': $("#message").val()})
   });
   $("#message").val("")
 }
