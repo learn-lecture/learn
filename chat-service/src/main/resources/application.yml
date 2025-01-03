@@ -6,10 +6,16 @@ spring:
       client:
         registration:
           kakao:
-            client-id: a803bd9985e6f38b9a8e0aeb9162e597
-            client-secret: tSezfUNob0Zy077I22Yer5RESZjJnkjv
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_SECRET_KEY}
             scope:
               - profile_nickname
+              - account_email
+              - name
+              - gender
+              - birthday
+              - birthyear
+              - phone_number
             redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
             client-name: kakao
             authorization-grant-type: authorization_code
