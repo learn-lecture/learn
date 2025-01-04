@@ -1,9 +1,22 @@
+let enteredChatroomId;
+
 const stompClient = new StompJs.Client({
   brokerURL: 'ws://localhost:8080/stomp/chats'
 });
 
+function toggleNewMessageIcon(chatroomId, toggle) {
+  if (toggle && (enteredChatroomId != chatroomId)) {
+    $("#new_" + chatroomId).show();
+  } else {
+    $("#new_" + chatroomId).hide();
+  }
+}
+
 stompClient.onConnect = (frame) => {
   setConnected(true);
+  stompClient.subscribe('/sub/chats/news', (chatMessage) => {
+    toggleNewMessageIcon(JSON.parse(chatMessage.body), true);
+  })
 };
 
 stompClient.onWebSocketError = (error) => {
@@ -67,13 +80,19 @@ function joinChatroom(chatroomId) {
   })
 }
 
+function getDisplayValue(hasNewMessage) {
+  return hasNewMessage ? "inline" : "none";
+}
+
 function renderChatrooms(chatrooms) {
   $("#chatroom-list").html("");
   for (let i = 0; i < chatrooms.length; i++) {
     $("#chatroom-list").append(
         "<tr onclick='joinChatroom(" + chatrooms[i].id + ")'>" +
         "<td>" + chatrooms[i].id + "</td>" +
-        "<td>" + chatrooms[i].title + "</td>" +
+        "<td>" + chatrooms[i].title +
+        "<img src='new.png' id='new_" + chatrooms[i].id + "' style='display: " +
+        getDisplayValue(chatrooms[i].hasNewMessage) + "'/> </td>" +
         "<td>" + chatrooms[i].memberCount + "</td>" +
         "<td>" + chatrooms[i].createdAt + "</td>" +
         "</tr>"
@@ -124,6 +143,8 @@ function enterChatrooms(chatroomId, newMember) {
   $("#conversation").show();
   $("#send").prop("disabled", false);
   $("#leave").prop("disabled", false);
+  toggleNewMessageIcon(chatroomId, false);
+  enteredChatroomId = chatroomId;
 
   if (subscription !== undefined) {
     subscription.unsubscribe();

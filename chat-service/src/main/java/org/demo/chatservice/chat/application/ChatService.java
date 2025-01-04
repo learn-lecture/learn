@@ -68,17 +68,27 @@ public class ChatService {
     }
 
     public List<Chatroom> getChatroom(Member member) {
-        List<MemberChatroomMapping> chatroomMappings =
-                jpaMemberChatRoomMappingRepository.findAllByMemberId(member.getId());
-
-        return chatroomMappings.stream()
-                .map(MemberChatroomMapping::getChatroom)
+        return jpaMemberChatRoomMappingRepository.findAllByMemberId(member.getId())
+                .stream()
+                .map(memberChatroomMapping -> {
+                    Chatroom chatroom = memberChatroomMapping.getChatroom();
+                    chatroom.setHasNewMessage(jpaMessageRepository.existsByChatroomIdAndCreatedAtAfter(
+                            chatroom.getId(),
+                            memberChatroomMapping.getLastCheckedAt()
+                    ));
+                    return chatroom;
+                })
                 .toList();
     }
 
     public Message saveMessage(Member member, Long chatroomId, String text) {
         Chatroom chatroom = jpaChatroomRepository.findById(chatroomId).get();
-        Message message = Message.builder().text(text).member(member).chatroom(chatroom).build();
+        Message message = Message.builder()
+                .text(text)
+                .member(member)
+                .chatroom(chatroom)
+                .createdAt(LocalDateTime.now())
+                .build();
         return jpaMessageRepository.save(message);
     }
 

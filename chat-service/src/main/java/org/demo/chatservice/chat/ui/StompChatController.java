@@ -13,6 +13,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 public class StompChatController {
 
     private final ChatService chatService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/chats/{chatroomId}")
     @SendTo("/sub/chats/{chatroomId}")
@@ -36,6 +38,7 @@ public class StompChatController {
         String text = payload.get("message");
 
         chatService.saveMessage(member, chatroomId, text);
+        messagingTemplate.convertAndSend("/sub/chats/news", chatroomId);
         log.info("{} sent {} in {}", member.getName(), text, chatroomId);
 
         return new ChatMessage(member.getName(), text);
