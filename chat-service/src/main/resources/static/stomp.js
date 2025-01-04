@@ -99,9 +99,28 @@ function showChatrooms() {
 
 let subscription;
 
+function showMessages(chatroomId) {
+  $.ajax({
+    type: 'GET',
+    dataType: 'json',
+    url: '/chats/' + chatroomId + '/messages',
+    success: function (data) {
+      console.log("message data: ", data);
+      for (let i = 0; i < data.length; i++) {
+        showMessage(data[i]);
+      }
+    },
+    error: function (request, status, error) {
+      console.log('request: ', request);
+      console.log('error: ', error);
+    }
+  })
+}
+
 function enterChatrooms(chatroomId, newMember) {
   $("#chatroom-id").val(chatroomId);
   $("#messages").html("");
+  showMessages(chatroomId);
   $("#conversation").show();
   $("#send").prop("disabled", false);
   $("#leave").prop("disabled", false);

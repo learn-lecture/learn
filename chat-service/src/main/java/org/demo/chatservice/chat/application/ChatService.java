@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.demo.chatservice.chat.repository.JpaChatroomRepository;
 import org.demo.chatservice.chat.repository.JpaMemberChatRoomMappingRepository;
+import org.demo.chatservice.chat.repository.JpaMessageRepository;
 import org.demo.chatservice.chat.repository.entities.Chatroom;
 import org.demo.chatservice.chat.repository.entities.MemberChatroomMapping;
+import org.demo.chatservice.chat.repository.entities.Message;
 import org.demo.chatservice.oauth.repository.entities.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class ChatService {
 
     private final JpaChatroomRepository jpaChatroomRepository;
     private final JpaMemberChatRoomMappingRepository jpaMemberChatRoomMappingRepository;
+    private final JpaMessageRepository jpaMessageRepository;
 
     @Transactional
     public Chatroom createChatroom(Member member, String title) {
@@ -71,6 +74,16 @@ public class ChatService {
         return chatroomMappings.stream()
                 .map(MemberChatroomMapping::getChatroom)
                 .toList();
+    }
+
+    public Message saveMessage(Member member, Long chatroomId, String text) {
+        Chatroom chatroom = jpaChatroomRepository.findById(chatroomId).get();
+        Message message = Message.builder().text(text).member(member).chatroom(chatroom).build();
+        return jpaMessageRepository.save(message);
+    }
+
+    public List<Message> getMessages(Long chatroomId) {
+        return jpaMessageRepository.findAllByChatroomId(chatroomId);
     }
 
 }
