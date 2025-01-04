@@ -1,11 +1,10 @@
-let enteredChatroomId;
-
 const stompClient = new StompJs.Client({
   brokerURL: 'ws://localhost:8080/stomp/chats'
 });
 
 function toggleNewMessageIcon(chatroomId, toggle) {
-  if (toggle && (enteredChatroomId != chatroomId)) {
+  let currentChatroomId = $("#chatroom-id").val();
+  if (toggle && (currentChatroomId != chatroomId)) {
     $("#new_" + chatroomId).show();
   } else {
     $("#new_" + chatroomId).hide();
@@ -64,11 +63,21 @@ function showMessage(chatMessage) {
       + "</td></tr>");
 }
 
+function getRequestParam(currentChatroomId) {
+  if (currentChatroomId === "") {
+    return "";
+  }
+
+  return "?currentChatroomId=" + currentChatroomId;
+}
+
 function joinChatroom(chatroomId) {
+  let currentChatroomId = $("#chatroom-id").val();
+
   $.ajax({
     type: 'POST',
     dataType: 'json',
-    url: '/chats/' + chatroomId,
+    url: '/chats/' + chatroomId + getRequestParam(currentChatroomId),
     success: function (data) {
       console.log('show chatroom data: ', data);
       enterChatrooms(chatroomId, data);
@@ -144,7 +153,6 @@ function enterChatrooms(chatroomId, newMember) {
   $("#send").prop("disabled", false);
   $("#leave").prop("disabled", false);
   toggleNewMessageIcon(chatroomId, false);
-  enteredChatroomId = chatroomId;
 
   if (subscription !== undefined) {
     subscription.unsubscribe();

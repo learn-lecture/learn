@@ -39,21 +39,35 @@ public class ChatService {
         return chatroom;
     }
 
-    public Boolean joinChatroom(Member member, Long chatroomId) {
-        if (jpaMemberChatRoomMappingRepository.existsByMemberIdAndChatroomId(member.getId(), chatroomId)) {
-            log.info("Chatroom {} already exists", chatroomId);
+    @Transactional
+    public Boolean joinChatroom(Member member, Long newChatroomId, Long currentChatroomId) {
+        if (currentChatroomId != null) {
+            updateLastCheckedAt(member, currentChatroomId);
+        }
+
+        if (jpaMemberChatRoomMappingRepository.existsByMemberIdAndChatroomId(member.getId(), newChatroomId)) {
+            log.info("Chatroom {} already exists", newChatroomId);
             return false;
         }
 
-        Chatroom chatroom = jpaChatroomRepository.findById(chatroomId).orElse(null);
+        Chatroom chatroom = jpaChatroomRepository.findById(newChatroomId).orElse(null);
         MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
                 .member(member)
                 .chatroom(chatroom)
+                .lastCheckedAt(LocalDateTime.now())
                 .build();
 
         jpaMemberChatRoomMappingRepository.save(memberChatroomMapping);
 
         return true;
+    }
+
+    private void updateLastCheckedAt(Member member, Long currentChatroomId) {
+        MemberChatroomMapping memberChatroomMapping =
+                jpaMemberChatRoomMappingRepository.findByMemberIdAndChatroomId(member.getId(), currentChatroomId)
+                        .orElseThrow(IllegalStateException::new);
+        memberChatroomMapping.updateLastCheckedAt();
+        jpaMemberChatRoomMappingRepository.save(memberChatroomMapping);
     }
 
     @Transactional

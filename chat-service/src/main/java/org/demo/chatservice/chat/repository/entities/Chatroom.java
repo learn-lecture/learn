@@ -48,6 +48,7 @@ public class Chatroom {
         MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
                 .member(member)
                 .chatroom(this)
+                .lastCheckedAt(LocalDateTime.now())
                 .build();
 
         memberChatroomMappings.add(memberChatroomMapping);
