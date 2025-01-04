@@ -10,6 +10,7 @@ import org.demo.chatservice.chat.repository.entities.Chatroom;
 import org.demo.chatservice.chat.repository.entities.MemberChatroomMapping;
 import org.demo.chatservice.oauth.repository.entities.Member;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,9 @@ public class ChatService {
     private final JpaChatroomRepository jpaChatroomRepository;
     private final JpaMemberChatRoomMappingRepository jpaMemberChatRoomMappingRepository;
 
+    @Transactional
     public Chatroom createChatroom(Member member, String title) {
+        log.info("create chatroom {}", member);
         Chatroom chatroom = Chatroom.builder()
                 .title(title)
                 .createdAt(LocalDateTime.now())
@@ -27,11 +30,7 @@ public class ChatService {
 
         chatroom = jpaChatroomRepository.save(chatroom);
 
-        MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
-                .member(member)
-                .chatroom(chatroom)
-                .build();
-
+        MemberChatroomMapping memberChatroomMapping = chatroom.addMember(member);
         jpaMemberChatRoomMappingRepository.save(memberChatroomMapping);
 
         return chatroom;
@@ -54,6 +53,7 @@ public class ChatService {
         return true;
     }
 
+    @Transactional
     public Boolean leaveChatroom(Member member, Long chatroomId) {
         if (!jpaMemberChatRoomMappingRepository.existsByMemberIdAndChatroomId(member.getId(), chatroomId)) {
             log.info("Chatroom {} does not exist", chatroomId);

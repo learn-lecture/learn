@@ -7,11 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.demo.chatservice.oauth.repository.entities.Member;
 
 @Entity
 @Builder
@@ -31,4 +33,18 @@ public class Chatroom {
     private Set<MemberChatroomMapping> memberChatroomMappings;
 
     private LocalDateTime createdAt;
+
+    public MemberChatroomMapping addMember(Member member) {
+        if (memberChatroomMappings == null) {
+            memberChatroomMappings = new HashSet<>();
+        }
+
+        MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
+                .member(member)
+                .chatroom(this)
+                .build();
+
+        memberChatroomMappings.add(memberChatroomMapping);
+        return memberChatroomMapping;
+    }
 }

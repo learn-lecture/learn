@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.demo.chatservice.chat.application.ChatService;
+import org.demo.chatservice.chat.application.dto.ChatroomDto;
 import org.demo.chatservice.chat.repository.entities.Chatroom;
 import org.demo.chatservice.oauth.domain.CustomOauth2User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,11 +26,11 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping
-    public Chatroom createChatroom(
+    public ChatroomDto createChatroom(
             @AuthenticationPrincipal CustomOauth2User user,
             @RequestParam String title
     ) {
-        return chatService.createChatroom(user.getMember(), title);
+        return ChatroomDto.from(chatService.createChatroom(user.getMember(), title));
     }
 
     @PostMapping("/{chatroomId}")
@@ -49,8 +50,11 @@ public class ChatController {
     }
 
     @GetMapping
-    public List<Chatroom> getChatroom(@AuthenticationPrincipal CustomOauth2User user) {
-        return chatService.getChatroom(user.getMember());
+    public List<ChatroomDto> getChatroom(@AuthenticationPrincipal CustomOauth2User user) {
+        return chatService.getChatroom(user.getMember())
+                .stream()
+                .map(ChatroomDto::from)
+                .toList();
     }
 
 }
