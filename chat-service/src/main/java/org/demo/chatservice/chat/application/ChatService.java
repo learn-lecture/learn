@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.demo.chatservice.chat.application.dto.ChatroomDto;
 import org.demo.chatservice.chat.repository.JpaChatroomRepository;
 import org.demo.chatservice.chat.repository.JpaMemberChatRoomMappingRepository;
 import org.demo.chatservice.chat.repository.JpaMessageRepository;
@@ -95,6 +96,7 @@ public class ChatService {
                 .toList();
     }
 
+    @Transactional
     public Message saveMessage(Member member, Long chatroomId, String text) {
         Chatroom chatroom = jpaChatroomRepository.findById(chatroomId).get();
         Message message = Message.builder()
@@ -108,6 +110,11 @@ public class ChatService {
 
     public List<Message> getMessages(Long chatroomId) {
         return jpaMessageRepository.findAllByChatroomId(chatroomId);
+    }
+
+    @Transactional(readOnly = true)
+    public ChatroomDto getChatroom(Long chatroomId) {
+        return ChatroomDto.from(jpaChatroomRepository.findById(chatroomId).orElseThrow());
     }
 
 }

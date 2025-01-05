@@ -2,18 +2,20 @@ package org.demo.chatservice.member.domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.demo.chatservice.member.repository.entities.Member;
+import org.demo.chatservice.oauth.domain.CustomOauth2User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@AllArgsConstructor
-@Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails extends CustomOauth2User implements UserDetails {
 
-    private final Member member;
+    public CustomUserDetails(Member member, Map<String, Object> attributes) {
+        super(member, attributes);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,4 +31,5 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername() {
         return member.getName();
     }
+
 }

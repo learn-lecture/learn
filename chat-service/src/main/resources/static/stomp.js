@@ -11,10 +11,15 @@ function toggleNewMessageIcon(chatroomId, toggle) {
   }
 }
 
+function updateMemberCount(chatroom) {
+  $("#memberCount_" + chatroom.id).html(chatroom.memberCount);
+}
+
 stompClient.onConnect = (frame) => {
   setConnected(true);
-  stompClient.subscribe('/sub/chats/news', (chatMessage) => {
-    toggleNewMessageIcon(JSON.parse(chatMessage.body), true);
+  stompClient.subscribe('/sub/chats/updates', (chatMessage) => {
+    toggleNewMessageIcon(JSON.parse(chatMessage.body).id, true);
+    updateMemberCount(JSON.parse(chatMessage.body));
   })
 };
 
@@ -102,7 +107,7 @@ function renderChatrooms(chatrooms) {
         "<td>" + chatrooms[i].title +
         "<img src='new.png' id='new_" + chatrooms[i].id + "' style='display: " +
         getDisplayValue(chatrooms[i].hasNewMessage) + "'/> </td>" +
-        "<td>" + chatrooms[i].memberCount + "</td>" +
+        "<td id='memberCount_" + chatrooms[i].id + "'>" + chatrooms[i].memberCount + "</td>" +
         "<td>" + chatrooms[i].createdAt + "</td>" +
         "</tr>"
     )

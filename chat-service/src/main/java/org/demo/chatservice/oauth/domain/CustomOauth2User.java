@@ -13,8 +13,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 @AllArgsConstructor
 public class CustomOauth2User implements OAuth2User {
 
-    private final Member member;
-    private final Map<String, Object> attributes;
+    protected final Member member;
+    protected final Map<String, Object> attributes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

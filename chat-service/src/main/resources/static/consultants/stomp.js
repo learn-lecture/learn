@@ -11,10 +11,15 @@ function toggleNewMessageIcon(chatroomId, toggle) {
   }
 }
 
+function updateMemberCount(chatroom) {
+  $("#memberCount_" + chatroom.id).html(chatroom.memberCount);
+}
+
 stompClient.onConnect = (frame) => {
   setConnected(true);
-  stompClient.subscribe('/sub/chats/news', (chatMessage) => {
-    toggleNewMessageIcon(JSON.parse(chatMessage.body), true);
+  stompClient.subscribe('/sub/chats/updates', (chatMessage) => {
+    toggleNewMessageIcon(JSON.parse(chatMessage.body).id, true);
+    updateMemberCount(JSON.parse(chatMessage.body));
   })
 };
 
@@ -35,7 +40,7 @@ function setConnected(connected) {
 
 function connect() {
   stompClient.activate();
-  showChatrooms();
+  showChatrooms(0);
 }
 
 function disconnect() {
@@ -93,7 +98,8 @@ function getDisplayValue(hasNewMessage) {
   return hasNewMessage ? "inline" : "none";
 }
 
-function renderChatrooms(chatrooms) {
+function renderChatrooms(page) {
+  let chatrooms = page.content;
   $("#chatroom-list").html("");
   for (let i = 0; i < chatrooms.length; i++) {
     $("#chatroom-list").append(
@@ -102,18 +108,24 @@ function renderChatrooms(chatrooms) {
         "<td>" + chatrooms[i].title +
         "<img src='new.png' id='new_" + chatrooms[i].id + "' style='display: " +
         getDisplayValue(chatrooms[i].hasNewMessage) + "'/> </td>" +
-        "<td>" + chatrooms[i].memberCount + "</td>" +
+        "<td id='memberCount_" + chatrooms[i].id + "'>" + chatrooms[i].memberCount + "</td>" +
         "<td>" + chatrooms[i].createdAt + "</td>" +
         "</tr>"
     )
   }
+  // 버튼 상태만 업데이트
+  $("#prev").prop("disabled", page.first);
+  $("#next").prop("disabled", page.last);
+
+  // 현재 페이지 번호 저장
+  $("#prev, #next").data('current-page', page.number);
 }
 
-function showChatrooms() {
+function showChatrooms(pageNumber) {
   $.ajax({
     type: 'GET',
     dataType: 'json',
-    url: '/chats',
+    url: '/consultants/chats?sorts=id,desc&page=' + pageNumber,
     success: function (data) {
       console.log('show chatroom data: ', data);
       renderChatrooms(data);
@@ -178,7 +190,7 @@ function createChatroom() {
     url: "/chats?title=" + $("#chatroom-title").val(),
     success: function (data) {
       console.log('create chatroom data: ', data);
-      showChatrooms();
+      showChatrooms(0);
       enterChatrooms(data.id, true);
     },
     error: function (request, status, error) {
@@ -204,7 +216,7 @@ function leaveChatroom() {
     url: '/chats/' + chatRoomId,
     success: function (data) {
       console.log('show chatroom data: ', data);
-      showChatrooms();
+      showChatrooms(0);
       exitChatRoom();
     },
     error: function (request, status, error) {
@@ -221,4 +233,19 @@ $(function () {
   $("#create").click(() => createChatroom());
   $("#leave").click(() => leaveChatroom());
   $("#send").click(() => sendMessage());
+
+  // 페이지네이션 버튼 이벤트 추가
+  $("#prev").click(function() {
+    if (!$(this).prop("disabled")) {
+      let currentPage = $(this).data('current-page');
+      showChatrooms(currentPage - 1);
+    }
+  });
+
+  $("#next").click(function() {
+    if (!$(this).prop("disabled")) {
+      let currentPage = $(this).data('current-page');
+      showChatrooms(currentPage + 1);
+    }
+  });
 });
