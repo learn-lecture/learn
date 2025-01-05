@@ -1,4 +1,4 @@
-package com.study.baekjoon.dp.bitmask.boj1562;
+package com.study.baekjoon.dp_with_bitmask.boj1562;
 
 import java.io.BufferedReader;
 import java.io.IOException;

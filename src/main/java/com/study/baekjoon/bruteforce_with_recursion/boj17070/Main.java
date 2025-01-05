@@ -1,4 +1,4 @@
-package com.study.baekjoon.bruteforce.recursion.boj17070;
+package com.study.baekjoon.bruteforce_with_recursion.boj17070;
 import java.io.*;
 import java.util.*;
 

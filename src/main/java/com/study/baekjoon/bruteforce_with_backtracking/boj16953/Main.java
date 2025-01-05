@@ -1,4 +1,4 @@
-package com.study.baekjoon.bruteforce.backtracking.boj16953;
+package com.study.baekjoon.bruteforce_with_backtracking.boj16953;
 
 import java.io.*;
 import java.util.*;

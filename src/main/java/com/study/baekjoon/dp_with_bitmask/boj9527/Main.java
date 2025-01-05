@@ -1,4 +1,4 @@
-package com.study.baekjoon.dp.bitmask.boj9527;
+package com.study.baekjoon.dp_with_bitmask.boj9527;
 
 /*
 * acmicpc 9527 - 1의 개수 세기

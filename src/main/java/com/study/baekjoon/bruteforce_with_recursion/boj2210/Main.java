@@ -1,4 +1,4 @@
-package com.study.baekjoon.bruteforce.recursion.boj2210;
+package com.study.baekjoon.bruteforce_with_recursion.boj2210;
 
 import java.io.BufferedReader;
 import java.io.IOException;

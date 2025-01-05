@@ -1,4 +1,4 @@
-package com.study.baekjoon.bruteforce.backtracking.boj16922;
+package com.study.baekjoon.bruteforce_with_backtracking.boj16922;
 
 import java.io.BufferedReader;
 import java.io.IOException;
