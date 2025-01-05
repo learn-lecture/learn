@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.demo.chatservice.oauth.repository.entities.Member;
+import org.demo.chatservice.member.repository.entities.Member;
 
 @Entity
 @Builder

@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.demo.chatservice.oauth.domain.CustomOauth2User;
-import org.demo.chatservice.oauth.repository.JpaMemberRepository;
-import org.demo.chatservice.oauth.repository.entities.Member;
-import org.demo.chatservice.oauth.repository.enums.Gender;
+import org.demo.chatservice.member.repository.JpaMemberRepository;
+import org.demo.chatservice.member.repository.entities.Member;
+import org.demo.chatservice.member.repository.enums.Gender;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -39,7 +39,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                 .phoneNumber((String) kakaoAccount.get("phone_number"))
                 .gender(Gender.valueOf(((String) kakaoAccount.get("gender")).toUpperCase()))
                 .birthday(getBirthDay(kakaoAccount))
-                .role("USER_ROLE")
+                .role("ROLE_USER")
                 .build();
         return jpaMemberRepository.save(member);
     }

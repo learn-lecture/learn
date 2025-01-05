@@ -10,7 +10,7 @@ import org.demo.chatservice.chat.repository.JpaMessageRepository;
 import org.demo.chatservice.chat.repository.entities.Chatroom;
 import org.demo.chatservice.chat.repository.entities.MemberChatroomMapping;
 import org.demo.chatservice.chat.repository.entities.Message;
-import org.demo.chatservice.oauth.repository.entities.Member;
+import org.demo.chatservice.member.repository.entities.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

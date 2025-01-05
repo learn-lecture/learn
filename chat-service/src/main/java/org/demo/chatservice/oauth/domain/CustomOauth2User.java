@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.demo.chatservice.oauth.repository.entities.Member;
+import org.demo.chatservice.member.repository.entities.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
