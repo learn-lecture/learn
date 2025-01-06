@@ -1,6 +1,7 @@
 package org.demo.jpashop;
 
 import org.assertj.core.api.Assertions;
+import org.demo.jpashop.domain.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
