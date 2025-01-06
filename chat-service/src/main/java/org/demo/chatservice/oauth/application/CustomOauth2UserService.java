@@ -8,6 +8,7 @@ import org.demo.chatservice.oauth.domain.CustomOauth2User;
 import org.demo.chatservice.member.repository.JpaMemberRepository;
 import org.demo.chatservice.member.repository.entities.Member;
 import org.demo.chatservice.member.repository.enums.Gender;
+import org.demo.chatservice.oauth.utils.MemberFactory;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -23,31 +24,11 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
-        String email = (String) kakaoAccount.get("email");
+        String email = oAuth2User.getAttribute("email");
         Member member = jpaMemberRepository.findByEmail(email)
-                .orElseGet(() -> registerMember(kakaoAccount));
+                .orElseGet(() -> jpaMemberRepository.save(MemberFactory.create(userRequest, oAuth2User)));
 
         return new CustomOauth2User(member, oAuth2User.getAttributes());
-    }
-
-    private Member registerMember(Map<String, Object> kakaoAccount) {
-        Member member = Member.builder()
-                .email((String) kakaoAccount.get("email"))
-                .nickname((String) ((Map) kakaoAccount.get("profile")).get("nickname"))
-                .name((String) kakaoAccount.get("name"))
-                .phoneNumber((String) kakaoAccount.get("phone_number"))
-                .gender(Gender.valueOf(((String) kakaoAccount.get("gender")).toUpperCase()))
-                .birthday(getBirthDay(kakaoAccount))
-                .role("ROLE_USER")
-                .build();
-        return jpaMemberRepository.save(member);
-    }
-
-    private LocalDate getBirthDay(Map<String, Object> kakaoAccount) {
-        String birthyear = (String) kakaoAccount.get("birthyear");
-        String birthday = (String) kakaoAccount.get("birthday");
-        return LocalDate.parse(birthyear + birthday, DateTimeFormatter.BASIC_ISO_DATE);
     }
 
 }

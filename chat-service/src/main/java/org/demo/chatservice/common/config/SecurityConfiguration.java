@@ -20,6 +20,7 @@ public class SecurityConfiguration {
         return httpSecurity
                 .authorizeHttpRequests(request -> request.anyRequest().authenticated())
                 .oauth2Login(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
@@ -28,7 +29,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain consultantFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .securityMatcher("/consultants/**", "/login")
+                .securityMatcher("/consultants/**")
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/consultants").permitAll()
                         .anyRequest()
