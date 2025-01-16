@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.demo.jpashop.domain.Category;
+import org.demo.jpashop.exception.NotEnoughStockException;
 
 @Entity
 @Getter
@@ -35,4 +36,15 @@ public abstract class Item {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
+    public void addStock(int quantity) {
+        stockQuantity += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        int restStock = stockQuantity - quantity;
+        if (restStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        stockQuantity = restStock;
+    }
 }
