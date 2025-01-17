@@ -10,6 +10,7 @@ import org.demo.jpashop.domain.item.Item;
 import org.demo.jpashop.repository.ItemRepository;
 import org.demo.jpashop.repository.MemberRepository;
 import org.demo.jpashop.repository.OrderRepository;
+import org.demo.jpashop.repository.OrderSearch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,7 @@ public class OrderService {
     }
 
     // 검색
-/*    public List<Order> findOrders(OrderSearch orderSearch) {
-        return orderRepository.findAll(orderSearch);
-    }*/
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAllByString(orderSearch);
+    }
 }
