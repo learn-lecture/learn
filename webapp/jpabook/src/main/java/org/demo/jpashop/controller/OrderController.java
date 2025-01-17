@@ -3,13 +3,16 @@ package org.demo.jpashop.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.demo.jpashop.domain.Member;
+import org.demo.jpashop.domain.Order;
 import org.demo.jpashop.domain.item.Item;
+import org.demo.jpashop.repository.OrderSearch;
 import org.demo.jpashop.service.ItemService;
 import org.demo.jpashop.service.MemberService;
 import org.demo.jpashop.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -42,4 +45,10 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @GetMapping("/orders")
+    public String orders(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+        List<Order> orders = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orders);
+        return "order/orderList";
+    }
 }
