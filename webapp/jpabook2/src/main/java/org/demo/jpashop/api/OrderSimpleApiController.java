@@ -10,6 +10,7 @@ import org.demo.jpashop.domain.Order;
 import org.demo.jpashop.domain.OrderStatus;
 import org.demo.jpashop.repository.OrderRepository;
 import org.demo.jpashop.repository.OrderSearch;
+import org.demo.jpashop.repository.OrderSimpleQueryDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,11 @@ public class OrderSimpleApiController {
         return orders.stream()
                 .map(SimpleOrderDto::new)
                 .toList();
+    }
+
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4() {
+        return orderRepository.findOrderDtos();
     }
 
     @Data
