@@ -113,4 +113,15 @@ public class OrderRepository {
         ).getResultList();
     }
 
+    public List<Order> findAllWithItem() {
+        // 페이징 한계
+        // 컬렉션 페치 조인은 1개만 사용가능
+        return em.createQuery(
+                "select distinct o from Order o"
+                        + " join fetch o.member m"
+                        + " join fetch o.delivery d"
+                        + " join fetch o.orderItems oi"
+                        + " join fetch oi.item i", Order.class
+        ).getResultList();
+    }
 }
