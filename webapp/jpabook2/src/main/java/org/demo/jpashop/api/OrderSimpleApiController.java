@@ -10,7 +10,7 @@ import org.demo.jpashop.domain.Order;
 import org.demo.jpashop.domain.OrderStatus;
 import org.demo.jpashop.repository.OrderRepository;
 import org.demo.jpashop.repository.OrderSearch;
-import org.demo.jpashop.repository.OrderSimpleQueryDto;
+import org.demo.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

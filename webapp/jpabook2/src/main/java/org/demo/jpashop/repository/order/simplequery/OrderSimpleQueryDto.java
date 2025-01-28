@@ -1,4 +1,4 @@
-package org.demo.jpashop.repository;
+package org.demo.jpashop.repository.order.simplequery;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

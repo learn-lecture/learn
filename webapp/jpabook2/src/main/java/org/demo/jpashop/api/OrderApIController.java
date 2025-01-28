@@ -13,6 +13,8 @@ import org.demo.jpashop.domain.OrderItem;
 import org.demo.jpashop.domain.OrderStatus;
 import org.demo.jpashop.repository.OrderRepository;
 import org.demo.jpashop.repository.OrderSearch;
+import org.demo.jpashop.repository.order.query.OrderQueryDto;
+import org.demo.jpashop.repository.order.query.OrderQueryRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderApIController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -59,6 +62,11 @@ public class OrderApIController {
         List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
         return orders.stream()
                 .map(OrderDto::new).toList();
+    }
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4_page() {
+        return orderQueryRepository.findOrderQueryDtos();
     }
 
     @Data
