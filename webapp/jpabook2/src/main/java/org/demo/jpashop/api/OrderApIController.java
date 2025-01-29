@@ -2,17 +2,19 @@ package org.demo.jpashop.api;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.demo.jpashop.domain.Address;
 import org.demo.jpashop.domain.Order;
 import org.demo.jpashop.domain.OrderItem;
 import org.demo.jpashop.domain.OrderStatus;
 import org.demo.jpashop.repository.OrderRepository;
 import org.demo.jpashop.repository.OrderSearch;
+import org.demo.jpashop.repository.order.query.OrderFlatDto;
+import org.demo.jpashop.repository.order.query.OrderItemQueryDto;
 import org.demo.jpashop.repository.order.query.OrderQueryDto;
 import org.demo.jpashop.repository.order.query.OrderQueryRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +74,22 @@ public class OrderApIController {
     @GetMapping("/api/v5/orders")
     public List<OrderQueryDto> ordersV5() {
         return orderQueryRepository.findAllByDto_optimization();
+    }
+
+    @GetMapping("/api/v6/orders")
+    public List<OrderQueryDto> ordersV6() {
+        List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
+        return flats.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                OrderQueryDto::new,
+                                Collectors.mapping(OrderItemQueryDto::new, Collectors.toList())
+                        )
+                )
+                .entrySet()
+                .stream()
+                .map(e -> new OrderQueryDto(e.getKey(), e.getValue()))
+                .toList();
     }
 
     @Data

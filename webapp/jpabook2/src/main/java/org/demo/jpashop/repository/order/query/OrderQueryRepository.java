@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.demo.jpashop.domain.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -71,4 +70,14 @@ public class OrderQueryRepository {
         return orderItemByOrderId;
     }
 
+    public List<OrderFlatDto> findAllByDto_flat() {
+        return em.createQuery(
+                "select new org.demo.jpashop.repository.order.query.OrderFlatDto(o.id, m.name, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count)"
+                        + " from Order o"
+                        + " join o.member m"
+                        + " join o.delivery d"
+                        + " join o.orderItems oi"
+                        + " join oi.item i", OrderFlatDto.class)
+        .getResultList();
+    }
 }

@@ -16,4 +16,11 @@ public class OrderItemQueryDto {
         this.orderPrice = orderPrice;
         this.count = count;
     }
+
+    public OrderItemQueryDto(OrderFlatDto dto) {
+        this.orderId = dto.getOrderId();
+        this.itemName = dto.getItemName();
+        this.orderPrice = dto.getOrderPrice();
+        this.count = dto.getCount();
+    }
 }
