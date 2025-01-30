@@ -9,6 +9,8 @@ import org.demo.jpashop.repository.OrderSearch;
 import org.demo.jpashop.service.ItemService;
 import org.demo.jpashop.service.MemberService;
 import org.demo.jpashop.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class OrderController {
 
+    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     private final OrderService orderService;
     private final MemberService memberService;
     private final ItemService itemService;
