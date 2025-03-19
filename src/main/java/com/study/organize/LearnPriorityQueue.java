@@ -18,6 +18,12 @@ public class LearnPriorityQueue {
         pq.offer(1);
         pq.offer(2);
         System.out.println(pq.peek());
+
+        pq.remove(1);
+        pq.poll();
+        System.out.println(pq.poll());
+
+        pq.peek();
     }
 
 }
