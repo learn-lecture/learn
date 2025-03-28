@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Goorm DeepDive Duplicate Detection",
+  "description": "구름 딥다이브 수강생들을 위한 중복강의 감지 확장프로그램",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup/hello.html",
+    "default_icon": "images/icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://k-digital.goorm.io/*", "https://k-digital.goorm.io/?"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["scripts/content.js"]
+    }
+  ]
+}

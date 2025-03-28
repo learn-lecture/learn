@@ -1,0 +1,110 @@
+
+.list-group-item, .form-control {
+    color: #585D62;
+}
+.navbar, .repo, .profile-btn, .stars {
+    background-color: #4285F4;
+}
+.profile-btn {
+    color: white;
+}
+.gists, .watchers {
+    background-color: #ACB5BD;
+}
+.followers, .forks {
+    background-color: #01B974;
+}
+.following {
+    background-color: #1AA1B8;
+}
+.lead {
+    color: #979CA4;
+}
+h2, h1 {
+    font-weight: bold;
+    color: #343A40;
+}
+.repo-name {
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.repo-info {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+
+.repo-stats {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-left: 10px;
+}
+
+.repo-stats .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.repo-stats-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .repo-stats {
+        display: none;
+    }
+    .repo-name {
+        max-width: 100%;
+    }
+    .repo-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .repo-name {
+        font-size: 20px;
+    }
+    .repo-stats-mobile {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+    .repo-stats-mobile .badge {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.empty-container {
+    border: 1px solid #e0e0e0;
+}
+
+.empty-container > h2 {
+    color: #6c757d;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.spinner {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #333;
+    animation: spin 1s ease-in-out infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
