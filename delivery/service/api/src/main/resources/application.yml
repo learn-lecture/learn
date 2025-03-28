@@ -1,0 +1,53 @@
+server:
+  name: delivery-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+spring:
+  boot:
+    admin:
+      client:
+        url:
+          - http://localhost:8085
+  rabbitmq:
+    username: admin
+    password: admin123!@#
+    port: 5672
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:mysql://localhost:3306/delivery?userSSL=false&userUnicode=true&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1535
+
+token:
+  secret:
+    key: SpringBootJWTHelperTokenSecretKeyValue123!@#
+  access-token:
+    plus-hour: 3600000
+  refresh-token:
+    plus-hour: 43200000
+
+logging:
+  config: classpath:logback.xml
+  file:
+    name: logFile.log
