@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-messaging.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA9Cbzmz_nEUKZu76OzRUk1fr_cBoYZ0oA",
+    authDomain: "community-service-79c21.firebaseapp.com",
+    projectId: "community-service-79c21",
+    storageBucket: "community-service-79c21.firebasestorage.app",
+    messagingSenderId: "424022109712",
+    appId: "1:424022109712:web:9e4b7345c6a66b7bbde495",
+    measurementId: "G-5QSQHT3MHC"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  async function requestNotificationPermission() {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        throw new Error('알림 권한이 거부되었습니다.');
+      }
+    } catch (error) {
+      console.error('알림 권한 요청 실패:', error);
+    }
+  }
+
+  // Function to retrieve FCM token
+  async function retrieveToken() {
+    try {
+      await requestNotificationPermission(); // 권한 요청 추가
+      const currentToken = await getToken(messaging, {vapidKey: "BNy0Tesa0kx5T1UoCnH3i85xS3ZmvSFGr3ZiNLQAOa6EjQE8MwuYRIfgQ653euJNkRm4a92et0rhHhl53hsFBaE"});
+      if (currentToken) {
+        console.log(currentToken);
+        return currentToken;
+      } else {
+        console.warn("No registration token available.");
+        return "";
+      }
+    } catch (err) {
+      console.error('An error occurred while retrieving token: ', err);
+      return "";
+    }
+  }
+
+  // Login function with fcmToken as a parameter
+  async function login(fcmToken) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email, password, fcmToken}),
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    }).then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
+  }
+
+  // Function that handles login button click
+  async function handleLogin() {
+    const fcmToken = await retrieveToken();
+    await login(fcmToken);
+  }
+
+  window.handleLogin = handleLogin;
+</script>
+
+<body>
+<div id="login-form">
+  <label for="email">이메일</label><input type="email" id="email" placeholder="Email">
+  <label for="password">비밀번호</label><input type="password" id="password" placeholder="Password">
+  <button onclick="handleLogin()">Login</button>
+</div>
+</body>
+
+</html>

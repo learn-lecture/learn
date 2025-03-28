@@ -1,0 +1,72 @@
+plugins {
+    id("java")
+    id("org.springframework.boot") version "3.3.1"
+    id("io.spring.dependency-management") version "1.1.5"
+}
+
+group = "org.study"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // spring
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+    // mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
+
+    // lombok
+    implementation ("org.projectlombok:lombok")
+    annotationProcessor ("org.projectlombok:lombok")
+
+    // jwt
+    implementation ("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+    // firebase
+    implementation("com.google.firebase:firebase-admin:9.3.0")
+
+    // querydsl
+    implementation ("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    annotationProcessor ("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
+    annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
+
+    // test
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    runtimeOnly("com.h2database:h2")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+/**
+ * QueryDSL Build Options
+ */
+val querydslDir = "${layout.projectDirectory}/build/generated/querydsl"
+
+sourceSets {
+    getByName("main").java.srcDirs(querydslDir)
+}
+
+tasks.withType<JavaCompile> {
+    options.generatedSourceOutputDirectory = file(querydslDir)
+}
+
+tasks.named("clean") {
+    doLast {
+        file(querydslDir).deleteRecursively()
+    }
+}
