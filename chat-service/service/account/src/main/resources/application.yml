@@ -1,0 +1,10 @@
+token:
+  secret:
+    key: SpringBootJWTHelperTokenSecretKeyValue123!@#
+  access-token:
+    plus-hour: 3600000
+  refresh-token:
+    plus-hour: 43200000
+
+server:
+  port: 8083
