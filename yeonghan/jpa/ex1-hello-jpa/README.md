@@ -32,3 +32,23 @@
       - JPQL은 DB 레벨에 직접 접근, DB에 데이터가 있어야 하므로 1차 캐시 내용이 미리 Flush 됨
       - FlushModeType으로 관리 가능
 - 준영속: 영속 -> 영속성 컨텍스트에서 분리됨 (Detached)
+
+Column Unique vs Table Unique
+- Column Unique는 이름 설정이 랜덤
+- Table Unique를 활용하는 것이 에러 식별 가능성에 좋음
+
+@Temporal
+- Legacy에서 Date 필드를 쓸 경우만
+
+@Id
+- Identity
+  - DB에게 ID 전략을 맡김
+  - MySQL Auto Increment의 단점 
+    - 트랜잭션 내에서 1회 Insert가 필요
+- squence
+  - oracle, postgre와 같은 DB의 ID 전략
+  - 마찬가지로 트랜잭션 내 1회 select가 필요
+    - 성능을 최적화 하기 위해 AllocationSize를 활용가능
+- Table
+  - 비추, DB 낭비 + 성능 감소
+  - squenece와 유사

@@ -9,13 +9,7 @@ import java.util.List;
 public class JpaMain {
 
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-        EntityManager em = emf.createEntityManager();
-
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        try {
+        TransactionManager.executeInTransaction(em -> {
             /*
             // INSERT
             Member member = new Member();
@@ -71,14 +65,7 @@ public class JpaMain {
 
             em.detach(member);
             member.setName("Test2"); // Commit시 DB에 수정된 정보가 반영되지 않음.
-
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            em.close();
-        }
-
-        emf.close();
+        });
     }
+
 }
