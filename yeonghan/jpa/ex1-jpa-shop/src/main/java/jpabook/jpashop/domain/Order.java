@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -16,9 +17,20 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     private LocalDateTime orderDate;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItem.setOrder(this);
+        orderItems.add(orderItem);
+    }
 }
