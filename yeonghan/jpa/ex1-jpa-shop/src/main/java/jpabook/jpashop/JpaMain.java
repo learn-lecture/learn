@@ -8,7 +8,7 @@ public class JpaMain {
     public static void main(String[] args) {
         TransactionManager.executeInTransaction(em -> {
             Order order = new Order();
-            order.addOrderItem(new OrderItem());
+            //order.addOrderItem(new OrderItem());
         });
     }
 
