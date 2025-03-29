@@ -22,6 +22,12 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
     implementation 'com.h2database:h2:2.2.222'
 
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
