@@ -100,3 +100,30 @@ Column Unique vs Table Unique
   - 의미 없는 PK가 존재할 수 있음.
   - 복합키 제약, 참조 등이 너무 복잡해짐
   - TradeOff가 분명, 하지만 PK를 통해 생산성 높이는게 더 좋다고 판단
+
+---
+
+상속관계 전략
+1. @Inheritance join 
+- Dtype을 지정해서 어떤 구현체에 대한 정보인지 식별하기 용이하도록
+  - DiscriminatorColumn
+  - Dtype 구현체 이름 지정: DiscriminatorValue
+- 장점
+  - 상속관계를 정규화된 join table로 표현
+  - 정석
+- 단점
+  - join 복잡도
+  - insert * 2
+
+2. @Inheritance singleTable
+- Dtype이 필수, 마찬가지로 DiscriminatorColumn으로 표현
+  - 없어도 됨, 필드 명시할 때 사용
+- 장점
+  - 성능
+- 단점
+  - 필요없는 null 필드
+  - 테이블이 커지면, 조회 성능이 낮아질 수 있음.
+
+3. @Inheritance tablePerClass
+- Dtype이 없음.
+- 사용하면 안됨
