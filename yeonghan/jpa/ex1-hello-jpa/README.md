@@ -126,4 +126,19 @@ Column Unique vs Table Unique
 
 3. @Inheritance tablePerClass
 - Dtype이 없음.
-- 사용하면 안됨
+
+
+---
+Proxy 매커니즘
+1. Entity 객체에 접근 -> 실제로 프록시 객체에 접근
+2. 프록시 객체에 정보가 있다면 ? 그대로 정보를 반환
+3. 프록시 객체에 정보가 없다면 ? 영속성 컨텍스트에 엔티티 초기화 요청
+4. 영속성 컨텍스트는 DB로 부터 조회
+5. Proxy -> 조회한 Entity 를 가르킴
+
+Proxy 확인
+1. 프록시 인스턴스 여부 확인
+  `emf.getPersistenceUnitUtil().isLoaded(Entity.class)`
+2. 프록시 클래스 이름 확인
+  `entity.getClass().getName()`
+
