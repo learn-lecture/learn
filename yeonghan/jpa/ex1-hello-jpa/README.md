@@ -142,3 +142,13 @@ Proxy 확인
 2. 프록시 클래스 이름 확인
   `entity.getClass().getName()`
 
+---
+
+값 컬렉션
+1. @CollectionTable(joinColumns=@JoinColumn(...))과 @ElementCollection 으로 해결 할 수 있다.  
+   문제점 : 데이터가 모두 삭제되고 재삽입된다.  
+   -> 이게 문제점일까? Insert가 생각보다 긴 것은 큰 문제점은 아니라고 본다.  
+   -> 대신 컬렉션이 많다면 문제가 될 수는 있다.
+   해결법 : @OrderColumn 을 활용해 해결 할 수 있다.
+   -> 변경 히스토리를 남기고, Delete & Insert가 아닌 Update로 처리한다.  
+   근본적인 해결법 : 연관관계로 처리한다.
