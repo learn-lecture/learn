@@ -26,4 +26,10 @@
 * 여러 값 조회 Query
   * 한계가 명확 - Object를 반환
   * DTO를 생성해서 select new package.dto 로 생성 가능
-  * 
+  
+### Paging
+
+* setFirstResult, setMaxResults 로 페이징 가능
+  * Hibernate 의 기술이 아니라면 oracle 같은데선 굉장히 긴 쿼리가 됨
+  * JDBCTemplate 의 한계를 해결해주는 기술
+
