@@ -89,3 +89,40 @@
       * Hibernate 5.x 처럼 Dialect를 상속받을 수 있지만, 권장되지 않는 방식)
       * Hibernate 6.x 부터는 FunctionContributor를 구현하는게 BestPractice
       * Code 참조
+
+### 경로 표현식
+  * 단일 값 연관 경로 -> 묵시적 조인 발생 (inner join)
+    * JPQL 문법에서 탐색이 됨
+  * 컬렉션 값 연관 경로 -> 묵시적 조인 발생
+    * JPQL 문법에서 탐색이 안됨
+    * 탐색이 필요한 경우 명시적 조인
+  * 명시적 조인만 쓰면 됨
+
+### Fecth Join
+  * N+1 문제의 해결법 일종의 EAGER 와 같음
+    * EAGER와 차이는 뭘까?
+    * Fecth는 필요할 때만 EAGER를 할 수 있는 것임! 매번 EAGER와 큰 차이
+  * 새로운 문제 등장 -> JOIN 연산으로 인한 테이블 뻥튀기
+    * SQL에서 DISTINCT, APP에서 GROUPING
+    * DISTINCT는 실제로 DB에서 JOIN 된 Column들의 정보가 다르므로 중복제거 안됨
+      * JPA가 묵시적으로 Application에서 제거하는 것임
+  * 일반 Join은 JPA가 알아서 Join된 엔터티를 불러와주지 못함
+
+### Fetch Join 한계
+  * 양방향 연관관계는 Aggregate Root 에서 연관된 객체의 모든 정보가 필요할 때 쓰는 것
+    * Alias 와 같은 별칭을 통해 필터링하는 것은 사상에 맞지 않음
+  * 페이징의 한계
+  * N * M * K 등 다대다대다 컬렉션 한계
+    * 얘는 Join 자체도 문제임
+  * 사실 상 가장 큰 한계점: 성능 모니터링을 통해 단방향 연관관계로 분리
+
+## 벌크 연산
+  * executeUpdate
+  * 주의점
+    * 영속성 컨텍스트를 무시하고 DB에 바로 저장
+      * 영속성에 남아있던 데이터가 동기화되지 않음
+      * 벌크 이후 영속성 컨텍스트 초기화
+      * 혹은 초기화 후 벌크
+    * flush 가 기본적으로 auto mode 이므로 벌크 시 자동으로 flush는 됨
+      * query 라서
+      * 하지만, 영속성 컨텍스트에는 데이터가 남아있음.
